@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RestaurantMapView" customModule="FastFood" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="550" height="489"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0ZP-rd-JG8">
+                    <rect key="frame" x="0.0" y="44" width="550" height="411"/>
+                </mapView>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SNn-ry-X8B">
+                    <rect key="frame" x="10" y="54" width="530" height="50"/>
+                    <subviews>
+                        <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="NrS-fp-nu2">
+                            <rect key="frame" x="0.0" y="0.0" width="488" height="50"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <scopeButtonTitles>
+                                <string>Title</string>
+                                <string>Title</string>
+                            </scopeButtonTitles>
+                        </searchBar>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S6H-Af-VlM">
+                            <rect key="frame" x="488" y="0.0" width="42" height="50"/>
+                            <state key="normal" title="Filters">
+                                <color key="titleColor" red="0.71927623060000001" green="0.19324590380000001" blue="0.1424908252" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="filterCancelAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="ykB-JI-oW9"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="5z8-88-2qA"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="0ZP-rd-JG8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="1bL-4V-dgf"/>
+                <constraint firstItem="SNn-ry-X8B" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="DZj-Fb-jOO"/>
+                <constraint firstItem="SNn-ry-X8B" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="Ki7-kv-bnb"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="SNn-ry-X8B" secondAttribute="trailing" constant="10" id="KkR-cc-4c2"/>
+                <constraint firstItem="0ZP-rd-JG8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="fbT-UY-5i7"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="0ZP-rd-JG8" secondAttribute="bottom" id="qqK-vT-f42"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="0ZP-rd-JG8" secondAttribute="trailing" id="zP6-IA-8c6"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="filterCancelButton" destination="S6H-Af-VlM" id="pMl-LH-WQE"/>
+                <outlet property="mapView" destination="0ZP-rd-JG8" id="FCy-Q1-Oec"/>
+                <outlet property="searchBar" destination="NrS-fp-nu2" id="mQG-0q-xqU"/>
+                <outlet property="stackView" destination="SNn-ry-X8B" id="3Y4-Ub-RtL"/>
+            </connections>
+            <point key="canvasLocation" x="236.23188405797103" y="270.87053571428572"/>
+        </view>
+    </objects>
+</document>
