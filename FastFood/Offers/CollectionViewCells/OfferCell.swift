@@ -14,8 +14,8 @@ class OfferCell: UICollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     
-    func configure(title: String) {
-        titleLabel.text = title
+    func configure(item: Store) {
+        titleLabel.text = item.location.address1 + " " + item.location.city  + " " + item.location.state
     }
 
 }

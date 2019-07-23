@@ -35,6 +35,7 @@ extension UIView {
     }
 }
 
+
 //MARK:  UICollectionView extension
 extension UICollectionView {
     //MARK: Get cell Width base on number of columns
@@ -76,58 +77,4 @@ extension UICollectionView {
     }
 }
 
-extension UISearchBar {
-    static func setSearchBarAppearance() {
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: UIColor.white]
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes
-    }
-}
 
-
-//
-//extension UINavigationBar {
-//    func setBackgroundImageTransparent() {
-//        setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-//        shadowImage = UIImage()
-//    }
-//    func setBackgroundImageVisible() {
-//        setBackgroundImage(nil, for: .default)
-//        shadowImage = nil
-//    }
-//}
-//
-
-//
-//extension UICollectionViewFlowLayout {
-//    func availableHeight(collectionViewHeight: CGFloat, numberOfRows: CGFloat, navigationBarHeight: CGFloat) -> CGFloat {
-//        let availableHeight = collectionViewHeight
-//            - self.sectionInset.top - self.sectionInset.bottom
-//            - (self.minimumInteritemSpacing * numberOfRows)
-//            - navigationBarHeight
-//        return availableHeight
-//    }
-//
-//    func availableWidth(collectionViewWidth: CGFloat, numberOfColumns: CGFloat) -> CGFloat {
-//        let availableWidth = collectionViewWidth
-//            - self.sectionInset.left - self.sectionInset.right
-//            - (self.minimumInteritemSpacing * numberOfColumns)
-//        return availableWidth
-//    }
-//}
-//
-//extension UIView {
-//    func fillSuperview() {
-//        guard let superview = self.superview else { return }
-//        self.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor).isActive = true
-//        self.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor).isActive = true
-//        self.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor).isActive = true
-//        self.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor).isActive = true
-//    }
-//}
-
-//extension UICollectionViewController {
-//    func navigationBarHeight() -> CGFloat {
-//        return self.navigationController?.navigationBar.bounds.height ?? 0
-//    }
-//}

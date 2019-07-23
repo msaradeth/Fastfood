@@ -9,16 +9,26 @@
 import Foundation
 
 class RestaurantViewModel: NSObject {
-    var items: [String]
+    var items: [Store]
+    var searchStoreService: SearchStoreService
     var count: Int {
         return items.count
     }
-    subscript(indexPath: IndexPath) -> String {
+    subscript(indexPath: IndexPath) -> Store {
         return items[indexPath.row]
     }
     
-    init(items: [String]) {
+    init(items: [Store], searchStoreService: SearchStoreService) {
         self.items = items
+        self.searchStoreService = searchStoreService
     }
     
+    func searchStore(location: String, completion: @escaping ()->Void) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.searchStoreService.search(location: location, completion: { [weak self] (stores) in
+                self?.items = stores
+                completion()
+            })
+        }
+    }
 }

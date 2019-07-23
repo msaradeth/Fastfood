@@ -13,6 +13,7 @@ class TabBarController: UITabBarController {
     init(viewControllers: [UIViewController]) {
         super.init(nibName: nil, bundle: nil)
         self.viewControllers = viewControllers
+        UITabBar.appearance().tintColor = UIColor.orange
     }
         
     required init?(coder aDecoder: NSCoder) {

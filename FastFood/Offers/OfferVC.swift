@@ -8,68 +8,43 @@
 
 import UIKit
 
-class OfferVC: UICollectionViewController {
+class OfferVC: UIViewController {
+    lazy var collectionView: StoreCollectionView = {
+        let collectionnView = StoreCollectionView(collectionViewdataSource: self, collectionViewDelegate: self)
+        collectionnView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionnView
+    }()
     var viewModel: OfferViewModel!
     
     //MARK: init
     init(title: String, viewModel: OfferViewModel) {
         self.viewModel = viewModel
-        
-        //init CollectionView
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = 2
-        flowLayout.minimumLineSpacing = 4
-        super.init(collectionViewLayout: flowLayout)
+        super.init(nibName: nil, bundle: nil)
         self.title = title
-        self.collectionView.backgroundColor = .white
+        view.addSubview(collectionView)
+        collectionView.fillsuperView()
         setupVC()
     }
-    
-    
     //MARK: setupVC
     func setupVC() {
+        //Register cells
         collectionView.register(UINib(nibName: "ScanCanCell", bundle: nil), forCellWithReuseIdentifier: ScanCanCell.cellIdentifier)
         collectionView.register(UINib(nibName: "MonthlyDealCell", bundle: nil), forCellWithReuseIdentifier: MonthlyDealCell.cellIdentifier)
         collectionView.register(UINib(nibName: "OfferCell", bundle: nil), forCellWithReuseIdentifier: OfferCell.cellIdentifier)
-        self.tabBarItem = UITabBarItem(title: "Offers", image: nil, tag: 0)
+        //TabBarItem
+        self.tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
     }
     
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-//        let searchBusinessService = SearchBusinessService()
-//        DispatchQueue.global().async {
-//            searchBusinessService.loadData()
-//        }
-        
-    }
-    
-    //MARK: UICollectionViewDataSource
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.count + 2
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.row {
-        case 0:
-            return collectionView.dequeueReusableCell(withReuseIdentifier: ScanCanCell.cellIdentifier, for: indexPath) as! ScanCanCell
-        case 1:
-            return collectionView.dequeueReusableCell(withReuseIdentifier: MonthlyDealCell.cellIdentifier, for: indexPath) as! MonthlyDealCell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCell.cellIdentifier, for: indexPath) as! OfferCell
-            cell.configure(title: viewModel[indexPath])
-            return cell
+        viewModel.searchStore { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         }
     }
-    
-    
-    //MARK: UICollectionViewDelegate
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
-    }
-    
-    
+
     //MARK: Handle rotation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -77,12 +52,38 @@ class OfferVC: UICollectionViewController {
             flowLayout.invalidateLayout()
         }
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
+//MARK: UICollectionViewDataSource
+extension OfferVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.count + 2
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.row {
+        case 0:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: ScanCanCell.cellIdentifier, for: indexPath) as! ScanCanCell
+        case 1:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: MonthlyDealCell.cellIdentifier, for: indexPath) as! MonthlyDealCell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCell.cellIdentifier, for: indexPath) as! OfferCell
+            cell.configure(item: viewModel[indexPath])
+            return cell
+        }
+    }
+}
+
+//MARK: UICollectionViewDelegate
+extension OfferVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
+        //        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+}
 
 
 //MARK: UICollectionViewDelegateFlowLayout
@@ -92,17 +93,19 @@ extension OfferVC: UICollectionViewDelegateFlowLayout {
         var cellHeight: CGFloat!
         var cellWidth: CGFloat!
         
-        //Number of columns
+        //determine number of columns base device
         let numberOfColumns = UIDevice.current.userInterfaceIdiom == .phone ? 1 : 2
         
         //calc cell Height and Width
         switch indexPath.row {
         case 0:
+            //Calc cell Width base on number of columns
+            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
             cellHeight = ScanCanCell.cellHeight
-            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)   //Calc cell Width base on number of columns
         case 1:
+            //Calc cell Width base on number of columns
+            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
             cellHeight = MonthlyDealCell.cellHeight
-            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)   //Calc cell Width base on number of columns
         default:
             //Calc cell Width base on minimum cell width
             cellHeight = OfferCell.cellHeight

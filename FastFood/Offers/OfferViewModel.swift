@@ -9,22 +9,28 @@
 import Foundation
 
 class OfferViewModel: NSObject {
-    var items = [String]()
-    var searchBusinessService: SearchBusinessService
+    var items = [Store]()
+    var searchStoreService: SearchStoreService
     var count: Int {
         return items.count
     }
-    subscript(indexPath: IndexPath) -> String {
-        return items[indexPath.row]
+    subscript(indexPath: IndexPath) -> Store {
+        let index = indexPath.row - 2
+        return items[index]
     }
     
     
-    init(items: [String], searchBusinessService: SearchBusinessService) {
+    init(items: [Store], searchStoreService: SearchStoreService) {
         self.items = items
-        self.searchBusinessService = searchBusinessService
+        self.searchStoreService = searchStoreService
     }
     
-    func loadData() {
-
+    func searchStore(completion: @escaping ()->Void) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.searchStoreService.search { [weak self] (stores) in
+                self?.items = stores
+                completion()
+            }
+        }
     }
 }

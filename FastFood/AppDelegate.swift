@@ -16,12 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        var items = [String]()
-        for ii in 0..<500 {
-            items.append(String(ii))
-        }
-        let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: OfferViewModel(items: items, searchBusinessService: SearchBusinessService())))
-        let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: RestaurantViewModel(items: items)))
+        let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: OfferViewModel(items: [], searchStoreService: SearchStoreService())))
+        let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: RestaurantViewModel(items: [], searchStoreService: SearchStoreService())))
         
         let viewControllers = [offerVC, restaurantVC]
         let tabBarController = TabBarController(viewControllers: viewControllers)
@@ -29,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = tabBarController   //UINavigationController(rootViewController: restaurantVC)
+        
         return true
     }
     
