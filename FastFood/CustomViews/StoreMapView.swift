@@ -24,10 +24,10 @@ class StoreMapView: MKMapView {
             }
         }
     }
-    fileprivate var searchStoreDelegate: SearchStoreDelegate?
+    fileprivate var searchStoreDelegate: RestaurantVCDelegate?
     
     //MARK: init
-    init(delegate: SearchStoreDelegate?) {
+    init(delegate: RestaurantVCDelegate?) {
         self.searchStoreDelegate = delegate
         super.init(frame: .zero)
         self.addSubview(searchBarStackView)
@@ -35,7 +35,7 @@ class StoreMapView: MKMapView {
     }
 
     func updateLocation(stores: [Store]) {
-        var nearestStoreLocation: CLLocationCoordinate2D? = nil
+        var coordinates: Coordinates?
         
         for (index, store) in stores.enumerated() {
             let pointAnnotation = MKPointAnnotation()
@@ -51,15 +51,20 @@ class StoreMapView: MKMapView {
             
             self.addAnnotation(annotation)
             
-            if nearestStoreLocation == nil {
-                nearestStoreLocation = locationCoordinate
+            if coordinates == nil {
+                coordinates = store.coordinates
             }
             
         }
-        if let nearestStoreLocation = nearestStoreLocation {
-            let region = MKCoordinateRegion(center: nearestStoreLocation, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-            self.setRegion(region, animated: true)
+        if let coordinates = coordinates {
+            updateRegion(coordinates: coordinates)
         }
+    }
+    
+    func updateRegion(coordinates: Coordinates) {
+        let location = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+        self.setRegion(region, animated: true)
     }
     
     //MARK: Define views
@@ -76,6 +81,7 @@ class StoreMapView: MKMapView {
         searchBar.delegate = self
         searchBar.placeholder = "Enter city, state, or zip"
         searchBar.searchBarStyle = UISearchBar.Style.minimal
+        searchBar.setDefaultAppearance()
         return searchBar
     }()
     lazy var searchButton: UIButton = {

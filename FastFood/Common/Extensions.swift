@@ -78,3 +78,40 @@ extension UICollectionView {
 }
 
 
+//MARK:  UIImageView extension
+extension UIImageView {
+    func rounded() {
+        self.layer.borderWidth = 0.3 
+        self.layer.masksToBounds = false
+        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.cornerRadius = self.frame.height/2 //This
+        self.clipsToBounds = true
+    }
+}
+
+//MARK:  UISearchBar extension
+extension UISearchBar {
+    func setDefaultAppearance() {
+//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .darkGray
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.black]
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes
+    }
+}
+
+
+//MARK:  UINavigationBar extension
+extension UINavigationBar {
+    static func setLargeTitleFont() {
+        let navBarAppearance = UINavigationBar.appearance()
+        navBarAppearance.titleTextAttributes = [
+        NSAttributedString.Key.foregroundColor: UIColor.orange,
+        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 21, weight: .bold)]
+    }
+    
+    static func setNormalTitleFont() {
+        let navBarAppearance = UINavigationBar.appearance()
+        navBarAppearance.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.orange,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold)]
+    }
+}

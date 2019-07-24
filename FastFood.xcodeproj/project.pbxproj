@@ -37,6 +37,9 @@
 		5EB1F53822E7B80E00B8501C /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F53722E7B80E00B8501C /* Enums.swift */; };
 		5ED16A1222E7C151006F6C15 /* StoreMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1122E7C151006F6C15 /* StoreMapItem.swift */; };
 		5ED16A1422E7C276006F6C15 /* StoreAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1322E7C276006F6C15 /* StoreAnnotation.swift */; };
+		5ED16A1622E8FECD006F6C15 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1522E8FECD006F6C15 /* LocationManager.swift */; };
+		5ED16A1822E9105E006F6C15 /* StoreDetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */; };
+		5ED16A1A22E91B3B006F6C15 /* RestaurantDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1922E91B3B006F6C15 /* RestaurantDetailVC.swift */; };
 		B390D018C5B9A7E6B07FE82C /* Pods_FastFoodTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470C94E9BAC97B549956D28C /* Pods_FastFoodTests.framework */; };
 		FCE700B1B12BDD76C8BCC52B /* Pods_FastFood.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A66438751B60F61CAA3A825A /* Pods_FastFood.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +102,9 @@
 		5EB1F53722E7B80E00B8501C /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		5ED16A1122E7C151006F6C15 /* StoreMapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMapItem.swift; sourceTree = "<group>"; };
 		5ED16A1322E7C276006F6C15 /* StoreAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAnnotation.swift; sourceTree = "<group>"; };
+		5ED16A1522E8FECD006F6C15 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailService.swift; sourceTree = "<group>"; };
+		5ED16A1922E91B3B006F6C15 /* RestaurantDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailVC.swift; sourceTree = "<group>"; };
 		7744F9EC5404C2A61E64BCFE /* Pods_FastFoodUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FastFoodUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		935E155A3E666AAC21F550B1 /* Pods-FastFoodUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FastFoodUITests.debug.xcconfig"; path = "Target Support Files/Pods-FastFoodUITests/Pods-FastFoodUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A66438751B60F61CAA3A825A /* Pods_FastFood.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FastFood.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +146,7 @@
 				0E035A3222E55349004A8726 /* RestaurantViewModel.swift */,
 				5EB1F52222E61AE200B8501C /* RestaurantCell.swift */,
 				5EB1F52322E61AE200B8501C /* RestaurantCell.xib */,
+				5ED16A1922E91B3B006F6C15 /* RestaurantDetailVC.swift */,
 			);
 			path = Restaurants;
 			sourceTree = "<group>";
@@ -237,6 +244,7 @@
 			children = (
 				5EB1F50E22E1271300B8501C /* SearchStoreService.swift */,
 				5EB1F51022E12F7600B8501C /* HttpHelper.swift */,
+				5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -247,6 +255,7 @@
 				5EB1F51C22E13D0A00B8501C /* Protocols.swift */,
 				5EB1F51822E13CCE00B8501C /* Extensions.swift */,
 				5EB1F53722E7B80E00B8501C /* Enums.swift */,
+				5ED16A1522E8FECD006F6C15 /* LocationManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -516,6 +525,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ED16A1A22E91B3B006F6C15 /* RestaurantDetailVC.swift in Sources */,
 				5EB1F52722E62B5600B8501C /* OfferViewModel.swift in Sources */,
 				5EB1F50F22E1271300B8501C /* SearchStoreService.swift in Sources */,
 				5EB1F51122E12F7600B8501C /* HttpHelper.swift in Sources */,
@@ -530,6 +540,8 @@
 				0E035A3122E5388C004A8726 /* RestaurantVC.swift in Sources */,
 				5EB1F53622E7B1E600B8501C /* StoreCollectionView.swift in Sources */,
 				5EB1F51F22E234D200B8501C /* Models.swift in Sources */,
+				5ED16A1822E9105E006F6C15 /* StoreDetailService.swift in Sources */,
+				5ED16A1622E8FECD006F6C15 /* LocationManager.swift in Sources */,
 				5EB1F51D22E13D0A00B8501C /* Protocols.swift in Sources */,
 				0E035A3322E55349004A8726 /* RestaurantViewModel.swift in Sources */,
 				5ED16A1422E7C276006F6C15 /* StoreAnnotation.swift in Sources */,
@@ -705,7 +717,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QAJNW7456U;
+				DEVELOPMENT_TEAM = LP46D328FV;
 				INFOPLIST_FILE = FastFood/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -725,7 +737,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QAJNW7456U;
+				DEVELOPMENT_TEAM = LP46D328FV;
 				INFOPLIST_FILE = FastFood/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -20,6 +20,7 @@ class OfferVC: UIViewController {
     init(title: String, viewModel: OfferViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.view.backgroundColor = .white
         self.title = title
         view.addSubview(collectionView)
         collectionView.fillsuperView()
@@ -40,10 +41,16 @@ class OfferVC: UIViewController {
         super.viewDidLoad()
         viewModel.searchStore { [weak self] in
             DispatchQueue.main.async {
+                let locationManager = LocationManager()
                 self?.collectionView.reloadData()
             }
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         UINavigationBar.setLargeTitleFont()
+    }
+    
 
     //MARK: Handle rotation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

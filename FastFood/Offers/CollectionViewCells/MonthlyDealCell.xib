@@ -25,6 +25,7 @@
                     </imageView>
                 </subviews>
             </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="380-sh-Xj2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="DDG-C1-Ygj"/>
                 <constraint firstAttribute="bottom" secondItem="380-sh-Xj2" secondAttribute="bottom" id="Kcy-Kv-hKe"/>

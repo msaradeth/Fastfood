@@ -15,12 +15,10 @@ protocol LoadImageService {
 }
 extension LoadImageService {
     func loadImage(imageUrl: String?, completion: @escaping (UIImage?) -> Void) {
-        guard let imageUrl = imageUrl else { return }
-        let urlString = "https://image.tmdb.org/t/p/w500\(imageUrl)"
+        guard let imageUrlString = imageUrl, let url = URL(string: imageUrlString) else { return }
         DispatchQueue.global(qos: .userInteractive).async {
             do {
-                let url = URL(string: urlString)
-                let data = try Data(contentsOf: url!)
+                let data = try Data(contentsOf: url)
                 let image = UIImage(data: data)
                 completion(image)
             }catch {

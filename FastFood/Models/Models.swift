@@ -9,7 +9,28 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
+
+struct Hours: Codable {
+    var open: [Open]
+}
+
+struct Open: Codable {
+    var start: String
+    var end: String
+    var day: Int
+}
+
+struct StoreDetail: Codable {
+    var id: String
+    var name: String
+    var location: Location
+    var coordinates: Coordinates
+    var photos: [String]
+    var hours: [Hours]?
+
+}
 
 struct Store: Codable {
     var id: String
@@ -19,6 +40,8 @@ struct Store: Codable {
     var transactions: [String]
     var coordinates: Coordinates
     var location: Location
+    var imageCached: UIImage?
+    var storeDetailCached: StoreDetail?
     
     enum CodingKeys: String, CodingKey {
         case id

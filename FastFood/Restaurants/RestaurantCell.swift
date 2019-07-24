@@ -9,22 +9,76 @@
 import UIKit
 
 class RestaurantCell: UICollectionViewCell {
-    static let cellHeight: CGFloat = 140
+    static let cellHeight: CGFloat = 145
     static let cellIdentifier = "RestaurantCell"
     @IBOutlet weak var thumbnailImage: UIImageView!
     @IBOutlet weak var address1: UILabel!
     @IBOutlet weak var address2: UILabel!
     @IBOutlet weak var restaurantHours: UILabel!
     @IBOutlet weak var restaurantServiceImage: UIImageView!
-    
     @IBOutlet weak var orderNowButton: UIButton!
-    func configure(item: Store) {
+    @IBOutlet weak var locationNumber: UILabel!
+    @IBOutlet weak var rightArrowImage: UIImageView!
+    @IBOutlet weak var imageFromServer: UIImageView!
+    
+    var indexPath: IndexPath?
+    var viewModelDelegate: ViewModelDelegate?
+    var vcDelegate: RestaurantVCDelegate?
+    
+    func configure(item: Store, indexPath: IndexPath, viewModelDelegate: ViewModelDelegate?, vcDelegate: RestaurantVCDelegate?) {
+        self.indexPath = indexPath
+        self.viewModelDelegate = viewModelDelegate
+        self.vcDelegate = vcDelegate
+        
+        //update data
+        updateData(item: item, indexPath: indexPath)
+
+        //Add UITapGestureRecognizer to right arrow to go to detail screen
+        let tapGestureRecognize = UITapGestureRecognizer(target: self, action: #selector(rightArrowPressed))      
+        rightArrowImage.addGestureRecognizer(tapGestureRecognize)
+    }
+    
+    func updateData(item: Store, indexPath: IndexPath) {
         address1.text = item.location.displayAddress[0]
         address2.text = item.location.displayAddress[1] + "  (\(item.location.distance ?? 0.0) mi)"
         restaurantHours.text = item.isClose ? "Closed" : "Open"
-//        restaurantServiceImage.image = item.imageUrlString
+        locationNumber.text = String(indexPath.row)
+        
+        //update selected location RED
+        if viewModelDelegate != nil && viewModelDelegate!.selectedIndexPath == indexPath {
+            thumbnailImage.image = #imageLiteral(resourceName: "locationSelected")
+            locationNumber.textColor = .red
+        }else {
+            thumbnailImage.image = #imageLiteral(resourceName: "location")
+            locationNumber.textColor = .darkGray
+        }
+        
+        //set image from cache if exist, otherwise get from server
+        if let image = item.imageCached {
+            imageFromServer.image = image
+        }else {
+            viewModelDelegate?.loadImage(indexPath: indexPath, completion: { [weak self] (image) in
+                DispatchQueue.main.async {
+                    self?.imageFromServer.image = image
+                }
+            })
+        }
+        
+        //set button corner Radius and circle imageview
+        orderNowButton.layer.cornerRadius = 8
+        imageFromServer.rounded()
     }
 
     @IBAction func orderNowButtonAction(_ sender: Any) {
+        if let indexPath = self.indexPath {
+            vcDelegate?.orderNow(indexPath: indexPath)
+        }
+    }
+    
+    @objc func rightArrowPressed() {
+        print("rightArrowPressed")
+        if let indexPath = self.indexPath {
+            vcDelegate?.storeDetail(indexPath: indexPath)
+        }
     }
 }

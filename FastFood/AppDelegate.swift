@@ -16,12 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: OfferViewModel(items: [], searchStoreService: SearchStoreService())))
-        let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: RestaurantViewModel(items: [], searchStoreService: SearchStoreService())))
+        //offerVC
+        let offerViewModel = OfferViewModel(items: [], searchStoreService: SearchStoreService())
+        let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: offerViewModel))
         
+        //Restaurant VC
+        let restaurantViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService())
+        let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: restaurantViewModel))
+        
+        //TabBarController
         let viewControllers = [offerVC, restaurantVC]
         let tabBarController = TabBarController(viewControllers: viewControllers)
         
+        //Window
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = tabBarController   //UINavigationController(rootViewController: restaurantVC)

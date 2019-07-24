@@ -24,7 +24,7 @@ class StoreCollectionView: UICollectionView {
             self.delegate = delegate
         }
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = UIColor.lightGray
+        self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
     }
     
     required init?(coder aDecoder: NSCoder) {
