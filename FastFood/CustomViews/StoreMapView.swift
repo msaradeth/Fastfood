@@ -97,24 +97,25 @@ extension StoreMapView: MKMapViewDelegate {
     override func view(for annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "Annotation"
         
-        if let annotationView = self.dequeueReusableAnnotationView(withIdentifier: identifier) {
-            annotationView.annotation = annotation
-            return annotationView
-        }else {
-            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView.canShowCallout = true
-            return annotationView
-        }
-        
-//        var annotationView = self.dequeueReusableAnnotationView(withIdentifier: identifier)
-//        if annotationView == nil {
-//            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            annotationView?.canShowCallout = true
-//        } else {
-//            annotationView?.annotation = annotation
+//        if let annotationView = self.dequeueReusableAnnotationView(withIdentifier: identifier) {
+//            annotationView.annotation = annotation
+//            return annotationView
+//        }else {
+//            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//            annotationView.canShowCallout = true
+//            return annotationView
 //        }
-////        annotationView?.displayPriority = .required
-//        return annotationView
+        
+        var annotationView = self.dequeueReusableAnnotationView(withIdentifier: identifier)
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+//        annotationView?.displayPriority = .required
+        annotationView?.image = #imageLiteral(resourceName: "RestaurantImage")
+        return annotationView
     }
 }
 

@@ -10,9 +10,25 @@ import Foundation
 import MapKit
 
 class StoreAnnotation: NSObject, MKAnnotation {
-    var coordinate: CLLocationCoordinate2D
+
+    // This property must be key-value observable, which the `@objc dynamic` attributes provide.
+    @objc dynamic var coordinate: CLLocationCoordinate2D
+    
+    var title: String?
+    
+    var subtitle: String?
+    
+    var imageName: String?
     
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
+        super.init()
     }
+    
+//    var coordinate: CLLocationCoordinate2D
+//    
+//    init(coordinate: CLLocationCoordinate2D) {
+//        self.coordinate = coordinate
+//    }
+    
 }

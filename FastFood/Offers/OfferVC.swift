@@ -101,7 +101,7 @@ extension OfferVC: UICollectionViewDelegateFlowLayout {
         case 0:
             //Calc cell Width base on number of columns
             cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
-            cellHeight = ScanCanCell.cellHeight
+            cellHeight = UIDevice.current.userInterfaceIdiom == .phone ? ScanCanCell.cellHeight : MonthlyDealCell.cellHeight
         case 1:
             //Calc cell Width base on number of columns
             cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)

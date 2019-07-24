@@ -25,7 +25,7 @@ class RestaurantVC: UIViewController {
     }
     //MARK:  setup VC
     func setupVC() {
-        self.view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
+        self.view.backgroundColor = .white // UIColor.lightGray.withAlphaComponent(0.9)
         self.view.addSubview(stackView)
         stackView.fillsuperView()
         self.tabBarItem = UITabBarItem(title: "Restaurants", image: #imageLiteral(resourceName: "RestaurantImage"), tag: 1)
@@ -49,13 +49,22 @@ class RestaurantVC: UIViewController {
         return stackView
     }()
     lazy var collectionView: UICollectionView = {
-        let collectionView = StoreCollectionView(collectionViewdataSource: self, collectionViewDelegate: self)
+//        let collectionView = StoreCollectionView(collectionViewdataSource: self, collectionViewDelegate: self)
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumInteritemSpacing = 1
+        flowLayout.minimumLineSpacing = 0.5
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
         collectionView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellWithReuseIdentifier: RestaurantCell.cellIdentifier)
+        collectionView.backgroundColor = .lightGray
         return collectionView
     }()
     lazy var storeMapView: StoreMapView = {
-        let customMapView = StoreMapView(delegate: self)
-        return customMapView
+        let storeMapView = StoreMapView(delegate: self)
+//         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(BridgeAnnotation.self))
+        return storeMapView
     }()
     
     required init?(coder aDecoder: NSCoder) {

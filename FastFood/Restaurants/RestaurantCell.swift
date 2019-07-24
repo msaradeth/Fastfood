@@ -9,12 +9,22 @@
 import UIKit
 
 class RestaurantCell: UICollectionViewCell {
-    static let cellHeight: CGFloat = 120
+    static let cellHeight: CGFloat = 140
     static let cellIdentifier = "RestaurantCell"
-    @IBOutlet weak var titleLabel: UILabel!
-        
+    @IBOutlet weak var thumbnailImage: UIImageView!
+    @IBOutlet weak var address1: UILabel!
+    @IBOutlet weak var address2: UILabel!
+    @IBOutlet weak var restaurantHours: UILabel!
+    @IBOutlet weak var restaurantServiceImage: UIImageView!
+    
+    @IBOutlet weak var orderNowButton: UIButton!
     func configure(item: Store) {
-        titleLabel.text = item.location.address1 + " " + item.location.city  + " " + item.location.state
+        address1.text = item.location.displayAddress[0]
+        address2.text = item.location.displayAddress[1] + "  (\(item.location.distance ?? 0.0) mi)"
+        restaurantHours.text = item.isClose ? "Closed" : "Open"
+//        restaurantServiceImage.image = item.imageUrlString
     }
 
+    @IBAction func orderNowButtonAction(_ sender: Any) {
+    }
 }
