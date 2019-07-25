@@ -48,7 +48,7 @@ class RestaurantVC: UIViewController {
         }else {
             stackView = UIStackView(arrangedSubviews: [collectionView, mapView])
             stackView.axis = .horizontal
-            collectionView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+            collectionView.widthAnchor.constraint(equalToConstant: 320).isActive = true
             collectionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         }
         stackView.translatesAutoresizingMaskIntoConstraints = false

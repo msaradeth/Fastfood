@@ -13,19 +13,12 @@ import UIKit
 import UIKit
 import MapKit
 
-//protocol OrderVCDelegate {
-//    func updateSelectedLocation(indexPath: IndexPath)
-//    func searchStore(location: String)
-//    func orderNow(indexPath: IndexPath)
-//    func storeDetail(indexPath: IndexPath)
-//
-//}
 
 class OrderVC: UIViewController {
-    fileprivate var viewModel: OrderViewModel!
+    fileprivate var viewModel: RestaurantViewModel!
     
     //MARK: init
-    init(title: String, viewModel: OrderViewModel) {
+    init(title: String, viewModel: RestaurantViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.navigationItem.titleView = TitleView(title: title)
@@ -51,7 +44,7 @@ class OrderVC: UIViewController {
         }else {
             stackView = UIStackView(arrangedSubviews: [collectionView, mapView])
             stackView.axis = .horizontal
-            collectionView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+            collectionView.widthAnchor.constraint(equalToConstant: 320).isActive = true
             collectionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         }
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -88,10 +81,7 @@ extension OrderVC: UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.cellIdentifier, for: indexPath) as! RestaurantCell
-        cell.configure(item: viewModel[indexPath], indexPath: indexPath, viewModelDelegate: viewModel, vcDelegate: self)                
-        if cell.orderNowButton != nil {
-            cell.orderNowButton.removeFromSuperview()
-        }
+        cell.configure(hideOrderButton: true, item: viewModel[indexPath], indexPath: indexPath, viewModelDelegate: viewModel, vcDelegate: self)            
         return cell
     }
 }
@@ -108,7 +98,8 @@ extension OrderVC: UICollectionViewDelegate {
 extension OrderVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = collectionView.getCellWidth(numberOfColumns: 1)
-        return CGSize(width: cellWidth, height: RestaurantCell.cellHeight)
+        let cellHeight = RestaurantCell.cellHeight - 30 //minus order now button height
+        return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 

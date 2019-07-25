@@ -9,7 +9,7 @@
 import UIKit
 
 class RestaurantCell: UICollectionViewCell {
-    static let cellHeight: CGFloat = 140
+    static let cellHeight: CGFloat = 138
     static let cellIdentifier = "RestaurantCell"
     @IBOutlet weak var thumbnailImage: UIImageView!
     @IBOutlet weak var address1: UILabel!
@@ -24,34 +24,19 @@ class RestaurantCell: UICollectionViewCell {
     var indexPath: IndexPath?
     var viewModelDelegate: ViewModelDelegate?
     var vcDelegate: StoreDelegate?
+    var hideOrderButton: Bool = false {
+        willSet {
+            if newValue != hideOrderButton && orderNowButton != nil {
+                orderNowButton.isHidden = newValue
+            }
+        }
+    }
     
-    func configure(item: Store, indexPath: IndexPath, viewModelDelegate: ViewModelDelegate?, vcDelegate: StoreDelegate?) {
+    func configure(hideOrderButton: Bool = false, item: Store, indexPath: IndexPath, viewModelDelegate: ViewModelDelegate?, vcDelegate: StoreDelegate?) {
+        self.hideOrderButton = hideOrderButton
         self.indexPath = indexPath
         self.viewModelDelegate = viewModelDelegate
         self.vcDelegate = vcDelegate
-        
-        //update data
-        updateData(item: item, indexPath: indexPath)
-
-        //Add UITapGestureRecognizer to right arrow to go to detail screen
-        let tapGestureRecognize = UITapGestureRecognizer(target: self, action: #selector(rightArrowPressed))      
-        rightArrowImage.addGestureRecognizer(tapGestureRecognize)
-    }
-    
-    func updateData(item: Store, indexPath: IndexPath) {
-        address1.text = item.location.displayAddress[0]
-        address2.text = item.location.displayAddress[1] + "  (\(item.location.distance ?? 0.0) mi)"
-        restaurantHours.text = item.isClose ? "Closed" : "Open"
-        locationNumber.text = String(indexPath.row)
-        
-        //update selected location RED
-        if viewModelDelegate != nil && viewModelDelegate!.selectedIndexPath == indexPath {
-            thumbnailImage.image = #imageLiteral(resourceName: "locationSelected")
-            locationNumber.textColor = .red
-        }else {
-            thumbnailImage.image = #imageLiteral(resourceName: "location")
-            locationNumber.textColor = .darkGray
-        }
         
         //set image from cache if exist, otherwise get from server
         if let image = item.imageCached {
@@ -64,11 +49,25 @@ class RestaurantCell: UICollectionViewCell {
             })
         }
         
-        //set button corner Radius and circle imageview
-        if orderNowButton != nil {
-            orderNowButton.layer.cornerRadius = 8
-        }        
-        imageFromServer.rounded()
+        //update data
+        updateData(item: item, indexPath: indexPath)
+        
+    }
+    
+    func updateData(item: Store, indexPath: IndexPath) {
+        address1.text = item.location.displayAddress[0]
+        address2.text = "\(item.location.displayAddress[1])  (\(item.location.distance ?? 0.0) mi)"
+        restaurantHours.text = item.isClose ? "Closed" : "Open"
+        locationNumber.text = String(indexPath.row)
+        
+        //update selected location RED
+        if viewModelDelegate != nil && viewModelDelegate!.selectedIndexPath == indexPath {
+            thumbnailImage.image = #imageLiteral(resourceName: "locationSelected")
+            locationNumber.textColor = .red
+        }else {
+            thumbnailImage.image = #imageLiteral(resourceName: "location")
+            locationNumber.textColor = .darkGray
+        }
     }
 
     @IBAction func orderNowButtonAction(_ sender: Any) {
@@ -82,5 +81,14 @@ class RestaurantCell: UICollectionViewCell {
         if let indexPath = self.indexPath {
             vcDelegate?.storeDetail(indexPath: indexPath)
         }
+    }
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        //Add UITapGestureRecognizer to right arrow to go to detail screen
+        let tapGestureRecognize = UITapGestureRecognizer(target: self, action: #selector(rightArrowPressed))
+        rightArrowImage.addGestureRecognizer(tapGestureRecognize)        
+        imageFromServer.rounded()
     }
 }

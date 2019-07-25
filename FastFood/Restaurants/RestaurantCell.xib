@@ -20,9 +20,9 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJP-rk-mgv">
-                        <rect key="frame" x="38" y="8" width="44.5" height="20.5"/>
+                        <rect key="frame" x="38" y="8" width="42.5" height="19.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -34,19 +34,19 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynM-vX-tfj">
-                        <rect key="frame" x="38" y="30.5" width="40.5" height="19.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                        <rect key="frame" x="38" y="29.5" width="38.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resaurant Hours:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVQ-3q-d8G">
-                        <rect key="frame" x="38" y="52" width="129" height="19.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                        <rect key="frame" x="38" y="49.5" width="122" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OrderImage" translatesAutoresizingMaskIntoConstraints="NO" id="KQl-VR-dwF">
-                        <rect key="frame" x="38" y="73.5" width="30" height="30"/>
+                        <rect key="frame" x="38" y="69.5" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="YB1-lN-Yl1"/>
                             <constraint firstAttribute="width" constant="30" id="guR-rX-v1z"/>
@@ -59,13 +59,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdf-Si-SEr">
-                        <rect key="frame" x="171" y="52" width="40.5" height="19.5"/>
+                        <rect key="frame" x="164" y="49.5" width="40.5" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                         <color key="textColor" red="0.79443607233502544" green="0.11884033625698925" blue="0.0068637556868290286" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TOb-Ib-IQR">
-                        <rect key="frame" x="38" y="105.5" width="150" height="27"/>
+                        <rect key="frame" x="38" y="101.5" width="150" height="27"/>
                         <color key="backgroundColor" red="0.79443607230000002" green="0.1188403363" blue="0.0068637556870000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="3Gj-Dr-uCU"/>
@@ -75,6 +75,11 @@
                         <state key="normal" title="Order Now">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="orderNowButtonAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="ic6-ff-iFF"/>
                         </connections>
@@ -86,7 +91,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FlashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="V5f-Nu-HYx">
-                        <rect key="frame" x="76" y="73.5" width="30" height="30"/>
+                        <rect key="frame" x="76" y="69.5" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Cra-mY-jYQ"/>
                             <constraint firstAttribute="width" constant="30" id="T4H-Qx-bWI"/>
@@ -94,7 +99,7 @@
                     </imageView>
                 </subviews>
             </view>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="1" alpha="0.90001917177914115" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="AVQ-3q-d8G" firstAttribute="top" secondItem="ynM-vX-tfj" secondAttribute="bottom" constant="2" id="6uq-A4-o0S"/>
                 <constraint firstItem="ynM-vX-tfj" firstAttribute="top" secondItem="UJP-rk-mgv" secondAttribute="bottom" constant="2" id="Afi-ue-rDs"/>
