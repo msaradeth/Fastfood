@@ -9,7 +9,7 @@
 import UIKit
 
 class RestaurantCell: UICollectionViewCell {
-    static let cellHeight: CGFloat = 138
+    static let cellHeight: CGFloat = 140
     static let cellIdentifier = "RestaurantCell"
     @IBOutlet weak var thumbnailImage: UIImageView!
     @IBOutlet weak var address1: UILabel!

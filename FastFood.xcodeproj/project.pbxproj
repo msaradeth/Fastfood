@@ -28,7 +28,6 @@
 		5EB1F51122E12F7600B8501C /* HttpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F51022E12F7600B8501C /* HttpHelper.swift */; };
 		5EB1F51922E13CCE00B8501C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F51822E13CCE00B8501C /* Extensions.swift */; };
 		5EB1F51D22E13D0A00B8501C /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F51C22E13D0A00B8501C /* Protocols.swift */; };
-		5EB1F51F22E234D200B8501C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F51E22E234D200B8501C /* Models.swift */; };
 		5EB1F52422E61AE200B8501C /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F52222E61AE200B8501C /* RestaurantCell.swift */; };
 		5EB1F52522E61AE200B8501C /* RestaurantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB1F52322E61AE200B8501C /* RestaurantCell.xib */; };
 		5EB1F52722E62B5600B8501C /* OfferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F52622E62B5600B8501C /* OfferViewModel.swift */; };
@@ -45,6 +44,8 @@
 		5ED16A1622E8FECD006F6C15 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1522E8FECD006F6C15 /* LocationManager.swift */; };
 		5ED16A1822E9105E006F6C15 /* StoreDetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */; };
 		5ED16A1A22E91B3B006F6C15 /* RestaurantDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1922E91B3B006F6C15 /* RestaurantDetailVC.swift */; };
+		5ED16A5B22EA3382006F6C15 /* StoreDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A5A22EA3382006F6C15 /* StoreDetail.swift */; };
+		5ED16A5D22EA3398006F6C15 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A5C22EA3398006F6C15 /* Store.swift */; };
 		B390D018C5B9A7E6B07FE82C /* Pods_FastFoodTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470C94E9BAC97B549956D28C /* Pods_FastFoodTests.framework */; };
 		FCE700B1B12BDD76C8BCC52B /* Pods_FastFood.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A66438751B60F61CAA3A825A /* Pods_FastFood.framework */; };
 /* End PBXBuildFile section */
@@ -98,7 +99,6 @@
 		5EB1F51022E12F7600B8501C /* HttpHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpHelper.swift; sourceTree = "<group>"; };
 		5EB1F51822E13CCE00B8501C /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5EB1F51C22E13D0A00B8501C /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		5EB1F51E22E234D200B8501C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5EB1F52222E61AE200B8501C /* RestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
 		5EB1F52322E61AE200B8501C /* RestaurantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantCell.xib; sourceTree = "<group>"; };
 		5EB1F52622E62B5600B8501C /* OfferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferViewModel.swift; sourceTree = "<group>"; };
@@ -115,6 +115,8 @@
 		5ED16A1522E8FECD006F6C15 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailService.swift; sourceTree = "<group>"; };
 		5ED16A1922E91B3B006F6C15 /* RestaurantDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailVC.swift; sourceTree = "<group>"; };
+		5ED16A5A22EA3382006F6C15 /* StoreDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetail.swift; sourceTree = "<group>"; };
+		5ED16A5C22EA3398006F6C15 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		7744F9EC5404C2A61E64BCFE /* Pods_FastFoodUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FastFoodUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		935E155A3E666AAC21F550B1 /* Pods-FastFoodUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FastFoodUITests.debug.xcconfig"; path = "Target Support Files/Pods-FastFoodUITests/Pods-FastFoodUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A66438751B60F61CAA3A825A /* Pods_FastFood.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FastFood.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,7 +205,8 @@
 		0EEF387A22E742980063B9D9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5EB1F51E22E234D200B8501C /* Models.swift */,
+				5ED16A5C22EA3398006F6C15 /* Store.swift */,
+				5ED16A5A22EA3382006F6C15 /* StoreDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,7 +236,6 @@
 		5E7E562622DFCB3700230C16 /* FastFood */ = {
 			isa = PBXGroup;
 			children = (
-				0EECA6D322E97B3A005A722B /* Main.storyboard */,
 				5E7E562722DFCB3700230C16 /* AppDelegate.swift */,
 				5E7E565822DFCCAF00230C16 /* TabBarController.swift */,
 				0E035A2C22E5327B004A8726 /* Offers */,
@@ -245,6 +247,7 @@
 				5EB1F51722E13CBF00B8501C /* Common */,
 				5EB1F50D22E126D100B8501C /* Services */,
 				5E7E563122DFCB3800230C16 /* Assets.xcassets */,
+				0EECA6D322E97B3A005A722B /* Main.storyboard */,
 				5E7E563322DFCB3800230C16 /* LaunchScreen.storyboard */,
 				5E7E563622DFCB3800230C16 /* Info.plist */,
 				5E7E562E22DFCB3700230C16 /* FastFood.xcdatamodeld */,
@@ -570,10 +573,10 @@
 				5EB1F53822E7B80E00B8501C /* Enums.swift in Sources */,
 				5EB1F52422E61AE200B8501C /* RestaurantCell.swift in Sources */,
 				5EB1F53222E655FA00B8501C /* MonthlyDealCell.swift in Sources */,
+				5ED16A5B22EA3382006F6C15 /* StoreDetail.swift in Sources */,
 				0E035A3122E5388C004A8726 /* RestaurantVC.swift in Sources */,
 				5EB1F53622E7B1E600B8501C /* StoreCollectionView.swift in Sources */,
 				0EECA6CD22E93899005A722B /* TitleView.swift in Sources */,
-				5EB1F51F22E234D200B8501C /* Models.swift in Sources */,
 				5ED16A1822E9105E006F6C15 /* StoreDetailService.swift in Sources */,
 				5ED16A1622E8FECD006F6C15 /* LocationManager.swift in Sources */,
 				5EB1F51D22E13D0A00B8501C /* Protocols.swift in Sources */,
@@ -584,6 +587,7 @@
 				5EB1F52A22E62B7100B8501C /* OfferCell.swift in Sources */,
 				0EEF387822E731F10063B9D9 /* StoreMapView.swift in Sources */,
 				5EB1F52E22E655C600B8501C /* ScanCanCell.swift in Sources */,
+				5ED16A5D22EA3398006F6C15 /* Store.swift in Sources */,
 				5ED16A1222E7C151006F6C15 /* StoreMapItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

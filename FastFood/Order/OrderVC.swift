@@ -24,7 +24,7 @@ class OrderVC: UIViewController {
         self.navigationItem.titleView = TitleView(title: title)
         self.tabBarItem = UITabBarItem(title: "Order", image: #imageLiteral(resourceName: "OrderImage"), tag: 1)
         self.setupViews()
-        
+        self.addSettingsButton()      
     }
     //MARK:  setup VC
     private func setupViews() {
@@ -98,7 +98,7 @@ extension OrderVC: UICollectionViewDelegate {
 extension OrderVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = collectionView.getCellWidth(numberOfColumns: 1)
-        let cellHeight = RestaurantCell.cellHeight - 30 //minus order now button height
+        let cellHeight = RestaurantCell.cellHeight - 35 //minus order now button height
         return CGSize(width: cellWidth, height: cellHeight)
     }
 }

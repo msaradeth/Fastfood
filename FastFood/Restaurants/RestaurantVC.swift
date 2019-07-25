@@ -10,13 +10,6 @@
 import UIKit
 import MapKit
 
-protocol StoreDelegate {
-    func updateSelectedLocation(indexPath: IndexPath)
-    func searchStore(location: String)
-    func orderNow(indexPath: IndexPath)
-    func storeDetail(indexPath: IndexPath)
-    
-}
 
 class RestaurantVC: UIViewController {
     fileprivate var viewModel: RestaurantViewModel!
@@ -28,7 +21,7 @@ class RestaurantVC: UIViewController {
         self.navigationItem.titleView = TitleView(title: title)
         self.tabBarItem = UITabBarItem(title: "Restaurants", image: #imageLiteral(resourceName: "locationTabBar"), tag: 1)
         self.setupViews()
-        
+        self.addSettingsButton()        
     }
     //MARK:  setup VC
     private func setupViews() {

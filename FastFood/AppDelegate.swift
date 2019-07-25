@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Window
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = tabBarController   //UINavigationController(rootViewController: restaurantVC)
+        window?.rootViewController = tabBarController   
         
         return true
     }

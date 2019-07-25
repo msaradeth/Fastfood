@@ -25,6 +25,7 @@ class OfferVC: UIViewController {
         self.view.addSubview(collectionView)
         self.collectionView.fillsuperView()
         self.tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
+        self.addSettingsButton()
         registerCollectionViewCells()
     }
     //MARK: Register CollectionViewCells

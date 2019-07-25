@@ -65,11 +65,11 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TOb-Ib-IQR">
-                        <rect key="frame" x="38" y="101.5" width="150" height="27"/>
+                        <rect key="frame" x="38" y="101.5" width="150" height="30"/>
                         <color key="backgroundColor" red="0.79443607230000002" green="0.1188403363" blue="0.0068637556870000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="3Gj-Dr-uCU"/>
-                            <constraint firstAttribute="height" constant="27" id="6rE-nn-0hF"/>
+                            <constraint firstAttribute="height" constant="30" id="6rE-nn-0hF"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                         <state key="normal" title="Order Now">

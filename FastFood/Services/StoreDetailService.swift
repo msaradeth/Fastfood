@@ -6,7 +6,6 @@
 //  Copyright © 2019 Mike Saradeth. All rights reserved.
 //
 
-//https://api.yelp.com/v3/businesses/zbTHFC7Sf7FajB5mx8IPRA
 import Foundation
 import Alamofire
 

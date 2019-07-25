@@ -28,3 +28,16 @@ extension LoadImageService {
     }
 }
 
+
+protocol StoreDelegate {
+    func updateSelectedLocation(indexPath: IndexPath)
+    func searchStore(location: String)
+    func orderNow(indexPath: IndexPath)
+    func storeDetail(indexPath: IndexPath)
+}
+
+protocol ViewModelDelegate {
+    var selectedIndexPath: IndexPath {get set}
+    func loadStoreDetail(indexPath: IndexPath, completion: @escaping (StoreDetail)->Void)
+    func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void)
+}

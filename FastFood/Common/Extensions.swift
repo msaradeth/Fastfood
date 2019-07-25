@@ -78,6 +78,16 @@ extension UICollectionView {
 }
 
 
+//MARK:  UITabBarController extension
+extension UITabBarController {
+    static func updateTheme() {
+        let appearance = UITabBarItem.appearance()
+        let attributes =  [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 13, weight: .bold)]
+        appearance.setTitleTextAttributes(attributes, for: .normal)
+        UITabBar.appearance().tintColor = UIColor.darkOrange()
+    }
+}
+
 //MARK:  UIImageView extension
 extension UIImageView {
     func rounded() {
@@ -107,5 +117,26 @@ extension UIColor {
     }
     static func darkOrange() -> UIColor {
         return UIColor(red:0.82, green:0.35, blue:0.09, alpha:1.0)
+    }
+}
+
+
+//MARK:  UIViewController extension
+extension UIViewController {
+    func addSettingsButton() {
+        let settingButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Settings"), style: .plain, target: self, action: #selector(settingsPressed))
+        settingButton.tintColor = .darkGray
+        self.navigationItem.leftBarButtonItem = settingButton
+    }
+    
+    @objc func settingsPressed() {
+        let alertController = UIAlertController(title: "Settings", message: "Not Implemented", preferredStyle: .alert)
+        //Alert Actions
+        let continueButton = UIAlertAction(title: "Continue", style: .cancel) { (alertAction) in
+            print("continueButton press")
+        }
+        // Add the alert actions
+        alertController.addAction(continueButton)
+        self.present(alertController, animated: true, completion: nil)
     }
 }

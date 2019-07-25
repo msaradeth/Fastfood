@@ -9,11 +9,6 @@
 import Foundation
 import UIKit
 
-protocol ViewModelDelegate {
-    var selectedIndexPath: IndexPath {get set}
-    func loadStoreDetail(indexPath: IndexPath, completion: @escaping (StoreDetail)->Void)
-    func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void)
-}
 
 class RestaurantViewModel: NSObject {
     fileprivate var searchStoreService: SearchStoreService
