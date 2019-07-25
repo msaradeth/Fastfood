@@ -9,10 +9,26 @@
 import UIKit
 
 class OfferVC: UIViewController {
-    lazy var collectionView: StoreCollectionView = {
-        let collectionnView = StoreCollectionView(collectionViewdataSource: self, collectionViewDelegate: self)
-        collectionnView.translatesAutoresizingMaskIntoConstraints = false
-        return collectionnView
+    lazy var collectionView: UICollectionView = {
+//        let flowLayout = UICollectionViewFlowLayout()
+//        flowLayout.minimumInteritemSpacing = 4
+//        flowLayout.minimumLineSpacing = 8
+//        flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        collectionView.delegate = self
+//        collectionView.dataSource = self
+        
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumInteritemSpacing = 1
+        flowLayout.minimumLineSpacing = 1
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        
+        return collectionView
     }()
     var viewModel: OfferViewModel!
     

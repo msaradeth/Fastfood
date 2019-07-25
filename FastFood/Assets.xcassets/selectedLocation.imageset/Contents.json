@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "locationSelected.png",
+      "filename" : "selectedLocation.png",
       "scale" : "1x"
     },
     {

@@ -16,7 +16,7 @@ final class HttpHelper: NSObject {
     class func request(_ urlString: URLConvertible, method: HTTPMethod, success: @escaping (DataResponse<Any>) -> Void, failure:@escaping (Error) -> Void) {
         
         HttpHelper.dataRequest?.cancel()
-        HttpHelper.dataRequest = Alamofire.request(urlString, method: method, encoding: JSONEncoding.default, headers: Yelp.headers).responseJSON { response in
+        HttpHelper.dataRequest = Alamofire.request(urlString, method: method, encoding: JSONEncoding.default, headers: YelpApi.headers).responseJSON { response in
             switch response.result {
             case .success:
                 success(response)

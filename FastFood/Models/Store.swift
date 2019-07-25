@@ -21,6 +21,7 @@ struct Store: Codable {
     var location: Location
     var imageCached: UIImage?
     var storeDetailCached: StoreDetail?
+    var coordinate: CLLocationCoordinate2D?
     
     enum CodingKeys: String, CodingKey {
         case id

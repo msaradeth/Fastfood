@@ -62,8 +62,8 @@ class RestaurantCell: UICollectionViewCell {
         
         //update selected location RED
         if viewModelDelegate != nil && viewModelDelegate!.selectedIndexPath == indexPath {
-            thumbnailImage.image = #imageLiteral(resourceName: "locationSelected")
-            locationNumber.textColor = .red
+            thumbnailImage.image = #imageLiteral(resourceName: "selectedLocation")
+            locationNumber.textColor = .white
         }else {
             thumbnailImage.image = #imageLiteral(resourceName: "location")
             locationNumber.textColor = .darkGray
@@ -88,7 +88,10 @@ class RestaurantCell: UICollectionViewCell {
         super.awakeFromNib()
         //Add UITapGestureRecognizer to right arrow to go to detail screen
         let tapGestureRecognize = UITapGestureRecognizer(target: self, action: #selector(rightArrowPressed))
-        rightArrowImage.addGestureRecognizer(tapGestureRecognize)        
+        rightArrowImage.addGestureRecognizer(tapGestureRecognize)
+        
+        //update button color
+        orderNowButton.backgroundColor = UIColor.darkRed()
         imageFromServer.rounded()
     }
 }

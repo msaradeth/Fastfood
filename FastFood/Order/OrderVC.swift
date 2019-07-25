@@ -115,7 +115,7 @@ extension OrderVC: StoreDelegate {
         viewModel.selectedIndexPath = indexPath
         collectionView.reloadItems(at: [indexPath, previousSelectedIndexPath])
         collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-        mapView.updateRegion(coordinates: viewModel[indexPath].coordinates)
+        mapView.selectedCoordinate = viewModel[indexPath].coordinate
     }
     
     //Search new store location from query

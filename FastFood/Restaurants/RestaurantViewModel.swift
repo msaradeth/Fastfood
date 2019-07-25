@@ -45,6 +45,7 @@ extension RestaurantViewModel: ViewModelDelegate, LoadImageService {
         }
     }
     
+    //MARK: Load Store detail information from cached if exist, otherwise load from server
     func loadStoreDetail(indexPath: IndexPath, completion: @escaping (StoreDetail)->Void) {
         let store = items[indexPath.row]
         if let storeDetail = store.storeDetailCached {

@@ -103,7 +103,7 @@ extension UIImageView {
 extension UISearchBar {
     func setDefaultAppearance() {
 //        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .darkGray
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.black]
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.blue]
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes
     }
 }
@@ -112,8 +112,8 @@ extension UISearchBar {
 //MARK:  UINavigationBar extension
 extension UIColor {
     static func darkRed() -> UIColor {
-        return UIColor(red:0.82, green:0.09, blue:0.16, alpha:1.0)
-        //UIColor(red:0.76, green:0.03, blue:0.10, alpha:1.0)
+//        return UIColor(red:0.82, green:0.09, blue:0.16, alpha:1.0)
+        return UIColor(red:248/255, green:20/255, blue:20/255, alpha:1.0)
     }
     static func darkOrange() -> UIColor {
         return UIColor(red:0.82, green:0.35, blue:0.09, alpha:1.0)

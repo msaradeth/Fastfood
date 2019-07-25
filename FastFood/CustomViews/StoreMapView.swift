@@ -24,6 +24,14 @@ class StoreMapView: MKMapView {
             }
         }
     }
+    var selectedCoordinate:  CLLocationCoordinate2D? {
+        didSet {
+            if let coordinate = selectedCoordinate {
+                let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15))
+                self.setRegion(region, animated: true)
+            }
+        }
+    }
     fileprivate var searchStoreDelegate: StoreDelegate?
     
     //MARK: init
@@ -35,37 +43,17 @@ class StoreMapView: MKMapView {
     }
 
     func updateLocation(stores: [Store]) {
-        var coordinates: Coordinates?
-        
         for (index, store) in stores.enumerated() {
-            let pointAnnotation = MKPointAnnotation()
-            let locationCoordinate = CLLocationCoordinate2D(latitude: store.coordinates.latitude, longitude: store.coordinates.longitude)
-//            pointAnnotation.coordinate = locationCoordinate
-//            pointAnnotation.title = String(index)
-            
-            let annotation = StoreAnnotation(coordinate: locationCoordinate)
-//            annotation.title = String(index)
-//            annotation.subtitle = "Subtitle"
-            
-             
-            
+            let coordinate = CLLocationCoordinate2D(latitude: store.coordinates.latitude, longitude: store.coordinates.longitude)
+            let annotation = StoreAnnotation(coordinate: coordinate, title: String(index), subtitle: store.location.address1, storeNumber: index)
             self.addAnnotation(annotation)
             
-            if coordinates == nil {
-                coordinates = store.coordinates
+            if index == 0 {
+                self.selectedCoordinate = coordinate
             }
-            
-        }
-        if let coordinates = coordinates {
-            updateRegion(coordinates: coordinates)
         }
     }
     
-    func updateRegion(coordinates: Coordinates) {
-        let location = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-        self.setRegion(region, animated: true)
-    }
     
     //MARK: Define views
     lazy var searchBarStackView: UIStackView = {
@@ -88,7 +76,7 @@ class StoreMapView: MKMapView {
         let searchButton = UIButton(type: .roundedRect)
         searchButton.addTarget(self, action: #selector(searchButtonPressed), for: .touchUpInside)
         searchButton.setTitle(ButtonIs.filterButton.rawValue, for: .normal)
-        searchButton.setTitleColor(UIColor.darkRed(), for: .normal)
+        searchButton.setTitleColor(UIColor.darkOrange(), for: .normal)
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return searchButton
     }()

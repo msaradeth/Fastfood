@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class StoreDetailView: UIStackView {
     lazy var dineInHours: WeekOpen? = {
         let dineInHours = WeekOpen(title: "Dine In Hours", hours: self.storeDetail.hours)

@@ -12,7 +12,7 @@ import Alamofire
 
 class StoreDetailService: NSObject {
     func loadStoreDetail(storeId: String, completion: @escaping (StoreDetail)->Void) {
-        let urlString = Yelp.EndPoints.businessDetail + storeId        
+        let urlString = YelpApi.EndPoints.businessDetail + storeId        
         HttpHelper.request(urlString, method: .get, success: { (response) in
             guard let data = response.data else { return }
             do {
