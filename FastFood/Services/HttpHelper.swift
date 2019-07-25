@@ -21,7 +21,7 @@ final class HttpHelper: NSObject {
     class func request(_ url: URLConvertible, method: HTTPMethod, success: @escaping (DataResponse<Any>) -> Void, failure:@escaping (Error) -> Void) {
         HttpHelper.dataRequest?.cancel()
         
-        Alamofire.request(url, method: method).responseJSON { response in
+        HttpHelper.dataRequest = Alamofire.request(url, method: method).responseJSON { response in
             switch response.result {
             case .success:
                 success(response)

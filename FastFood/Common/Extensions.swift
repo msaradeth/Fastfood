@@ -100,18 +100,12 @@ extension UISearchBar {
 
 
 //MARK:  UINavigationBar extension
-extension UINavigationBar {
-    static func setLargeTitleFont() {
-        let navBarAppearance = UINavigationBar.appearance()
-        navBarAppearance.titleTextAttributes = [
-        NSAttributedString.Key.foregroundColor: UIColor.orange,
-        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 21, weight: .bold)]
+extension UIColor {
+    static func darkRed() -> UIColor {
+        return UIColor(red:0.82, green:0.09, blue:0.16, alpha:1.0)
+        //UIColor(red:0.76, green:0.03, blue:0.10, alpha:1.0)
     }
-    
-    static func setNormalTitleFont() {
-        let navBarAppearance = UINavigationBar.appearance()
-        navBarAppearance.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.orange,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold)]
+    static func darkOrange() -> UIColor {
+        return UIColor(red:0.82, green:0.35, blue:0.09, alpha:1.0)
     }
 }

@@ -20,30 +20,21 @@ protocol RestaurantVCDelegate {
 
 class RestaurantVC: UIViewController {
     fileprivate var viewModel: RestaurantViewModel!
-    private var mTitle: String
     
     //MARK: init
     init(title: String, viewModel: RestaurantViewModel) {
-        self.mTitle = title
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        self.setupVC()
+        self.navigationItem.titleView = TitleView(title: title)
+        self.tabBarItem = UITabBarItem(title: "Restaurants", image: #imageLiteral(resourceName: "locationTabBar"), tag: 1)
+        self.setupViews()
         
     }
     //MARK:  setup VC
-    func setupVC() {
+    private func setupViews() {
         self.view.backgroundColor = .white
         self.view.addSubview(stackView)
         stackView.fillsuperView()
-        self.tabBarItem = UITabBarItem(title: "Restaurants", image: #imageLiteral(resourceName: "locationTabBar"), tag: 1)
-    }
-    
-    //MARK: viewWillAppear
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UINavigationBar.setNormalTitleFont()
-        self.title = mTitle
     }
     
     
@@ -66,7 +57,7 @@ class RestaurantVC: UIViewController {
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 1
-        flowLayout.minimumLineSpacing = 0.5
+        flowLayout.minimumLineSpacing = 1
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
@@ -145,7 +136,6 @@ extension RestaurantVC: RestaurantVCDelegate {
     
     //Goto Store Detail screen
     func storeDetail(indexPath: IndexPath) {
-        self.title = ""
         let storeDetailVC = RestaurantDetailVC(title: viewModel[indexPath].location.displayAddress[0], indexPath: indexPath, viewModel: viewModel)
         self.navigationController?.pushViewController(storeDetailVC, animated: true)
     }

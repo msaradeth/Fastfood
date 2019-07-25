@@ -18,7 +18,7 @@ class TabBarController: UITabBarController {
         let appearance = UITabBarItem.appearance()
         let attributes =  [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 13, weight: .bold)]
         appearance.setTitleTextAttributes(attributes, for: .normal)
-        UITabBar.appearance().tintColor = UIColor.orange
+        UITabBar.appearance().tintColor = UIColor.darkOrange()
     }
         
     required init?(coder aDecoder: NSCoder) {

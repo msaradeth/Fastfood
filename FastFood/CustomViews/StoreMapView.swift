@@ -88,7 +88,7 @@ class StoreMapView: MKMapView {
         let searchButton = UIButton(type: .roundedRect)
         searchButton.addTarget(self, action: #selector(searchButtonPressed), for: .touchUpInside)
         searchButton.setTitle(ButtonIs.filterButton.rawValue, for: .normal)
-        searchButton.setTitleColor(.red, for: .normal)
+        searchButton.setTitleColor(UIColor.darkRed(), for: .normal)
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return searchButton
     }()

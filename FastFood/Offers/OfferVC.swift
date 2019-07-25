@@ -20,20 +20,20 @@ class OfferVC: UIViewController {
     init(title: String, viewModel: OfferViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.navigationItem.titleView = TitleView(title: title, fontSize: .large)
         self.view.backgroundColor = .white
-        self.title = title
-        view.addSubview(collectionView)
-        collectionView.fillsuperView()
-        setupVC()
+        self.view.addSubview(collectionView)
+        self.collectionView.fillsuperView()
+        self.tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
+        registerCollectionViewCells()
     }
-    //MARK: setupVC
-    func setupVC() {
+    //MARK: Register CollectionViewCells
+    private func registerCollectionViewCells() {
         //Register cells
         collectionView.register(UINib(nibName: "ScanCanCell", bundle: nil), forCellWithReuseIdentifier: ScanCanCell.cellIdentifier)
         collectionView.register(UINib(nibName: "MonthlyDealCell", bundle: nil), forCellWithReuseIdentifier: MonthlyDealCell.cellIdentifier)
         collectionView.register(UINib(nibName: "OfferCell", bundle: nil), forCellWithReuseIdentifier: OfferCell.cellIdentifier)
-        //TabBarItem
-        self.tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
+
     }
     
     //MARK: viewDidLoad
@@ -46,11 +46,7 @@ class OfferVC: UIViewController {
             }
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-         UINavigationBar.setLargeTitleFont()
-    }
-    
+
 
     //MARK: Handle rotation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
