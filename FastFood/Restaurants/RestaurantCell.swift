@@ -23,9 +23,9 @@ class RestaurantCell: UICollectionViewCell {
     
     var indexPath: IndexPath?
     var viewModelDelegate: ViewModelDelegate?
-    var vcDelegate: RestaurantVCDelegate?
+    var vcDelegate: StoreDelegate?
     
-    func configure(item: Store, indexPath: IndexPath, viewModelDelegate: ViewModelDelegate?, vcDelegate: RestaurantVCDelegate?) {
+    func configure(item: Store, indexPath: IndexPath, viewModelDelegate: ViewModelDelegate?, vcDelegate: StoreDelegate?) {
         self.indexPath = indexPath
         self.viewModelDelegate = viewModelDelegate
         self.vcDelegate = vcDelegate
@@ -65,7 +65,9 @@ class RestaurantCell: UICollectionViewCell {
         }
         
         //set button corner Radius and circle imageview
-        orderNowButton.layer.cornerRadius = 8
+        if orderNowButton != nil {
+            orderNowButton.layer.cornerRadius = 8
+        }        
         imageFromServer.rounded()
     }
 

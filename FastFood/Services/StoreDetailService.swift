@@ -12,38 +12,20 @@ import Alamofire
 
 
 class StoreDetailService: NSObject {
-//    private struct BusinessDetalObject: Codable {
-//        var stores: [Store]
-//
-//        enum CodingKeys: String, CodingKey {
-//            case stores = "businesses"
-//        }
-//    }
-    
-    //    var dataTask: URLSessionDataTask?
-    
-    var dataTask: URLSessionDataTask?
-    var dataRequest: DataRequest?
-    
     func loadStoreDetail(storeId: String, completion: @escaping (StoreDetail)->Void) {
-        dataRequest?.cancel()
-        let urlString = Yelp.EndPoints.businessDetail + storeId
-        dataRequest = Alamofire.request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: Yelp.headers).responseJSON { response in
+        let urlString = Yelp.EndPoints.businessDetail + storeId        
+        HttpHelper.request(urlString, method: .get, success: { (response) in
             guard let data = response.data else { return }
-            
-            switch response.result {
-            case .success:
-                do {
-                    let decoder = JSONDecoder()
-                    let storeDetail = try decoder.decode(StoreDetail.self, from: data)
-                    completion(storeDetail)
-                }catch {
-                    print(error.localizedDescription)
-                }
-                
-            case .failure(let error):
+            do {
+                let decoder = JSONDecoder()
+                let storeDetail = try decoder.decode(StoreDetail.self, from: data)
+                completion(storeDetail)
+            }catch {
                 print(error.localizedDescription)
             }
+            
+        }) { (error) in
+            print(error.localizedDescription)
         }
     }
 }

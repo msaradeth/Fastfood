@@ -1,32 +1,35 @@
 //
-//  RestaurantsVC.swift
+//  OrderVCViewController.swift
 //  FastFood
 //
-//  Created by Mike Saradeth on 7/21/19.
+//  Created by Mike Saradeth on 7/25/19.
 //  Copyright © 2019 Mike Saradeth. All rights reserved.
 //
+
+import UIKit
+
 
 
 import UIKit
 import MapKit
 
-protocol StoreDelegate {
-    func updateSelectedLocation(indexPath: IndexPath)
-    func searchStore(location: String)
-    func orderNow(indexPath: IndexPath)
-    func storeDetail(indexPath: IndexPath)
-    
-}
+//protocol OrderVCDelegate {
+//    func updateSelectedLocation(indexPath: IndexPath)
+//    func searchStore(location: String)
+//    func orderNow(indexPath: IndexPath)
+//    func storeDetail(indexPath: IndexPath)
+//
+//}
 
-class RestaurantVC: UIViewController {
-    fileprivate var viewModel: RestaurantViewModel!
+class OrderVC: UIViewController {
+    fileprivate var viewModel: OrderViewModel!
     
     //MARK: init
-    init(title: String, viewModel: RestaurantViewModel) {
+    init(title: String, viewModel: OrderViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.navigationItem.titleView = TitleView(title: title)
-        self.tabBarItem = UITabBarItem(title: "Restaurants", image: #imageLiteral(resourceName: "locationTabBar"), tag: 1)
+        self.tabBarItem = UITabBarItem(title: "Order", image: #imageLiteral(resourceName: "OrderImage"), tag: 1)
         self.setupViews()
         
     }
@@ -68,7 +71,7 @@ class RestaurantVC: UIViewController {
     }()
     lazy var mapView: StoreMapView = {
         let mapView = StoreMapView(delegate: self)
-//         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(BridgeAnnotation.self))
+        //         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(BridgeAnnotation.self))
         return mapView
     }()
     
@@ -79,19 +82,22 @@ class RestaurantVC: UIViewController {
 
 
 //MARK: UICollectionViewDataSource
-extension RestaurantVC: UICollectionViewDataSource {
+extension OrderVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.cellIdentifier, for: indexPath) as! RestaurantCell
-        cell.configure(item: viewModel[indexPath], indexPath: indexPath, viewModelDelegate: viewModel, vcDelegate: self)
+        cell.configure(item: viewModel[indexPath], indexPath: indexPath, viewModelDelegate: viewModel, vcDelegate: self)                
+        if cell.orderNowButton != nil {
+            cell.orderNowButton.removeFromSuperview()
+        }
         return cell
     }
 }
 
 //MARK: UICollectionViewDelegate
-extension RestaurantVC: UICollectionViewDelegate {
+extension OrderVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         updateSelectedLocation(indexPath: indexPath)
     }
@@ -99,7 +105,7 @@ extension RestaurantVC: UICollectionViewDelegate {
 
 
 //MARK: UICollectionViewDelegateFlowLayout
-extension RestaurantVC: UICollectionViewDelegateFlowLayout {
+extension OrderVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = collectionView.getCellWidth(numberOfColumns: 1)
         return CGSize(width: cellWidth, height: RestaurantCell.cellHeight)
@@ -110,7 +116,7 @@ extension RestaurantVC: UICollectionViewDelegateFlowLayout {
 
 
 //MARK: RestaurantVCDelegate
-extension RestaurantVC: StoreDelegate {
+extension OrderVC: StoreDelegate {
     
     //Scroll selected cell to top and update zoom in mapview on selected location
     func updateSelectedLocation(indexPath: IndexPath) {
@@ -165,4 +171,5 @@ extension RestaurantVC: StoreDelegate {
         self.present(alertController, animated: true, completion: nil)
     }
 }
+
 

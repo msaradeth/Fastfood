@@ -24,10 +24,10 @@ class StoreMapView: MKMapView {
             }
         }
     }
-    fileprivate var searchStoreDelegate: RestaurantVCDelegate?
+    fileprivate var searchStoreDelegate: StoreDelegate?
     
     //MARK: init
-    init(delegate: RestaurantVCDelegate?) {
+    init(delegate: StoreDelegate?) {
         self.searchStoreDelegate = delegate
         super.init(frame: .zero)
         self.addSubview(searchBarStackView)

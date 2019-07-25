@@ -8,54 +8,97 @@
 
 import UIKit
 
-class StoreDetailView: UIView {
+class StoreDetailView: UIStackView {
+    lazy var dineInHours: WeekOpen? = {
+        let dineInHours = WeekOpen(title: "Dine In Hours", hours: self.storeDetail.hours)
+        dineInHours?.translatesAutoresizingMaskIntoConstraints = false
+        return dineInHours
+    }()
+    lazy var driveThruHours: WeekOpen? = {
+        let driveThruHours = WeekOpen(title: "Dine In Hours", hours: self.storeDetail.hours)
+        driveThruHours?.translatesAutoresizingMaskIntoConstraints = false
+        return driveThruHours
+    }()
+    var storeDetail: StoreDetail
+    
+    init(storeDetail: StoreDetail) {
+        self.storeDetail = storeDetail
+        super.init(frame: .zero)
+        if let dineInHours = self.dineInHours {
+            addArrangedSubview(dineInHours)
+        }
+        if let driveThruHours = self.driveThruHours {
+            addArrangedSubview(driveThruHours)
+        }
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
-    @IBOutlet weak var dineInMonday: UILabel!
-    @IBOutlet weak var dineTuesday: UILabel!
+class WeekOpen: UIStackView {
+    var titleLabel: UILabel = {
+        let titleLabel = UILabel(frame: .zero)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textAlignment = .left
+        titleLabel.heightAnchor.constraint(equalToConstant: 60)
+        return titleLabel
+    }()
+    var title: String
+    var hours: [Hours]
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-//        loadViewFromNib ()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-//        loadViewFromNib ()
-    }
-    
-    class func instanceFromNib() -> UIView {
-        return UINib(nibName: "StoreDetailView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UIView
-    }
-    
-    func loadViewFromNib() {
-//        let bundle = Bundle(forClass: type(of: self))
-//        let nib = UINib(nibName: "SimpleCustomView", bundle: bundle)
-//        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
-//        view.frame = bounds
-//        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-//        self.addSubview(view);
+    init?(title: String, hours: [Hours]?) {
+        guard let hours = hours else { return nil }
+        self.title = title
+        self.hours = hours
+        super.init(frame: .zero)
         
+        titleLabel.text = title
+        addArrangedSubview(titleLabel)
+        for hour in hours {
+            for open in hour.open {
+                addArrangedSubview(DayOpen(open: open))
+            }
+        }
     }
     
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-////        Bundle.main.loadNibNamed("StoreDetailView", owner: self, options: nil)
-////        self.addSubview(view);    // adding the top level view to the view hierarchy
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-////        fatalError("init(coder:) has not been implemented")
-//    }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
+}
 
+
+class DayOpen: UIStackView {
+    lazy var dayOpenLabel: UILabel = {
+        let dayOpenLabel = UILabel(frame: .zero)
+        dayOpenLabel.translatesAutoresizingMaskIntoConstraints = false
+        dayOpenLabel.textAlignment = .left
+        dayOpenLabel.text = self.dayOfWeek
+        return dayOpenLabel
+    }()
+    lazy var hoursOpenLabel: UILabel = {
+        let hoursOpenLabel = UILabel(frame: .zero)
+        hoursOpenLabel.translatesAutoresizingMaskIntoConstraints = false
+        hoursOpenLabel.textAlignment = .right
+        hoursOpenLabel.text = self.hoursOpen
+        return hoursOpenLabel
+    }()
+    var dayOfWeek: String
+    var hoursOpen: String
+    
+    init(open: Open) {
+        self.dayOfWeek = String(open.day)
+        self.hoursOpen = "\(open.start) - \(open.end)"
+        super.init(frame: .zero)
+        self.heightAnchor.constraint(equalToConstant: 40)
+        self.axis = .horizontal
+        addArrangedSubview(dayOpenLabel)
+        addArrangedSubview(hoursOpenLabel)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
