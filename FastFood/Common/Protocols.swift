@@ -31,17 +31,31 @@ extension LoadImageService {
 
 
 protocol VCDelegate {
+    //Define variables
     var prevIndexPath: IndexPath {get set}
     var currIndexPath: IndexPath {get set}
+    
+    //Define function
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?)
     func orderNow(indexPath: IndexPath)
     func storeDetail(indexPath: IndexPath)
 }
 
 
+
 protocol ViewModelDelegate {
+    //Define variables
     var items: [Store] {get set}
+    var count: Int {get}
+    subscript(indexPath: IndexPath) -> Store {get}
     var annotations: [StoreAnnotation] {get set}
+    
+    //Define function
+    func searchStore(location: String?, coordinate: CLLocationCoordinate2D?, completion: @escaping ()->Void)
     func loadStoreDetail(indexPath: IndexPath, completion: @escaping (StoreDetail)->Void)
     func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void)
 }
+
+
+
+

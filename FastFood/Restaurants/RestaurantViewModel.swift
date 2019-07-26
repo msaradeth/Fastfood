@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 
+
 class RestaurantViewModel: NSObject {
     fileprivate var searchStoreService: SearchStoreService
     fileprivate var storeDetailService: StoreDetailService

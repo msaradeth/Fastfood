@@ -34,12 +34,14 @@ class StoreMapView: MKMapView {
         self.vcDelegate = vcDelegate
         self.viewModelDelegate = viewModelDelegate
         super.init(frame: .zero)
+        self.showsUserLocation = true
         self.delegate = self
         self.addSubview(searchBarStackView)
-        searchBarStackView.pinTo(view: self, top: 10, left: 10, right: 10)
+        self.searchBarStackView.pinTo(view: self, top: 10, left: 10, right: 10)
         self.reloadData()
-        locationService.locationManager.requestWhenInUseAuthorization()
+        self.locationService.locationManager.requestWhenInUseAuthorization()
     }
+    
     //MARK:  reload mapview
     func reloadData() {
         guard let viewModelDelegate = self.viewModelDelegate else { return }
