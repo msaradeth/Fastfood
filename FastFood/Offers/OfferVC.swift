@@ -10,18 +10,10 @@ import UIKit
 
 class OfferVC: UIViewController {
     lazy var collectionView: UICollectionView = {
-//        let flowLayout = UICollectionViewFlowLayout()
-//        flowLayout.minimumInteritemSpacing = 4
-//        flowLayout.minimumLineSpacing = 8
-//        flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
-//        collectionView.delegate = self
-//        collectionView.dataSource = self
-        
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 1
         flowLayout.minimumLineSpacing = 1
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
@@ -50,17 +42,33 @@ class OfferVC: UIViewController {
         collectionView.register(UINib(nibName: "ScanCanCell", bundle: nil), forCellWithReuseIdentifier: ScanCanCell.cellIdentifier)
         collectionView.register(UINib(nibName: "MonthlyDealCell", bundle: nil), forCellWithReuseIdentifier: MonthlyDealCell.cellIdentifier)
         collectionView.register(UINib(nibName: "OfferCell", bundle: nil), forCellWithReuseIdentifier: OfferCell.cellIdentifier)
-
     }
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.searchStore { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            self.viewModel.searchStore(term: "food") { [weak self] in
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             }
         }
+//        viewModel.locationService.didUpdateLocationCallback? { value in
+//            print(value)
+//
+//        }
+    
+        
+//        viewModel.locationService.didUpdateLocationCallback { (coordinate) in
+//            print(coordinate)
+//            viewModel.searchStore(term: "food") { [weak self] in
+//                DispatchQueue.main.async {
+//                    self?.collectionView.reloadData()
+//                }
+//            }
+//        }
     }
 
 

@@ -39,7 +39,6 @@
 		5EB1F52F22E655C600B8501C /* ScanCanCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB1F52D22E655C600B8501C /* ScanCanCell.xib */; };
 		5EB1F53222E655FA00B8501C /* MonthlyDealCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F53022E655FA00B8501C /* MonthlyDealCell.swift */; };
 		5EB1F53322E655FA00B8501C /* MonthlyDealCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB1F53122E655FA00B8501C /* MonthlyDealCell.xib */; };
-		5EB1F53822E7B80E00B8501C /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F53722E7B80E00B8501C /* Enums.swift */; };
 		5ED16A1422E7C276006F6C15 /* StoreAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1322E7C276006F6C15 /* StoreAnnotation.swift */; };
 		5ED16A1822E9105E006F6C15 /* StoreDetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */; };
 		5ED16A1A22E91B3B006F6C15 /* RestaurantDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1922E91B3B006F6C15 /* RestaurantDetailVC.swift */; };
@@ -111,7 +110,6 @@
 		5EB1F52D22E655C600B8501C /* ScanCanCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanCanCell.xib; sourceTree = "<group>"; };
 		5EB1F53022E655FA00B8501C /* MonthlyDealCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyDealCell.swift; sourceTree = "<group>"; };
 		5EB1F53122E655FA00B8501C /* MonthlyDealCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonthlyDealCell.xib; sourceTree = "<group>"; };
-		5EB1F53722E7B80E00B8501C /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		5ED16A1322E7C276006F6C15 /* StoreAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAnnotation.swift; sourceTree = "<group>"; };
 		5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailService.swift; sourceTree = "<group>"; };
 		5ED16A1922E91B3B006F6C15 /* RestaurantDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailVC.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 				5ED16A1322E7C276006F6C15 /* StoreAnnotation.swift */,
 				0EEC5E8C22EACD4B002CD454 /* StoreAnnotationView.swift */,
 				0EF0939422EB30B500EF1C95 /* StoreMapOverlayView.swift */,
-				5ED16A6022EB83F0006F6C15 /* LocationService.swift */,
 			);
 			path = MapViews;
 			sourceTree = "<group>";
@@ -281,6 +278,7 @@
 			children = (
 				5EB1F50E22E1271300B8501C /* SearchStoreService.swift */,
 				5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */,
+				5ED16A6022EB83F0006F6C15 /* LocationService.swift */,
 				5EB1F51022E12F7600B8501C /* HttpHelper.swift */,
 			);
 			path = Services;
@@ -292,7 +290,6 @@
 				0EECA6CC22E93899005A722B /* TitleView.swift */,
 				5EB1F51C22E13D0A00B8501C /* Protocols.swift */,
 				5EB1F51822E13CCE00B8501C /* Extensions.swift */,
-				5EB1F53722E7B80E00B8501C /* Enums.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -575,7 +572,6 @@
 				5E7E562822DFCB3700230C16 /* AppDelegate.swift in Sources */,
 				5ED16A6322EB9FAF006F6C15 /* MapBaseViewController.swift in Sources */,
 				5EB1F51922E13CCE00B8501C /* Extensions.swift in Sources */,
-				5EB1F53822E7B80E00B8501C /* Enums.swift in Sources */,
 				5EB1F52422E61AE200B8501C /* RestaurantCell.swift in Sources */,
 				5EB1F53222E655FA00B8501C /* MonthlyDealCell.swift in Sources */,
 				5ED16A5B22EA3382006F6C15 /* StoreDetail.swift in Sources */,

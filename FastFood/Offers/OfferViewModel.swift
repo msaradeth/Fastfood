@@ -10,7 +10,8 @@ import Foundation
 
 class OfferViewModel: NSObject {
     var items = [Store]()
-    var searchStoreService: SearchStoreService
+    private var searchStoreService: SearchStoreService
+    var locationService: LocationService
     var count: Int {
         return items.count
     }
@@ -18,19 +19,21 @@ class OfferViewModel: NSObject {
         let index = indexPath.row - 2
         return items[index]
     }
-    
-    
-    init(items: [Store], searchStoreService: SearchStoreService) {
+        
+    init(items: [Store], searchStoreService: SearchStoreService, locationService: LocationService) {
+        locationService.locationManager.requestWhenInUseAuthorization()
         self.items = items
         self.searchStoreService = searchStoreService
+        self.locationService = locationService        
     }
     
-    func searchStore(completion: @escaping ()->Void) {
+    func searchStore(term: String, completion: @escaping ()->Void) {
         DispatchQueue.global(qos: .userInteractive).async {
-            self.searchStoreService.search { [weak self] (stores) in
+            print("searchStore", self.locationService.currLocation?.coordinate)
+            self.searchStoreService.search(term: term, coordinate: self.locationService.currLocation?.coordinate, completion: { [weak self] (stores) in
                 self?.items = stores
                 completion()
-            }
+            })
         }
     }
 }

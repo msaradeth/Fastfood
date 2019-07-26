@@ -10,6 +10,19 @@ import Foundation
 import Alamofire
 import MapKit
 
+enum YelpApi {
+    static let baseURL = "https://api.yelp.com/v3/businesses/"
+    static let apiKey = "mHsbP_tWAkUKvZ_Ov3MljG4tC545hbyyAQcB09y_UeqjTZUEKIplWTk5Lv53bMObakQ5rLK3kpFBcujmusipIK3wjG4sq-BfBgaxv664N7xYS546sKW7r9axFOEwXXYx"
+    static let clientId = "Ziwec-rzNnC1a_OyUBr5Ng"
+    static let headers = ["Authorization": "Bearer \(YelpApi.apiKey)"]
+    
+    enum EndPoints {
+        static let search = YelpApi.baseURL + "search?"
+        static let businessDetail = YelpApi.baseURL
+    }
+}
+
+
 
 class SearchStoreService: NSObject {
     private struct BusinessObject: Codable {
@@ -20,16 +33,16 @@ class SearchStoreService: NSObject {
         }
     }
 
-    func search(location: String? = nil, coordinate: CLLocationCoordinate2D? = nil, completion: @escaping ([Store])->Void) {
+    func search(term: String = "BurgerKing", location: String? = nil, coordinate: CLLocationCoordinate2D? = nil, completion: @escaping ([Store])->Void) {
         if location == nil && coordinate == nil { return }
         
-        var urlString = YelpApi.EndPoints.search
+        var urlString = YelpApi.EndPoints.search + "term=\(term)&limit=30"
         if let location = location {
             let searchLocation = location.replacingOccurrences(of: " ", with: "")
             urlString = urlString + "&location=\(searchLocation)"
         }
         if let coordinate = coordinate {
-            urlString = YelpApi.EndPoints.search + "&latitude=\(coordinate.latitude)" + "&longitude=\(coordinate.longitude)"
+            urlString = urlString + "&latitude=\(coordinate.latitude)" + "&longitude=\(coordinate.longitude)"
         }
         
         HttpHelper.request(urlString, method: .get, success: { (response) in
@@ -41,6 +54,7 @@ class SearchStoreService: NSObject {
                     let coordinates = businessObject.stores[index].coordinates
                     businessObject.stores[index].coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
                 }
+                print(businessObject.stores)
                 completion(businessObject.stores)
             }catch {
                 print(error.localizedDescription)

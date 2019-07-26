@@ -11,8 +11,10 @@ import CoreLocation
 
 
 class LocationService: NSObject {
+    typealias LocationCallBack = (CLLocationCoordinate2D) -> Void
     var locationManager: CLLocationManager = CLLocationManager()
     var currLocation: CLLocation?
+    var didUpdateLocationCallback: LocationCallBack?
     
     override init() {
         locationManager = CLLocationManager()
@@ -39,7 +41,8 @@ extension LocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currLocation = locations.first
         if let currLocation = currLocation {
-//             print(currLocation)
+            print(currLocation)
+            didUpdateLocationCallback?(currLocation.coordinate)
         }
     }
     

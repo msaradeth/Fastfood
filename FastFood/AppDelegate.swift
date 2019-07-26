@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         //offerVC
-        let offerViewModel = OfferViewModel(items: [], searchStoreService: SearchStoreService())
+        let offerViewModel = OfferViewModel(items: [], searchStoreService: SearchStoreService(), locationService: LocationService())
         let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: offerViewModel))
         
         //Restaurant VC

@@ -20,6 +20,7 @@ class MapBaseViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 if self.prevIndexPath.row < self.viewModel.items.count {
+                    //Deselect views
                     self.collectionView.reloadItems(at: [self.prevIndexPath])
                     self.mapView.deselectAnnotation(self.viewModel.annotations[self.prevIndexPath.row], animated: true)
                 }
