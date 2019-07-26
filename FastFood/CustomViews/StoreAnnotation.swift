@@ -15,12 +15,14 @@ class StoreAnnotation: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     var indexPath: IndexPath
+    var store: Store
     
-    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, indexPath: IndexPath) {
+    init(coordinate: CLLocationCoordinate2D, indexPath: IndexPath, store: Store) {
         self.coordinate = coordinate
-        self.title = "Store #\(indexPath.row): \(title) "
-        self.subtitle = "\(subtitle)"
         self.indexPath = indexPath
+        self.store = store
+        self.title = "Store #\(indexPath.row)"
+        self.subtitle = "\(store.location.displayAddress[0])"
     }
 
 }

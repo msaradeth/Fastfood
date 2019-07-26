@@ -25,8 +25,9 @@ class OrderVC: UIViewController {
             DispatchQueue.main.async {
                 if self.prevIndexPath.row < self.viewModel.items.count {
                     self.collectionView.reloadItems(at: [self.prevIndexPath])
+                    self.mapView.deselectAnnotation(self.viewModel.annotations[self.prevIndexPath.row], animated: true)
                 }
-                if self.prevIndexPath != self.currIndexPath {
+                if self.prevIndexPath != self.currIndexPath && self.currIndexPath.row < self.viewModel.items.count {
                     //Update views
                     self.collectionView.reloadItems(at: [self.currIndexPath])
                     self.collectionView.scrollToItem(at: self.currIndexPath, at: .top, animated: true)
@@ -41,7 +42,7 @@ class OrderVC: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.navigationItem.titleView = TitleView(title: title)
-        self.tabBarItem = UITabBarItem(title: "Order", image: #imageLiteral(resourceName: "OrderImage"), tag: 1)
+        self.tabBarItem = UITabBarItem(title: "Order", image: #imageLiteral(resourceName: "OrderImage"), tag: 2)
         self.setupViews()
         self.addSettingsButton()      
     }
@@ -51,7 +52,15 @@ class OrderVC: UIViewController {
         self.view.addSubview(stackView)
         stackView.fillsuperView()
     }
-    
+        
+    //MARK:  viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.items.removeAll()
+        collectionView.reloadData()
+        mapView.removeAnnotations(mapView.annotations)
+        self.searchStore(location: nil, coordinate: mapView.locationService.currLocation?.coordinate)
+    }
     
     
     //MARK:  Define Views
@@ -84,7 +93,6 @@ class OrderVC: UIViewController {
     }()
     lazy var mapView: StoreMapView = {
         let mapView = StoreMapView(vcDelegate: self, viewModelDelegate: self.viewModel)
-        //         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(BridgeAnnotation.self))
         return mapView
     }()
     
@@ -130,12 +138,13 @@ extension OrderVC: UICollectionViewDelegateFlowLayout {
 extension OrderVC: VCDelegate {
     
     //Search new store location from search text
-    func searchStore(location: String) {
-        viewModel.searchStore(location: location) { [weak self] in
+    func searchStore(location: String?, coordinate: CLLocationCoordinate2D?) {
+        viewModel.searchStore(location: location, coordinate: coordinate) { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                //reset data and views
                 self.collectionView.reloadData()
-                self.mapView.setLocation(stores: self.viewModel.items)
+                self.mapView.reloadData()
                 self.currIndexPath = IndexPath(row: 0, section: 0)
             }
         }

@@ -22,16 +22,12 @@ class RestaurantVC: UIViewController {
             DispatchQueue.main.async {
                 if self.prevIndexPath.row < self.viewModel.items.count {
                     self.collectionView.reloadItems(at: [self.prevIndexPath])
+                    self.mapView.deselectAnnotation(self.viewModel.annotations[self.prevIndexPath.row], animated: true)
                 }
-                if self.prevIndexPath != self.currIndexPath {
+                if self.prevIndexPath != self.currIndexPath && self.currIndexPath.row < self.viewModel.items.count {
                     //Update views
                     self.collectionView.reloadItems(at: [self.currIndexPath])
                     self.collectionView.scrollToItem(at: self.currIndexPath, at: .top, animated: true)
-                    
-                    let prevAnnotation = self.mapView.annotations[self.prevIndexPath.row]
-                    let currAnnotation = self.mapView.annotations[self.currIndexPath.row]
-                    self.mapView.showAnnotations([prevAnnotation, currAnnotation], animated: true)
-//                    self.mapView.removeAnnotations([prevAnnotation, currAnnotation])
                     self.mapView.setRegion(coordinate: self.viewModel[self.currIndexPath].coordinate)
                 }
             }
@@ -45,13 +41,21 @@ class RestaurantVC: UIViewController {
         self.navigationItem.titleView = TitleView(title: title)
         self.tabBarItem = UITabBarItem(title: "Restaurants", image: #imageLiteral(resourceName: "locationTabBar"), tag: 1)
         self.setupViews()
-        self.addSettingsButton()        
+        self.addSettingsButton()
     }
     //MARK:  setup VC
     private func setupViews() {
         self.view.backgroundColor = .white
         self.view.addSubview(stackView)
         stackView.fillsuperView()
+    }
+    
+    //MARK:  viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if viewModel.items.count == 0 {
+            self.searchStore(location: nil, coordinate: mapView.locationService.currLocation?.coordinate)
+        }
     }
     
     
@@ -85,7 +89,6 @@ class RestaurantVC: UIViewController {
     }()
     lazy var mapView: StoreMapView = {
         let mapView = StoreMapView(vcDelegate: self, viewModelDelegate: self.viewModel)
-//         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(BridgeAnnotation.self))
         return mapView
     }()
     
@@ -130,12 +133,13 @@ extension RestaurantVC: UICollectionViewDelegateFlowLayout {
 extension RestaurantVC: VCDelegate {
     
     //Search new store location from search text
-    func searchStore(location: String) {
-        viewModel.searchStore(location: location) { [weak self] in
+    func searchStore(location: String?, coordinate: CLLocationCoordinate2D?) {
+        viewModel.searchStore(location: location, coordinate: coordinate) { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                //reset data and views
                 self.collectionView.reloadData()
-                self.mapView.setLocation(stores: self.viewModel.items)
+                self.mapView.reloadData()
                 self.currIndexPath = IndexPath(row: 0, section: 0)
             }
         }

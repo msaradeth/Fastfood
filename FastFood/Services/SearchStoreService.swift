@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import MapKit
 
+
 class SearchStoreService: NSObject {
     private struct BusinessObject: Codable {
         var stores: [Store]
@@ -19,12 +20,20 @@ class SearchStoreService: NSObject {
         }
     }
 
-    func search(location: String = "Irvine,CA", completion: @escaping ([Store])->Void) {
-        let searchLocation = location.replacingOccurrences(of: " ", with: "")
-        let urlString = YelpApi.EndPoints.search + "&location=\(searchLocation)"
+    func search(location: String? = nil, coordinate: CLLocationCoordinate2D? = nil, completion: @escaping ([Store])->Void) {
+        if location == nil && coordinate == nil { return }
+        
+        var urlString = YelpApi.EndPoints.search
+        if let location = location {
+            let searchLocation = location.replacingOccurrences(of: " ", with: "")
+            urlString = urlString + "&location=\(searchLocation)"
+        }
+        if let coordinate = coordinate {
+            urlString = YelpApi.EndPoints.search + "&latitude=\(coordinate.latitude)" + "&longitude=\(coordinate.longitude)"
+        }
         
         HttpHelper.request(urlString, method: .get, success: { (response) in
-            guard let data = response.data else { return }
+            guard let data = response.data else { return }            
             do {
                 let decoder = JSONDecoder()
                 var businessObject = try decoder.decode(BusinessObject.self, from: data)

@@ -42,7 +42,7 @@ class OfferVC: UIViewController {
         self.collectionView.fillsuperView()
         self.tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
         self.addSettingsButton()
-        registerCollectionViewCells()
+        registerCollectionViewCells()        
     }
     //MARK: Register CollectionViewCells
     private func registerCollectionViewCells() {
@@ -58,7 +58,6 @@ class OfferVC: UIViewController {
         super.viewDidLoad()
         viewModel.searchStore { [weak self] in
             DispatchQueue.main.async {
-                let locationManager = LocationManager()
                 self?.collectionView.reloadData()
             }
         }

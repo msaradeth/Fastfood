@@ -8,12 +8,13 @@
 
 import Foundation
 import UIKit
-
+import MapKit
 
 class RestaurantViewModel: NSObject {
     fileprivate var searchStoreService: SearchStoreService
     fileprivate var storeDetailService: StoreDetailService
     var items: [Store]
+    var annotations: [StoreAnnotation] = []    
     var count: Int {
         return items.count
     }
@@ -26,6 +27,18 @@ class RestaurantViewModel: NSObject {
         self.items = items
         self.searchStoreService = searchStoreService
         self.storeDetailService = storeDetailService
+        super.init()
+        self.setAnnotations()
+    }
+    
+    //init annotations array
+    func setAnnotations() {
+        annotations.removeAll()
+        for (index, store) in items.enumerated() {
+            if let coordinate = store.coordinate {
+                annotations.append(StoreAnnotation(coordinate: coordinate, indexPath: IndexPath(row: index, section: 0), store: store))
+            }
+        }
     }
 }
 
@@ -33,10 +46,11 @@ class RestaurantViewModel: NSObject {
 extension RestaurantViewModel: ViewModelDelegate, LoadImageService {
     
     //MARK: Query server to get store base on given location
-    func searchStore(location: String, completion: @escaping ()->Void) {
+    func searchStore(location: String?, coordinate: CLLocationCoordinate2D?, completion: @escaping ()->Void) {
         DispatchQueue.global(qos: .userInteractive).async {
-            self.searchStoreService.search(location: location, completion: { [weak self] (stores) in
+            self.searchStoreService.search(location: location, coordinate: coordinate, completion: { [weak self] (stores) in
                 self?.items = stores
+                self?.setAnnotations()
                 completion()
             })
         }

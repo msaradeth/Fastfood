@@ -15,7 +15,7 @@ class StoreAnnotationView: MKAnnotationView {
     init(annotation: MKAnnotation?, reuseIdentifier: String?, vcDelegate: VCDelegate?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         guard let vcDelegate = vcDelegate else { return }
-        
+        self.canShowCallout = true
         //set image
         if let annotation = annotation as? StoreAnnotation {
             if annotation.indexPath == vcDelegate.currIndexPath {

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 
 protocol LoadImageService {
@@ -32,13 +33,15 @@ extension LoadImageService {
 protocol VCDelegate {
     var prevIndexPath: IndexPath {get set}
     var currIndexPath: IndexPath {get set}
-    func searchStore(location: String)
+    func searchStore(location: String?, coordinate: CLLocationCoordinate2D?)
     func orderNow(indexPath: IndexPath)
     func storeDetail(indexPath: IndexPath)
 }
 
+
 protocol ViewModelDelegate {
     var items: [Store] {get set}
+    var annotations: [StoreAnnotation] {get set}
     func loadStoreDetail(indexPath: IndexPath, completion: @escaping (StoreDetail)->Void)
     func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void)
 }
