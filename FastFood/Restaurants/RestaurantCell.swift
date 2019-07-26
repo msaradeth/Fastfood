@@ -23,7 +23,7 @@ class RestaurantCell: UICollectionViewCell {
     
     var indexPath: IndexPath?
     var viewModelDelegate: ViewModelDelegate?
-    var vcDelegate: StoreDelegate?
+    var vcDelegate: VCDelegate?
     var hideOrderButton: Bool = false {
         willSet {
             if newValue != hideOrderButton && orderNowButton != nil {
@@ -32,7 +32,7 @@ class RestaurantCell: UICollectionViewCell {
         }
     }
     
-    func configure(hideOrderButton: Bool = false, item: Store, indexPath: IndexPath, viewModelDelegate: ViewModelDelegate?, vcDelegate: StoreDelegate?) {
+    func configure(hideOrderButton: Bool = false, item: Store, indexPath: IndexPath, viewModelDelegate: ViewModelDelegate?, vcDelegate: VCDelegate?) {
         self.hideOrderButton = hideOrderButton
         self.indexPath = indexPath
         self.viewModelDelegate = viewModelDelegate
@@ -61,7 +61,7 @@ class RestaurantCell: UICollectionViewCell {
         locationNumber.text = String(indexPath.row)
         
         //update selected location RED
-        if viewModelDelegate != nil && viewModelDelegate!.selectedIndexPath == indexPath {
+        if vcDelegate != nil && vcDelegate!.currIndexPath == indexPath {
             thumbnailImage.image = #imageLiteral(resourceName: "selectedLocation")
             locationNumber.textColor = .white
         }else {
@@ -77,7 +77,6 @@ class RestaurantCell: UICollectionViewCell {
     }
     
     @objc func rightArrowPressed() {
-        print("rightArrowPressed")
         if let indexPath = self.indexPath {
             vcDelegate?.storeDetail(indexPath: indexPath)
         }

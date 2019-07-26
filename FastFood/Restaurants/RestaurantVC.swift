@@ -13,6 +13,30 @@ import MapKit
 
 class RestaurantVC: UIViewController {
     fileprivate var viewModel: RestaurantViewModel!
+    var prevIndexPath: IndexPath = IndexPath(item: 0, section: 0)
+    var currIndexPath: IndexPath = IndexPath(row: 0, section: 0) {
+        willSet {
+            prevIndexPath = currIndexPath
+        }
+        didSet {
+            DispatchQueue.main.async {
+                if self.prevIndexPath.row < self.viewModel.items.count {
+                    self.collectionView.reloadItems(at: [self.prevIndexPath])
+                }
+                if self.prevIndexPath != self.currIndexPath {
+                    //Update views
+                    self.collectionView.reloadItems(at: [self.currIndexPath])
+                    self.collectionView.scrollToItem(at: self.currIndexPath, at: .top, animated: true)
+                    
+                    let prevAnnotation = self.mapView.annotations[self.prevIndexPath.row]
+                    let currAnnotation = self.mapView.annotations[self.currIndexPath.row]
+                    self.mapView.showAnnotations([prevAnnotation, currAnnotation], animated: true)
+//                    self.mapView.removeAnnotations([prevAnnotation, currAnnotation])
+                    self.mapView.setRegion(coordinate: self.viewModel[self.currIndexPath].coordinate)
+                }
+            }
+        }
+    }
     
     //MARK: init
     init(title: String, viewModel: RestaurantViewModel) {
@@ -60,7 +84,7 @@ class RestaurantVC: UIViewController {
         return collectionView
     }()
     lazy var mapView: StoreMapView = {
-        let mapView = StoreMapView(delegate: self)
+        let mapView = StoreMapView(vcDelegate: self, viewModelDelegate: self.viewModel)
 //         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(BridgeAnnotation.self))
         return mapView
     }()
@@ -86,7 +110,7 @@ extension RestaurantVC: UICollectionViewDataSource {
 //MARK: UICollectionViewDelegate
 extension RestaurantVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        updateSelectedLocation(indexPath: indexPath)
+        currIndexPath = indexPath
     }
 }
 
@@ -103,26 +127,16 @@ extension RestaurantVC: UICollectionViewDelegateFlowLayout {
 
 
 //MARK: RestaurantVCDelegate
-extension RestaurantVC: StoreDelegate {
+extension RestaurantVC: VCDelegate {
     
-    //Scroll selected cell to top and update zoom in mapview on selected location
-    func updateSelectedLocation(indexPath: IndexPath) {
-        let previousSelectedIndexPath = viewModel.selectedIndexPath
-        viewModel.selectedIndexPath = indexPath
-        collectionView.reloadItems(at: [indexPath, previousSelectedIndexPath])
-        collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-        mapView.selectedCoordinate = viewModel[indexPath].coordinate
-    }
-    
-    //Search new store location from query
+    //Search new store location from search text
     func searchStore(location: String) {
         viewModel.searchStore(location: location) { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-                self?.mapView.updateLocation(stores: self?.viewModel.items ?? [])
-                if let indexPath = self?.viewModel.selectedIndexPath, self?.viewModel.items.count ?? 0 > 0 {
-                    self?.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-                }
+                self.collectionView.reloadData()
+                self.mapView.setLocation(stores: self.viewModel.items)
+                self.currIndexPath = IndexPath(row: 0, section: 0)
             }
         }
     }

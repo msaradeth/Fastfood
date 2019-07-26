@@ -9,23 +9,18 @@
 import Foundation
 import MapKit
 
-enum LocationImage {
-    static func getImage(storeNumber: Int) -> UIImage {
-        return #imageLiteral(resourceName: "locationTabBar")
-    }
-}
 
 class StoreAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
-    var storeNumber: Int
+    var indexPath: IndexPath
     
-    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, storeNumber: Int) {
+    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, indexPath: IndexPath) {
         self.coordinate = coordinate
-        self.title = title
-        self.subtitle = subtitle
-        self.storeNumber = storeNumber
+        self.title = "Store #\(indexPath.row): \(title) "
+        self.subtitle = "\(subtitle)"
+        self.indexPath = indexPath
     }
 
 }

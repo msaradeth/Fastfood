@@ -13,7 +13,6 @@ import UIKit
 class RestaurantViewModel: NSObject {
     fileprivate var searchStoreService: SearchStoreService
     fileprivate var storeDetailService: StoreDetailService
-    
     var items: [Store]
     var count: Int {
         return items.count
@@ -21,8 +20,7 @@ class RestaurantViewModel: NSObject {
     subscript(indexPath: IndexPath) -> Store {
         return items[indexPath.row]
     }
-    var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
-    
+
     //MARK: init
     init(items: [Store], searchStoreService: SearchStoreService, storeDetailService: StoreDetailService) {
         self.items = items
@@ -38,7 +36,6 @@ extension RestaurantViewModel: ViewModelDelegate, LoadImageService {
     func searchStore(location: String, completion: @escaping ()->Void) {
         DispatchQueue.global(qos: .userInteractive).async {
             self.searchStoreService.search(location: location, completion: { [weak self] (stores) in
-                self?.selectedIndexPath = IndexPath(item: 0, section: 0)
                 self?.items = stores
                 completion()
             })

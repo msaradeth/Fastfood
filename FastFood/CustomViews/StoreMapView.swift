@@ -9,12 +9,13 @@
 import Foundation
 import MapKit
 
+fileprivate enum ButtonIs: String {
+    case cancelButton = "Cancel"
+    case filterButton = "Filters"
+}
+
 
 class StoreMapView: MKMapView {
-    fileprivate enum ButtonIs: String {
-        case cancelButton = "Cancel"
-        case filterButton = "Filters"
-    }
     fileprivate var searchButtonIs = ButtonIs.filterButton {
         didSet {
             if searchButtonIs == .filterButton {
@@ -24,33 +25,44 @@ class StoreMapView: MKMapView {
             }
         }
     }
-    var selectedCoordinate:  CLLocationCoordinate2D? {
-        didSet {
-            if let coordinate = selectedCoordinate {
-                let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15))
-                self.setRegion(region, animated: true)
-            }
-        }
-    }
-    fileprivate var searchStoreDelegate: StoreDelegate?
+    fileprivate var vcDelegate: VCDelegate?
+    fileprivate var viewModelDelegate: ViewModelDelegate?
     
     //MARK: init
-    init(delegate: StoreDelegate?) {
-        self.searchStoreDelegate = delegate
+    init(vcDelegate: VCDelegate?, viewModelDelegate: ViewModelDelegate?) {
+        self.vcDelegate = vcDelegate
+        self.viewModelDelegate = viewModelDelegate
         super.init(frame: .zero)
+        self.delegate = self
         self.addSubview(searchBarStackView)
         searchBarStackView.pinTo(view: self, top: 10, left: 10, right: 10)
     }
 
-    func updateLocation(stores: [Store]) {
+    //MARK:  update MapView location
+    func setLocation(stores: [Store]) {
+        self.removeAnnotations(self.annotations)
+        
         for (index, store) in stores.enumerated() {
+            //setup data for Annotations
             let coordinate = CLLocationCoordinate2D(latitude: store.coordinates.latitude, longitude: store.coordinates.longitude)
-            let annotation = StoreAnnotation(coordinate: coordinate, title: String(index), subtitle: store.location.address1, storeNumber: index)
+            let indexPath = IndexPath(row: index, section: 0)
+            let address1 = store.location.displayAddress[0]
+            let address2 = store.location.displayAddress[1]
+            //create and add StoreAnnotation
+            let annotation = StoreAnnotation(coordinate: coordinate, title: address1, subtitle: address2, indexPath: indexPath)
             self.addAnnotation(annotation)
             
             if index == 0 {
-                self.selectedCoordinate = coordinate
+                setRegion(coordinate: coordinate)
             }
+        }
+    }
+    
+    //MARK:  setRegion
+    func setRegion(coordinate:  CLLocationCoordinate2D?) {
+        if let coordinate = coordinate {
+            let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+            self.setRegion(region, animated: true)
         }
     }
     
@@ -87,30 +99,46 @@ class StoreMapView: MKMapView {
 }
 
 
+//MARK: MKMapViewDelegate
 extension StoreMapView: MKMapViewDelegate {
-    override func view(for annotation: MKAnnotation) -> MKAnnotationView? {
-        let identifier = "Annotation"
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        return StoreMapOverlayView(overlay: overlay, overlayImage: #imageLiteral(resourceName: "HomeDelivery2"))
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationView = StoreAnnotationView(annotation: annotation, reuseIdentifier: StoreAnnotationView.cellIdentifier, vcDelegate: vcDelegate)
+        annotationView.canShowCallout = true
         
-//        if let annotationView = self.dequeueReusableAnnotationView(withIdentifier: identifier) {
-//            annotationView.annotation = annotation
-//            return annotationView
-//        }else {
-//            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            annotationView.canShowCallout = true
-//            return annotationView
-//        }
+        //set image
         
-        var annotationView = self.dequeueReusableAnnotationView(withIdentifier: identifier)
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            annotationView?.canShowCallout = true
-        } else {
-            annotationView?.annotation = annotation
+        if let annotation = annotation as? StoreAnnotation {
+            print("viewFor: ", vcDelegate?.prevIndexPath, vcDelegate?.currIndexPath, annotation.indexPath)
+//            annotationView.image = #imageLiteral(resourceName: "OfferImage")
+            if annotation.indexPath == vcDelegate?.currIndexPath {
+                annotationView.image = #imageLiteral(resourceName: "OrderImage")
+            }else {
+                annotationView.image = #imageLiteral(resourceName: "location")
+            }
         }
-//        annotationView?.displayPriority = .required
-        annotationView?.image = #imageLiteral(resourceName: "RestaurantImage")
         return annotationView
     }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view.annotation as? StoreAnnotation,
+            let viewModelDelegate = viewModelDelegate else { return }
+        //update views with indexPath
+        print("didSelect: ", annotation.indexPath, vcDelegate?.prevIndexPath, vcDelegate?.currIndexPath)
+        vcDelegate?.currIndexPath = annotation.indexPath
+        deselectAnnotation(annotation, animated: true)
+//        self.setLocation(stores: viewModelDelegate.items)
+    }
+    
+    override func deselectAnnotation(_ annotation: MKAnnotation?, animated: Bool) {
+        guard let annotation = annotation as? StoreAnnotation else { return }
+        print("deselectAnnotation: ", annotation.title, vcDelegate?.prevIndexPath, vcDelegate?.currIndexPath)
+        self.showAnnotations([annotation], animated: true)
+    }
+    
 }
 
 //MARK: UISearchBarDelegate
@@ -125,7 +153,7 @@ extension StoreMapView: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let location = searchBar.text else { return }
-        searchStoreDelegate?.searchStore(location: location)
+        vcDelegate?.searchStore(location: location)
         resetSearchBar()
     }
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
