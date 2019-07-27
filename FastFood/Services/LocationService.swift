@@ -8,16 +8,19 @@
 
 import Foundation
 import CoreLocation
-
+import RxSwift
 
 class LocationService: NSObject {
-    typealias LocationCallBack = (CLLocationCoordinate2D) -> Void
+    public var subject = PublishSubject<CLLocationCoordinate2D>()
+    public var observable: Observable<CLLocationCoordinate2D> {
+        return subject.asObservable()
+    }
     var locationManager: CLLocationManager = CLLocationManager()
     var currLocation: CLLocation?
-    var didUpdateLocationCallback: LocationCallBack?
     
     override init() {
         locationManager = CLLocationManager()
+        
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -41,8 +44,8 @@ extension LocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currLocation = locations.first
         if let currLocation = currLocation {
-            print(currLocation)
-            didUpdateLocationCallback?(currLocation.coordinate)
+//            print(currLocation)
+            subject.onNext(currLocation.coordinate)
         }
     }
     

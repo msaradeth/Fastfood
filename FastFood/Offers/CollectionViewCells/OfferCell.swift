@@ -9,18 +9,32 @@
 import UIKit
 
 class OfferCell: UICollectionViewCell {
-    static let cellHeight: CGFloat = 120
+    static let cellHeight: CGFloat = 100
     static let cellIdentifier = "OfferCell"
-
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var address1Label: UILabel!
     @IBOutlet weak var address2Label: UILabel!
     @IBOutlet weak var infoImageView: UIImageView!
+    @IBOutlet weak var foodImageView: UIImageView!
     
-    func configure(item: Store) {
+    var viewModelDelegate: OfferViewModelDelegate?
+    
+    func configure(item: Store, indexPath: IndexPath, viewModelDelegate: OfferViewModelDelegate?) {
+        self.viewModelDelegate = viewModelDelegate
         nameLabel.text = item.name
         address1Label.text = item.location.displayAddress[0]
         address2Label.text = item.location.displayAddress[1]
+        
+        //set image from cache if exist, otherwise get from server
+        if let image = item.imageCached {
+            foodImageView.image = image
+        }else {
+            viewModelDelegate?.loadImage(indexPath: indexPath, completion: { [weak self] (image) in
+                DispatchQueue.main.async {
+                    self?.foodImageView.image = image
+                }
+            })
+        }
     }
     
     @objc func showInfoPressed() {

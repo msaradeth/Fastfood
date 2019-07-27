@@ -11,7 +11,8 @@ import MapKit
 
 class MapBaseViewController: UIViewController {
     var saveTitle: String?
-    var viewModel: ViewModelDelegate!
+    var viewModel: MapViewModelDelegate!
+    var locationService: LocationService
     var prevIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     var currIndexPath: IndexPath = IndexPath(row: 0, section: 0) {
         willSet {
@@ -35,7 +36,8 @@ class MapBaseViewController: UIViewController {
     }
     
     //MARK:  init
-    init(title: String, tabBarItem: UITabBarItem? = nil) {
+    init(title: String, locationService: LocationService, tabBarItem: UITabBarItem? = nil) {
+        self.locationService = locationService
         super.init(nibName: nil, bundle: nil)
         self.saveTitle = title
         self.navigationItem.titleView = TitleView(title: title)
@@ -91,7 +93,7 @@ class MapBaseViewController: UIViewController {
         return collectionView
     }()
     lazy var mapView: StoreMapView = {
-        let mapView = StoreMapView(vcDelegate: self, viewModelDelegate: self.viewModel)
+        let mapView = StoreMapView(locationService: locationService, vcDelegate: self, viewModelDelegate: self.viewModel)
         return mapView
     }()
     
@@ -103,7 +105,7 @@ class MapBaseViewController: UIViewController {
 
 
 //MARK: RestaurantVCDelegate
-extension MapBaseViewController: VCDelegate {
+extension MapBaseViewController: MapViewControllerDelegate {
     
     //Search new store location from search text
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?) {

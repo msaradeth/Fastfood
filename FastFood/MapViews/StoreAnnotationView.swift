@@ -12,7 +12,7 @@ import MapKit
 class StoreAnnotationView: MKAnnotationView {
     static let cellIdentifier = "StoreAnnotationViews"
     
-    init(annotation: MKAnnotation?, reuseIdentifier: String?, vcDelegate: VCDelegate?) {
+    init(annotation: MKAnnotation?, reuseIdentifier: String?, vcDelegate: MapViewControllerDelegate?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         guard let vcDelegate = vcDelegate else { return }
         self.canShowCallout = true

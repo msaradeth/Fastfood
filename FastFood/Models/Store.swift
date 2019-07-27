@@ -16,9 +16,9 @@ struct Store: Codable {
     var name: String
     var imageUrlString: String
     var isClose: Bool
-    var transactions: [String]
     var coordinates: Coordinates
     var location: Location
+    
     var imageCached: UIImage?
     var storeDetailCached: StoreDetail?
     var coordinate: CLLocationCoordinate2D?
@@ -28,7 +28,6 @@ struct Store: Codable {
         case name
         case imageUrlString = "image_url"
         case isClose = "is_closed"
-        case transactions
         case coordinates
         case location
     }
@@ -40,11 +39,11 @@ struct Coordinates: Codable {
 }
 
 struct Location: Codable {
-    var address1: String
+    var address1: String?
     var address2: String?
-    var city: String
-    var zip: String
-    var state: String
+    var city: String?
+    var zip: String?
+    var state: String?
     var displayAddress: [String]
     var phone: String?
     var displayPhone: String?

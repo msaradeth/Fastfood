@@ -18,7 +18,7 @@ class RestaurantDetailVC: UIViewController {
     
     var storeDetail: StoreDetail!
     
-    init(title: String, indexPath: IndexPath, viewModel: ViewModelDelegate?) {
+    init(title: String, indexPath: IndexPath, viewModel: MapViewModelDelegate?) {
         super.init(nibName: nil, bundle: nil)
         self.navigationItem.titleView = TitleView(title: title)
         self.view.backgroundColor = .white

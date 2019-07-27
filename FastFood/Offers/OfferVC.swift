@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import MapKit
+import RxSwift
 
 class OfferVC: UIViewController {
+    var disposeBag = DisposeBag()
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 1
@@ -48,29 +51,25 @@ class OfferVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-            self.viewModel.searchStore(term: "food") { [weak self] in
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                }
-            }
+        //Load data with current location
+        if let currLocation = viewModel.locationService.currLocation {
+            loadData(coordinate: currLocation.coordinate)
+        }else {
+            viewModel.locationService.subject.take(1).subscribe(onNext: { [weak self] (coordinate) in
+                self?.loadData(coordinate: coordinate)
+            })
+            .disposed(by: disposeBag)
         }
-//        viewModel.locationService.didUpdateLocationCallback? { value in
-//            print(value)
-//
-//        }
-    
-        
-//        viewModel.locationService.didUpdateLocationCallback { (coordinate) in
-//            print(coordinate)
-//            viewModel.searchStore(term: "food") { [weak self] in
-//                DispatchQueue.main.async {
-//                    self?.collectionView.reloadData()
-//                }
-//            }
-//        }
     }
 
+    //Load data from current location
+    func loadData(coordinate: CLLocationCoordinate2D) {
+        viewModel.searchStore(term: "Restaurant", coordinate: coordinate) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.collectionView.reloadData()
+            }
+        }
+    }
 
     //MARK: Handle rotation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -88,7 +87,7 @@ class OfferVC: UIViewController {
 //MARK: UICollectionViewDataSource
 extension OfferVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.count + 2
+        return viewModel.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.row {
@@ -98,7 +97,7 @@ extension OfferVC: UICollectionViewDataSource {
             return collectionView.dequeueReusableCell(withReuseIdentifier: MonthlyDealCell.cellIdentifier, for: indexPath) as! MonthlyDealCell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCell.cellIdentifier, for: indexPath) as! OfferCell
-            cell.configure(item: viewModel[indexPath])
+            cell.configure(item: viewModel[indexPath], indexPath: indexPath, viewModelDelegate: viewModel)
             return cell
         }
     }
@@ -117,27 +116,45 @@ extension OfferVC: UICollectionViewDelegate {
 extension OfferVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return .zero}
         var cellHeight: CGFloat!
         var cellWidth: CGFloat!
         
         //determine number of columns base device
-        let numberOfColumns = UIDevice.current.userInterfaceIdiom == .phone ? 1 : 2
-        
-        //calc cell Height and Width
-        switch indexPath.row {
-        case 0:
-            //Calc cell Width base on number of columns
-            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
-            cellHeight = UIDevice.current.userInterfaceIdiom == .phone ? ScanCanCell.cellHeight : MonthlyDealCell.cellHeight
-        case 1:
-            //Calc cell Width base on number of columns
-            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
-            cellHeight = MonthlyDealCell.cellHeight
-        default:
-            //Calc cell Width base on minimum cell width
-            cellHeight = OfferCell.cellHeight
-            cellWidth = UIDevice.current.userInterfaceIdiom == .phone ? collectionView.getCellWidth(numberOfColumns: 1) : collectionView.getCellWidth(minCellWidth: 300)
+        var numberOfColumns: Int!
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            numberOfColumns = 1
+        }else {
+            numberOfColumns = UIDevice.current.orientation.isLandscape ? 3 : 2
+            flowLayout.minimumInteritemSpacing = 4
+            flowLayout.minimumLineSpacing = 8
+            flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         }
+  
+        
+        //Calc cell Width base on minimum cell width
+        cellHeight = OfferCell.cellHeight
+        cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
+        
+//        cellWidth = UIDevice.current.userInterfaceIdiom == .phone ? collectionView.getCellWidth(numberOfColumns: 1) : collectionView.getCellWidth(minCellWidth: 300)
+        
+        
+        
+//        //calc cell Height and Width
+//        switch indexPath.row {
+//        case 0:
+//            //Calc cell Width base on number of columns
+//            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
+//            cellHeight = UIDevice.current.userInterfaceIdiom == .phone ? ScanCanCell.cellHeight : MonthlyDealCell.cellHeight
+//        case 1:
+//            //Calc cell Width base on number of columns
+//            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
+//            cellHeight = MonthlyDealCell.cellHeight
+//        default:
+//            //Calc cell Width base on minimum cell width
+//            cellHeight = OfferCell.cellHeight
+//            cellWidth = UIDevice.current.userInterfaceIdiom == .phone ? collectionView.getCellWidth(numberOfColumns: 1) : collectionView.getCellWidth(minCellWidth: 300)
+//        }
         
         return CGSize(width: cellWidth, height: cellHeight)
     }

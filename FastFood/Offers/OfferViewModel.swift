@@ -7,33 +7,46 @@
 //
 
 import Foundation
+import MapKit
+
+protocol OfferViewModelDelegate {
+    func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void)
+}
 
 class OfferViewModel: NSObject {
-    var items = [Store]()
     private var searchStoreService: SearchStoreService
     var locationService: LocationService
+    var items = [Store]()
     var count: Int {
         return items.count
     }
     subscript(indexPath: IndexPath) -> Store {
-        let index = indexPath.row - 2
-        return items[index]
+        return items[indexPath.row]
     }
         
     init(items: [Store], searchStoreService: SearchStoreService, locationService: LocationService) {
-        locationService.locationManager.requestWhenInUseAuthorization()
         self.items = items
         self.searchStoreService = searchStoreService
-        self.locationService = locationService        
+        self.locationService = locationService
     }
     
-    func searchStore(term: String, completion: @escaping ()->Void) {
+    func searchStore(term: String, coordinate: CLLocationCoordinate2D, completion: @escaping ()->Void) {
         DispatchQueue.global(qos: .userInteractive).async {
-            print("searchStore", self.locationService.currLocation?.coordinate)
-            self.searchStoreService.search(term: term, coordinate: self.locationService.currLocation?.coordinate, completion: { [weak self] (stores) in
+            self.searchStoreService.search(term: term, coordinate: coordinate, completion: { [weak self] (stores) in
                 self?.items = stores
                 completion()
             })
         }
     }
+}
+
+extension OfferViewModel: OfferViewModelDelegate, LoadImageService {
+    //MARK: Load and cache image
+    func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void) {
+        loadImage(imageUrl: items[indexPath.row].imageUrlString) { [weak self] (image) in
+            self?.items[indexPath.row].imageCached = image
+            completion(image)
+        }
+    }
+    
 }

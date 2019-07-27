@@ -13,19 +13,23 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var locationService = LocationService()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        
+        //startUpdatingLocation
+        locationService.locationManager.startUpdatingLocation()
+        
         //offerVC
-        let offerViewModel = OfferViewModel(items: [], searchStoreService: SearchStoreService(), locationService: LocationService())
+        let offerViewModel = OfferViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
         let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: offerViewModel))
         
         //Restaurant VC
-        let restaurantViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService())
+        let restaurantViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService(), locationService: locationService)
         let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: restaurantViewModel))
         
         //Order VC
-        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService())
+        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService(), locationService: locationService)
         let orderVC = UINavigationController(rootViewController: OrderVC(title: "Order", viewModel: orderViewModel))
         
         //TabBarController

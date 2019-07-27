@@ -36,7 +36,7 @@ class SearchStoreService: NSObject {
     func search(term: String = "BurgerKing", location: String? = nil, coordinate: CLLocationCoordinate2D? = nil, completion: @escaping ([Store])->Void) {
         if location == nil && coordinate == nil { return }
         
-        var urlString = YelpApi.EndPoints.search + "term=\(term)&limit=30"
+        var urlString = YelpApi.EndPoints.search + "term=\(term)&limit=50"
         if let location = location {
             let searchLocation = location.replacingOccurrences(of: " ", with: "")
             urlString = urlString + "&location=\(searchLocation)"
@@ -54,7 +54,6 @@ class SearchStoreService: NSObject {
                     let coordinates = businessObject.stores[index].coordinates
                     businessObject.stores[index].coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
                 }
-                print(businessObject.stores)
                 completion(businessObject.stores)
             }catch {
                 print(error.localizedDescription)

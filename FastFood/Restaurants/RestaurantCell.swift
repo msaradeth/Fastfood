@@ -22,8 +22,8 @@ class RestaurantCell: UICollectionViewCell {
     @IBOutlet weak var imageFromServer: UIImageView!
     
     var indexPath: IndexPath?
-    var viewModelDelegate: ViewModelDelegate?
-    var vcDelegate: VCDelegate?
+    var viewModelDelegate: MapViewModelDelegate?
+    var vcDelegate: MapViewControllerDelegate?
     var hideOrderButton: Bool = false {
         willSet {
             if newValue != hideOrderButton && orderNowButton != nil {
@@ -32,7 +32,7 @@ class RestaurantCell: UICollectionViewCell {
         }
     }
     
-    func configure(hideOrderButton: Bool = false, item: Store, indexPath: IndexPath, viewModelDelegate: ViewModelDelegate?, vcDelegate: VCDelegate?) {
+    func configure(hideOrderButton: Bool = false, item: Store, indexPath: IndexPath, viewModelDelegate: MapViewModelDelegate?, vcDelegate: MapViewControllerDelegate?) {
         self.hideOrderButton = hideOrderButton
         self.indexPath = indexPath
         self.viewModelDelegate = viewModelDelegate

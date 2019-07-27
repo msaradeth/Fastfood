@@ -25,12 +25,13 @@ class StoreMapView: MKMapView {
             }
         }
     }
-    var locationService = LocationService()
-    fileprivate var vcDelegate: VCDelegate?
-    fileprivate var viewModelDelegate: ViewModelDelegate?
+    var locationService: LocationService
+    fileprivate var vcDelegate: MapViewControllerDelegate?
+    fileprivate var viewModelDelegate: MapViewModelDelegate?
     
     //MARK: init
-    init(vcDelegate: VCDelegate?, viewModelDelegate: ViewModelDelegate?) {
+    init(locationService: LocationService, vcDelegate: MapViewControllerDelegate?, viewModelDelegate: MapViewModelDelegate?) {
+        self.locationService = locationService
         self.vcDelegate = vcDelegate
         self.viewModelDelegate = viewModelDelegate
         super.init(frame: .zero)

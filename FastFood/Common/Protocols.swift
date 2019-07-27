@@ -30,7 +30,7 @@ extension LoadImageService {
 }
 
 
-protocol VCDelegate {
+protocol MapViewControllerDelegate {
     //Define variables
     var prevIndexPath: IndexPath {get set}
     var currIndexPath: IndexPath {get set}
@@ -43,8 +43,9 @@ protocol VCDelegate {
 
 
 
-protocol ViewModelDelegate {
+protocol MapViewModelDelegate {
     //Define variables
+    var locationService: LocationService {get set}
     var items: [Store] {get set}
     var count: Int {get}
     subscript(indexPath: IndexPath) -> Store {get}

@@ -7,6 +7,7 @@ target 'FastFood' do
 
   # Pods for FastFood
   pod 'Alamofire'
+  pod 'RxSwift'
 
   target 'FastFoodTests' do
     inherit! :search_paths

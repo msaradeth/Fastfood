@@ -17,8 +17,9 @@ import MapKit
 class OrderVC: MapBaseViewController {
     
     //MARK: init
-    init(title: String, viewModel: ViewModelDelegate) {
-        super.init(title: title, tabBarItem: UITabBarItem(title: "Order", image: #imageLiteral(resourceName: "OrderImage"), tag: 2)    )
+    init(title: String, viewModel: MapViewModelDelegate) {
+        let tabBarItem = UITabBarItem(title: "Order", image: #imageLiteral(resourceName: "OrderImage"), tag: 2)
+        super.init(title: title, locationService: viewModel.locationService, tabBarItem: tabBarItem)
         self.viewModel = viewModel        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
