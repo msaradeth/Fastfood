@@ -17,7 +17,7 @@ protocol LoadImageService {
 extension LoadImageService {
     func loadImage(imageUrl: String?, completion: @escaping (UIImage?) -> Void) {
         guard let imageUrlString = imageUrl, let url = URL(string: imageUrlString) else { return }
-        DispatchQueue.global(qos: .userInteractive).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             do {
                 let data = try Data(contentsOf: url)
                 let image = UIImage(data: data)
@@ -48,8 +48,8 @@ protocol MapViewModelDelegate {
     var locationService: LocationService {get set}
     var items: [Store] {get set}
     var count: Int {get}
-    subscript(indexPath: IndexPath) -> Store {get}
     var annotations: [StoreAnnotation] {get set}
+    subscript(indexPath: IndexPath) -> Store {get}
     
     //Define function
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?, completion: @escaping ()->Void)

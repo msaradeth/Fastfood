@@ -18,8 +18,12 @@ class OfferCell: UICollectionViewCell {
     @IBOutlet weak var foodImageView: UIImageView!
     
     var viewModelDelegate: OfferViewModelDelegate?
+    var vcDelegate: OfferVCDelegate?
+    var indexPath: IndexPath!
     
-    func configure(item: Store, indexPath: IndexPath, viewModelDelegate: OfferViewModelDelegate?) {
+    func configure(item: Store, indexPath: IndexPath, vcDelegate: OfferVCDelegate?, viewModelDelegate: OfferViewModelDelegate?) {
+        self.indexPath = indexPath
+        self.vcDelegate = vcDelegate
         self.viewModelDelegate = viewModelDelegate
         nameLabel.text = item.name
         address1Label.text = item.location.displayAddress[0]
@@ -38,7 +42,7 @@ class OfferCell: UICollectionViewCell {
     }
     
     @objc func showInfoPressed() {
-        print("showInfoPressed")
+        vcDelegate?.showInfo(indexPat: indexPath)
     }
     
     override func awakeFromNib() {

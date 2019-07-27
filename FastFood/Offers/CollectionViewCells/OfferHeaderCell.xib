@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="U6b-Vx-4bR" customClass="OfferHeaderCell" customModule="FastFood" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="453" height="279"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="MBU-8d-HXX">
+                    <rect key="frame" x="0.0" y="0.0" width="453" height="245"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OneScanCan" translatesAutoresizingMaskIntoConstraints="NO" id="CRY-VQ-gXL">
+                            <rect key="frame" x="0.0" y="0.0" width="453" height="122.5"/>
+                        </imageView>
+                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MonthlyDeal" translatesAutoresizingMaskIntoConstraints="NO" id="IXv-gs-t7t">
+                            <rect key="frame" x="0.0" y="122.5" width="453" height="122.5"/>
+                        </imageView>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="MBU-8d-HXX" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="L0G-R0-eV2"/>
+                <constraint firstItem="MBU-8d-HXX" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="hTH-Gi-Ipd"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="MBU-8d-HXX" secondAttribute="trailing" id="t5V-sc-H9c"/>
+                <constraint firstItem="MBU-8d-HXX" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="w0g-AF-hxa"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <connections>
+                <outlet property="scanCanImageView" destination="CRY-VQ-gXL" id="ijh-nV-C6d"/>
+                <outlet property="stackView" destination="MBU-8d-HXX" id="h56-gs-XV2"/>
+                <outlet property="subscribeImageView" destination="IXv-gs-t7t" id="b4v-c2-Y2v"/>
+            </connections>
+            <point key="canvasLocation" x="-21.014492753623191" y="144.30803571428569"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="MonthlyDeal" width="700" height="318"/>
+        <image name="OneScanCan" width="552" height="269"/>
+    </resources>
+</document>

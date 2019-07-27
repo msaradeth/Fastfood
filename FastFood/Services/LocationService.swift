@@ -44,7 +44,6 @@ extension LocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currLocation = locations.first
         if let currLocation = currLocation {
-//            print(currLocation)
             subject.onNext(currLocation.coordinate)
         }
     }

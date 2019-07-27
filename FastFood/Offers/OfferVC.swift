@@ -10,13 +10,20 @@ import UIKit
 import MapKit
 import RxSwift
 
+
+protocol OfferVCDelegate {
+    func showInfo(indexPat: IndexPath)
+    func paymentMethod()
+    func subscriptionInfoButtonPressed()
+    func scanButtonPressed()
+}
+
 class OfferVC: UIViewController {
     var disposeBag = DisposeBag()
     lazy var collectionView: UICollectionView = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = 1
-        flowLayout.minimumLineSpacing = 1
-        
+        //Flow layout
+        let flowLayout = StretchHeader()
+        //CollectionView
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
@@ -31,30 +38,37 @@ class OfferVC: UIViewController {
     init(title: String, viewModel: OfferViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.navigationItem.titleView = TitleView(title: title, fontSize: .large)
         self.view.backgroundColor = .white
+        self.navigationItem.titleView = TitleView(title: title, fontSize: .large)
+        self.tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
+                
+        //add collectionView
         self.view.addSubview(collectionView)
         self.collectionView.fillsuperView()
-        self.tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
+        
+        //Add settings image
         self.addSettingsButton()
-        registerCollectionViewCells()        
+        
+        //Register cells
+        self.registerCollectionViewCells()
     }
+    
     //MARK: Register CollectionViewCells
     private func registerCollectionViewCells() {
         //Register cells
-        collectionView.register(UINib(nibName: "ScanCanCell", bundle: nil), forCellWithReuseIdentifier: ScanCanCell.cellIdentifier)
-        collectionView.register(UINib(nibName: "MonthlyDealCell", bundle: nil), forCellWithReuseIdentifier: MonthlyDealCell.cellIdentifier)
+        collectionView.register(UINib(nibName: "OfferHeaderCell", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: OfferHeaderCell.cellIdentifier)
         collectionView.register(UINib(nibName: "OfferCell", bundle: nil), forCellWithReuseIdentifier: OfferCell.cellIdentifier)
     }
+    
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //Load data with current location
+        //Load data with current location if available, otherwise load when current location becomes available
         if let currLocation = viewModel.locationService.currLocation {
             loadData(coordinate: currLocation.coordinate)
         }else {
+            //Subscriber to get the latest current location when it becomes available
             viewModel.locationService.subject.take(1).subscribe(onNext: { [weak self] (coordinate) in
                 self?.loadData(coordinate: coordinate)
             })
@@ -62,7 +76,7 @@ class OfferVC: UIViewController {
         }
     }
 
-    //Load data from current location
+    //Search Yelp Api to get Restaurants near current location
     func loadData(coordinate: CLLocationCoordinate2D) {
         viewModel.searchStore(term: "Restaurant", coordinate: coordinate) { [weak self] in
             DispatchQueue.main.async { [weak self] in
@@ -90,24 +104,40 @@ extension OfferVC: UICollectionViewDataSource {
         return viewModel.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.row {
-        case 0:
-            return collectionView.dequeueReusableCell(withReuseIdentifier: ScanCanCell.cellIdentifier, for: indexPath) as! ScanCanCell
-        case 1:
-            return collectionView.dequeueReusableCell(withReuseIdentifier: MonthlyDealCell.cellIdentifier, for: indexPath) as! MonthlyDealCell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCell.cellIdentifier, for: indexPath) as! OfferCell
-            cell.configure(item: viewModel[indexPath], indexPath: indexPath, viewModelDelegate: viewModel)
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCell.cellIdentifier, for: indexPath) as! OfferCell
+        cell.configure(item: viewModel[indexPath], indexPath: indexPath, vcDelegate: self, viewModelDelegate: viewModel)
+        return cell
+    }
+    
+    // MARK: UICollectionView Header
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: OfferHeaderCell.cellIdentifier, for: indexPath) as! OfferHeaderCell
+        headerView.configure(delegate: self)
+
+        return headerView
     }
 }
 
 //MARK: UICollectionViewDelegate
 extension OfferVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
-        //        collectionView.deselectItem(at: indexPath, animated: true)
+        handleItemSelected(indexPath: indexPath)
+    }
+        
+    func handleItemSelected(indexPath: IndexPath) {
+        let style: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .phone ? .actionSheet: .alert
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: style)
+        
+        //alert action
+        let mobileOrder = UIAlertAction(title: "Mobile Order", style: .default, handler: nil)
+        let restaurantOrder = UIAlertAction(title: "Restaurant Order", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        //add alert actions
+        alertController.addAction(mobileOrder)
+        alertController.addAction(restaurantOrder)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -117,47 +147,58 @@ extension OfferVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return .zero}
-        var cellHeight: CGFloat!
-        var cellWidth: CGFloat!
-        
         //determine number of columns base device
         var numberOfColumns: Int!
         if UIDevice.current.userInterfaceIdiom == .phone {
             numberOfColumns = 1
+            flowLayout.minimumInteritemSpacing = 1
+            flowLayout.minimumLineSpacing = 1
         }else {
             numberOfColumns = UIDevice.current.orientation.isLandscape ? 3 : 2
             flowLayout.minimumInteritemSpacing = 4
             flowLayout.minimumLineSpacing = 8
             flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         }
-  
         
-        //Calc cell Width base on minimum cell width
-        cellHeight = OfferCell.cellHeight
-        cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
+        //Calc cell Width base on number of columnslet cellHeight =
+        let cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
         
-//        cellWidth = UIDevice.current.userInterfaceIdiom == .phone ? collectionView.getCellWidth(numberOfColumns: 1) : collectionView.getCellWidth(minCellWidth: 300)
+        return CGSize(width: cellWidth, height: OfferCell.cellHeight)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        //cell Height
+        var cellHeight: CGFloat = 250
+        if UIDevice.current.userInterfaceIdiom != .phone {
+            cellHeight = UIDevice.current.orientation.isPortrait ? 150 : 170
+        }
         
-        
-        
-//        //calc cell Height and Width
-//        switch indexPath.row {
-//        case 0:
-//            //Calc cell Width base on number of columns
-//            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
-//            cellHeight = UIDevice.current.userInterfaceIdiom == .phone ? ScanCanCell.cellHeight : MonthlyDealCell.cellHeight
-//        case 1:
-//            //Calc cell Width base on number of columns
-//            cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
-//            cellHeight = MonthlyDealCell.cellHeight
-//        default:
-//            //Calc cell Width base on minimum cell width
-//            cellHeight = OfferCell.cellHeight
-//            cellWidth = UIDevice.current.userInterfaceIdiom == .phone ? collectionView.getCellWidth(numberOfColumns: 1) : collectionView.getCellWidth(minCellWidth: 300)
-//        }
-        
-        return CGSize(width: cellWidth, height: cellHeight)
+        return CGSize(width: collectionView.bounds.width, height: cellHeight)
     }
 }
 
+
+
+//MARK: OfferVCDelegate
+extension OfferVC: OfferVCDelegate {
+    func showInfo(indexPat: IndexPath) {
+        //Get information from ViewModel using indexPath and show it
+        self.showAlert(style: .alert, title: "Coupon Info", message: "Coupon Detail Information", alertActionTitle: "OK")
+    }
+    
+    func scanButtonPressed() {
+        self.showAlert(style: .alert, title: "It's Time", message: "Your stranger summer starts now", alertActionTitle: "LET'S GO")
+    }
+    
+    func paymentMethod() {
+        //Handle Payment Methods
+        self.showAlert(style: .alert, title: "Payment Methods", message: "Handle Payment Methods", alertActionTitle: "OK")
+    }
+    
+    func subscriptionInfoButtonPressed() {
+        self.showAlert(style: .alert, title: "Subscription Info", message: "Subscription Detail Information", alertActionTitle: "OK")
+    }
+    
+}
 

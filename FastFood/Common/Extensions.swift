@@ -112,7 +112,6 @@ extension UISearchBar {
 //MARK:  UINavigationBar extension
 extension UIColor {
     static func darkRed() -> UIColor {
-//        return UIColor(red:0.82, green:0.09, blue:0.16, alpha:1.0)
         return UIColor(red:248/255, green:20/255, blue:20/255, alpha:1.0)
     }
     static func darkOrange() -> UIColor {
@@ -123,20 +122,25 @@ extension UIColor {
 
 //MARK:  UIViewController extension
 extension UIViewController {
+    //Add setting image to top left of Navigation Bar
     func addSettingsButton() {
         let settingButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Settings"), style: .plain, target: self, action: #selector(settingsPressed))
         settingButton.tintColor = .darkGray
         self.navigationItem.leftBarButtonItem = settingButton
     }
-    
     @objc func settingsPressed() {
-        let alertController = UIAlertController(title: "Settings", message: "Not Implemented", preferredStyle: .alert)
+        self.showAlert(title: "Settings", message: "Not Implemented", alertActionTitle: "Continue")
+    }
+    
+    //Helper function to show simple alert message
+    func showAlert(style: UIAlertController.Style = .actionSheet, title: String, message: String, alertActionTitle: String, alertHandler: ((UIAlertAction)->Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
         //Alert Actions
-        let continueButton = UIAlertAction(title: "Continue", style: .cancel) { (alertAction) in
-            print("continueButton press")
-        }
+        let alertAction = UIAlertAction(title: alertActionTitle, style: .cancel, handler: alertHandler)
         // Add the alert actions
-        alertController.addAction(continueButton)
+        alertController.addAction(alertAction)
         self.present(alertController, animated: true, completion: nil)
     }
 }
+
+

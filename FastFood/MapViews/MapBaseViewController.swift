@@ -107,7 +107,7 @@ class MapBaseViewController: UIViewController {
 //MARK: RestaurantVCDelegate
 extension MapBaseViewController: MapViewControllerDelegate {
     
-    //Search new store location from search text
+    //Search Yelp Api to get Burger King Locations using search criteria
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?) {
         viewModel.searchStore(location: location, coordinate: coordinate) { [weak self] in
             guard let self = self else { return }
@@ -131,18 +131,10 @@ extension MapBaseViewController: MapViewControllerDelegate {
         let alertStyle: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .phone ? .actionSheet : .alert
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: alertStyle)
         //Alert Actions
-        let driveThru = UIAlertAction(title: "Drive Thru", style: .default) { (alertAction) in
-            print("Drive Thru")
-        }
-        let dineIn = UIAlertAction(title: "Dine In", style: .default) { (alertAction) in
-            print("Dine In")
-        }
-        let takeOut = UIAlertAction(title: "Take Out", style: .default) { (alertAction) in
-            print("Take Out")
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
-            print("Cancel")
-        }
+        let driveThru = UIAlertAction(title: "Drive Thru", style: .default, handler: nil)
+        let dineIn = UIAlertAction(title: "Dine In", style: .default)
+        let takeOut = UIAlertAction(title: "Take Out", style: .default)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         // Add the alert actions
         alertController.addAction(driveThru)
         alertController.addAction(dineIn)

@@ -15,7 +15,11 @@ class RestaurantViewModel: NSObject {
     fileprivate var searchStoreService: SearchStoreService
     fileprivate var storeDetailService: StoreDetailService
     var locationService: LocationService
-    var items: [Store]
+    var items: [Store] {
+        didSet {
+            updateAnnotations()
+        }
+    }
     var annotations: [StoreAnnotation] = []    
     var count: Int {
         return items.count
@@ -31,7 +35,6 @@ class RestaurantViewModel: NSObject {
         self.storeDetailService = storeDetailService
         self.locationService = locationService
         super.init()
-        self.updateAnnotations()
     }
     
     //init annotations array
@@ -50,10 +53,9 @@ extension RestaurantViewModel: MapViewModelDelegate, LoadImageService {
     
     //MARK: Query server to get store base on given location
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?, completion: @escaping ()->Void) {
-        DispatchQueue.global(qos: .userInteractive).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             self.searchStoreService.search(location: location, coordinate: coordinate, completion: { [weak self] (stores) in
                 self?.items = stores
-                self?.updateAnnotations()
                 completion()
             })
         }
@@ -65,7 +67,7 @@ extension RestaurantViewModel: MapViewModelDelegate, LoadImageService {
         if let storeDetail = store.storeDetailCached {
             completion(storeDetail)
         }else {
-            DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.global(qos: .userInitiated).async {
                 self.storeDetailService.loadStoreDetail(storeId: store.id) { [weak self] (storeDetail) in
                     self?.items[indexPath.row].storeDetailCached = storeDetail
                     completion(storeDetail)
