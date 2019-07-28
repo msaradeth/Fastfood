@@ -12,16 +12,14 @@ import MapKit
 class StoreAnnotationView: MKAnnotationView {
     static let cellIdentifier = "StoreAnnotationViews"
     
-    init(annotation: MKAnnotation?, reuseIdentifier: String?, indexPath: IndexPath) {
+    init(annotation: MKAnnotation?, reuseIdentifier: String?, isSelected: Bool) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.canShowCallout = true
         //set image
-        if let annotation = annotation as? StoreAnnotation {
-            if annotation.indexPath == indexPath {
-                self.image = #imageLiteral(resourceName: "selectedLocation")
-            }else {
-                self.image = #imageLiteral(resourceName: "location")
-            }
+        if isSelected {
+            self.image = #imageLiteral(resourceName: "selectedLocation")
+        }else {
+            self.image = #imageLiteral(resourceName: "location")
         }
     }
 

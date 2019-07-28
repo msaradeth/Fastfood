@@ -60,7 +60,7 @@ class SearchMapView: MKMapView {
         
     //MARK: Define views
     lazy var searchBarStackView: UIStackView = {
-        let searchBarStackView = UIStackView(arrangedSubviews: [searchBar, searchButton])
+        let searchBarStackView = UIStackView(arrangedSubviews: [searchBar, homeImageView, searchButton])
         searchBarStackView.translatesAutoresizingMaskIntoConstraints = false
         searchBarStackView.axis = .horizontal
         return searchBarStackView
@@ -78,12 +78,30 @@ class SearchMapView: MKMapView {
     
     lazy var searchButton: UIButton = {
         let searchButton = UIButton(type: .roundedRect)
+        searchButton.translatesAutoresizingMaskIntoConstraints = false
         searchButton.addTarget(self, action: #selector(searchButtonPressed), for: .touchUpInside)
         searchButton.setTitle(ButtonIs.filterButton.rawValue, for: .normal)
         searchButton.setTitleColor(UIColor.darkOrange(), for: .normal)
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return searchButton
     }()
+    
+    lazy var  homeImageView: UIImageView = {
+        let homeImageView = UIImageView(image: #imageLiteral(resourceName: "NavigationHome"))
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        homeImageView.isUserInteractionEnabled = true
+        homeImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        homeImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector( homeImageViewPressed))
+        homeImageView.addGestureRecognizer(tapGesture)
+        return homeImageView
+    }()
+    
+    
+    //MARK:  homeImageView Event
+    @objc func  homeImageViewPressed() {
+        restaurantDelegate?.searchStore(location: nil, coordinate: self.userLocation.coordinate)
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -102,6 +120,7 @@ extension SearchMapView: MKMapViewDelegate {
 
 //MARK: UISearchBarDelegate
 extension SearchMapView: UISearchBarDelegate {
+    
     @objc func searchButtonPressed() {
         if searchButtonIs == .cancelButton {
             resetSearchBar()
