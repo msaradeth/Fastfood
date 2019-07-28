@@ -48,19 +48,6 @@ extension UICollectionView {
         return cellWidth > 0 ? cellWidth : 0
     }
     
-    
-    //MARK: Get cell Width base on minimum cell width
-    func getCellWidth(minCellWidth: CGFloat) -> CGFloat {
-        
-        let availableWidth = self.bounds.inset(by: self.layoutMargins).width
-        let maxNumColumns = Int(availableWidth / minCellWidth)
-        let cellWidth = (availableWidth / CGFloat(maxNumColumns)).rounded(.down)
-        
-        return cellWidth
-    }
-    
-
-    
     //Mark: Get available width
     func getAvailableWidth(numberOfColumns: Int) -> CGFloat {
         let numberOfColumns = CGFloat(numberOfColumns)
@@ -126,21 +113,46 @@ extension UIViewController {
     func addSettingsButton() {
         let settingButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Settings"), style: .plain, target: self, action: #selector(settingsPressed))
         settingButton.tintColor = .darkGray
+        
         self.navigationItem.leftBarButtonItem = settingButton
     }
+    
     @objc func settingsPressed() {
-        self.showAlert(title: "Settings", message: "Not Implemented", alertActionTitle: "Continue")
+        self.showAlert(style: .alert, title: "Settings", message: "Not Implemented", alertActionTitle: "Continue")
     }
     
     //Helper function to show simple alert message
     func showAlert(style: UIAlertController.Style = .actionSheet, title: String, message: String, alertActionTitle: String, alertHandler: ((UIAlertAction)->Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        
         //Alert Actions
         let alertAction = UIAlertAction(title: alertActionTitle, style: .cancel, handler: alertHandler)
+        
         // Add the alert actions
         alertController.addAction(alertAction)
+        
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    //Order Now Button Pressed
+    func showOrderNow(indexPath: IndexPath) {
+        let alertStyle: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .phone ? .actionSheet : .alert
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: alertStyle)
+        
+        //Alert Actions
+        let driveThru = UIAlertAction(title: "Drive Thru", style: .default, handler: nil)
+        let dineIn = UIAlertAction(title: "Dine In", style: .default)
+        let takeOut = UIAlertAction(title: "Take Out", style: .default)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        // Add the alert actions
+        alertController.addAction(driveThru)
+        alertController.addAction(dineIn)
+        alertController.addAction(takeOut)
+        alertController.addAction(cancel)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 

@@ -1,16 +1,16 @@
 //
-//  OrderVCViewController.swift
+//  TestVC.swift
 //  FastFood
 //
-//  Created by Mike Saradeth on 7/25/19.
+//  Created by Mike Saradeth on 7/28/19.
 //  Copyright © 2019 Mike Saradeth. All rights reserved.
 //
+
 
 import UIKit
 import MapKit
 
-
-class OrderVC: BaseViewController {
+class TestVC: BaseViewController {
     //MARK:  Define Views
     lazy var restaurantView: RestaurantView = {
         let restaurantView = RestaurantView(frame: .zero, viewModelDelegate: viewModel)
@@ -22,24 +22,20 @@ class OrderVC: BaseViewController {
     }()
     
     var viewModel: RestaurantViewModel!
-    
+
     //MARK: init
     init(title: String, viewModel: RestaurantViewModel) {
-        let tabBarItem = UITabBarItem(title: "Order", image: #imageLiteral(resourceName: "OrderImage"), tag: 2)
-        super.init(title: title, tabBarItem: tabBarItem, showSettings: true)
+        super.init(title: title)
         self.viewModel = viewModel
         self.view.addSubview(restaurantView)
         restaurantView.fillsuperView()
-    }
-    
-    //MARK:  viewWillAppear
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
         //Load data base on current location
-        if viewModel.count == 0 {
-            self.searchStore(location: nil, coordinate: restaurantView.mapView.userLocation.coordinate)
+        DispatchQueue.global().async {
+            self.searchStore(location: nil, coordinate: self.restaurantView.mapView.userLocation.coordinate)
         }
     }
+    
     
     //Search Yelp Api to get Burger King Locations using search criteria
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?) {
@@ -57,17 +53,17 @@ class OrderVC: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     deinit {
-        print("deinit -  OrderVC")
+        print("deinit - TestVC")
     }
 }
 
 
+
 //MARK: UICollectionViewDataSource
-extension  OrderVC: UICollectionViewDataSource {
+extension TestVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCell.cellIdentifier, for: indexPath) as! RestaurantCell
         
@@ -77,32 +73,50 @@ extension  OrderVC: UICollectionViewDataSource {
 }
 
 //MARK: UICollectionViewDelegate
-extension OrderVC: UICollectionViewDelegate {
+extension TestVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         restaurantView.currIndexPath = indexPath
     }
 }
 
+
 //MARK: UICollectionViewDelegateFlowLayout
-extension OrderVC: UICollectionViewDelegateFlowLayout {
+extension TestVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let cellWidth = collectionView.getCellWidth(numberOfColumns: 1)
         return CGSize(width: cellWidth, height: RestaurantCell.cellHeight)
     }
 }
 
 
-//MARK:  OrderVCDelegate
-extension OrderVC: RestaurantVCDelegate {
+
+
+
+
+//MARK: RestaurantVCDelegate
+extension TestVC: RestaurantVCDelegate {
     
     //Goto Store Detail screen
-    func storeDetail(indexPath: IndexPath) {
-        print("OrderVC - storeDetail")
+    @objc func storeDetail(indexPath: IndexPath) {
+        print("TestVC - storeDetail")
+//        let testVC = TestVC(title: "TestVCs", viewModel: self.viewModel)
+//        self.navigationController?.pushViewController(testVC, animated: true)
     }
     
     //Order Now Button Pressed
-    func orderNow(indexPath: IndexPath) {
-        self.showOrderNow(indexPath: indexPath)
+    @objc func orderNow(indexPath: IndexPath) {
+        let alertStyle: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .phone ? .actionSheet : .alert
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: alertStyle)
+        //Alert Actions
+        let driveThru = UIAlertAction(title: "Drive Thru", style: .default, handler: nil)
+        let dineIn = UIAlertAction(title: "Dine In", style: .default)
+        let takeOut = UIAlertAction(title: "Take Out", style: .default)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        // Add the alert actions
+        alertController.addAction(driveThru)
+        alertController.addAction(dineIn)
+        alertController.addAction(takeOut)
+        alertController.addAction(cancel)
+        self.present(alertController, animated: true, completion: nil)
     }
 }

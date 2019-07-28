@@ -30,24 +30,20 @@ extension LoadImageService {
 }
 
 
-protocol MapViewControllerDelegate {
-    //Define variables
-    var prevIndexPath: IndexPath {get set}
-    var currIndexPath: IndexPath {get set}
-    
+
+protocol RestaurantVCDelegate: NSObject {
     //Define function
-    func searchStore(location: String?, coordinate: CLLocationCoordinate2D?)
     func orderNow(indexPath: IndexPath)
     func storeDetail(indexPath: IndexPath)
 }
 
 
-
-protocol MapViewModelDelegate {
+protocol RestaurantViewModelDelegate: NSObject {
     //Define variables
-    var locationService: LocationService {get set}
+    var locationService: LocationService {get set}    
     var items: [Store] {get set}
     var count: Int {get}
+    var hideOrderButton: Bool {get set}
     var annotations: [StoreAnnotation] {get set}
     subscript(indexPath: IndexPath) -> Store {get}
     

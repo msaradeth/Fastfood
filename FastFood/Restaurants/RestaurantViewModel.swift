@@ -11,15 +11,13 @@ import UIKit
 import MapKit
 
 
+
 class RestaurantViewModel: NSObject {
     fileprivate var searchStoreService: SearchStoreService
     var locationService: LocationService
-    var items: [Store] {
-        didSet {
-            updateAnnotations()
-        }
-    }
-    var annotations: [StoreAnnotation] = []    
+    var hideOrderButton: Bool
+    var annotations: [StoreAnnotation] = []
+    var items: [Store]
     var count: Int {
         return items.count
     }
@@ -28,32 +26,24 @@ class RestaurantViewModel: NSObject {
     }
 
     //MARK: init
-    init(items: [Store], searchStoreService: SearchStoreService, locationService: LocationService) {
+    init(items: [Store], searchStoreService: SearchStoreService, locationService: LocationService, hideOrderButton: Bool = false) {
         self.items = items
         self.searchStoreService = searchStoreService
         self.locationService = locationService
+        self.hideOrderButton = hideOrderButton
         super.init()
     }
     
-    //init annotations array
-    func updateAnnotations() {
-        annotations.removeAll()
-        for (index, store) in items.enumerated() {
-            if let coordinate = store.coordinate {
-                annotations.append(StoreAnnotation(coordinate: coordinate, indexPath: IndexPath(row: index, section: 0), store: store))
-            }
-        }
-    }
 }
 
 
-extension RestaurantViewModel: MapViewModelDelegate, LoadImageService {
-    
+extension RestaurantViewModel: RestaurantViewModelDelegate, LoadImageService {    
     //MARK: Query server to get store base on given location
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?, completion: @escaping ()->Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            self.searchStoreService.search(location: location, coordinate: coordinate, completion: { [weak self] (stores) in
+            self.searchStoreService.search(location: location, coordinate: coordinate, completion: { [weak self] (stores, annotations) in
                 self?.items = stores
+                self?.annotations = annotations
                 completion()
             })
         }
@@ -66,7 +56,6 @@ extension RestaurantViewModel: MapViewModelDelegate, LoadImageService {
             self?.items[indexPath.row].imageCached = image
             completion(image)
         }
-    }
-    
+    }    
 }
 

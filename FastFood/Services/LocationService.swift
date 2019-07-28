@@ -17,6 +17,9 @@ class LocationService: NSObject {
     }
     var locationManager: CLLocationManager = CLLocationManager()
     var currLocation: CLLocation?
+    var coordinate: CLLocationCoordinate2D? {
+        return currLocation?.coordinate
+    }
     
     override init() {
         locationManager = CLLocationManager()

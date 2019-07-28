@@ -22,8 +22,8 @@ class RestaurantCell: UICollectionViewCell {
     @IBOutlet weak var imageFromServer: UIImageView!
     
     var indexPath: IndexPath?
-    var viewModelDelegate: MapViewModelDelegate?
-    var vcDelegate: MapViewControllerDelegate?
+    weak var viewModelDelegate: RestaurantViewModelDelegate?
+    weak var vcDelegate: RestaurantVCDelegate?
     var hideOrderButton: Bool = false {
         willSet {
             if newValue != hideOrderButton && orderNowButton != nil {
@@ -32,8 +32,11 @@ class RestaurantCell: UICollectionViewCell {
         }
     }
     
-    func configure(hideOrderButton: Bool = false, item: Store, indexPath: IndexPath, viewModelDelegate: MapViewModelDelegate?, vcDelegate: MapViewControllerDelegate?) {
-        self.hideOrderButton = hideOrderButton
+    func configure(indexPath: IndexPath, currIndexPath: IndexPath, viewModelDelegate: RestaurantViewModelDelegate?, vcDelegate: RestaurantVCDelegate?) {
+        guard let viewModelDelegate = viewModelDelegate else { return }
+        let item = viewModelDelegate[indexPath]
+        
+        self.hideOrderButton = viewModelDelegate.hideOrderButton
         self.indexPath = indexPath
         self.viewModelDelegate = viewModelDelegate
         self.vcDelegate = vcDelegate
@@ -42,7 +45,7 @@ class RestaurantCell: UICollectionViewCell {
         if let image = item.imageCached {
             imageFromServer.image = image
         }else {
-            viewModelDelegate?.loadImage(indexPath: indexPath, completion: { [weak self] (image) in
+            viewModelDelegate.loadImage(indexPath: indexPath, completion: { [weak self] (image) in
                 DispatchQueue.main.async {
                     self?.imageFromServer.image = image
                 }
@@ -50,18 +53,18 @@ class RestaurantCell: UICollectionViewCell {
         }
         
         //update data
-        updateData(item: item, indexPath: indexPath)
+        updateData(item: item, indexPath: indexPath, currIndexPath: currIndexPath)
         
     }
     
-    func updateData(item: Store, indexPath: IndexPath) {
+    func updateData(item: Store, indexPath: IndexPath, currIndexPath: IndexPath) {
         address1.text = item.location.displayAddress[0]
         address2.text = "\(item.location.displayAddress[1])  (\(item.location.distance ?? 0.0) mi)"
         restaurantHours.text = item.isClose ? "Closed" : "Open"
         locationNumber.text = String(indexPath.row)
         
         //update selected location RED
-        if vcDelegate != nil && vcDelegate!.currIndexPath == indexPath {
+        if indexPath == currIndexPath {
             thumbnailImage.image = #imageLiteral(resourceName: "selectedLocation")
             locationNumber.textColor = .white
         }else {

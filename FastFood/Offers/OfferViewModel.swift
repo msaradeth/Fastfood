@@ -34,7 +34,7 @@ class OfferViewModel: NSObject {
     //Search Yelp Api to get Restaurants near current location
     func searchStore(term: String, coordinate: CLLocationCoordinate2D, completion: @escaping ()->Void) {
         DispatchQueue.global(qos: .userInteractive).async {
-            self.searchStoreService.search(term: term, coordinate: coordinate, completion: { [weak self] (stores) in
+            self.searchStoreService.search(term: term, coordinate: coordinate, completion: { [weak self] (stores, annotations) in
                 self?.items = stores
                 completion()
             })

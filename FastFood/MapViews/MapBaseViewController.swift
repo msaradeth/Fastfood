@@ -11,28 +11,7 @@ import MapKit
 
 class MapBaseViewController: UIViewController {
     var saveTitle: String?
-    var viewModel: MapViewModelDelegate!
-    var prevIndexPath: IndexPath = IndexPath(item: 0, section: 0)
-    var currIndexPath: IndexPath = IndexPath(row: 0, section: 0) {
-        willSet {
-            prevIndexPath = currIndexPath
-        }
-        didSet {
-            DispatchQueue.main.async {
-                if self.prevIndexPath.row < self.viewModel.items.count {
-                    //Deselect views
-                    self.collectionView.reloadItems(at: [self.prevIndexPath])
-                    self.mapView.deselectAnnotation(self.viewModel.annotations[self.prevIndexPath.row], animated: true)
-                }
-                if self.prevIndexPath != self.currIndexPath && self.currIndexPath.row < self.viewModel.items.count {
-                    //Update views
-                    self.collectionView.reloadItems(at: [self.currIndexPath])
-                    self.collectionView.scrollToItem(at: self.currIndexPath, at: .top, animated: true)
-                    self.mapView.setRegion(coordinate: self.viewModel[self.currIndexPath].coordinate)
-                }
-            }
-        }
-    }
+    var viewModel: RestaurantViewModelDelegate?
     
     //MARK:  init
     init(title: String, tabBarItem: UITabBarItem? = nil) {
@@ -47,8 +26,8 @@ class MapBaseViewController: UIViewController {
     //MARK:  setup VC
     func setupViews() {
         self.view.backgroundColor = .white
-        self.view.addSubview(stackView)
-        stackView.fillsuperView()
+        self.view.addSubview(restaurantView)
+        restaurantView.fillsuperView()
     }
     
     
@@ -65,36 +44,13 @@ class MapBaseViewController: UIViewController {
     
     
     //MARK:  Define Views
-    lazy var stackView: UIStackView = {
-        var stackView: UIStackView!
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            stackView = UIStackView(arrangedSubviews: [mapView, collectionView])
-            stackView.axis = .vertical
-            stackView.distribution = .fillEqually
-        }else {
-            stackView = UIStackView(arrangedSubviews: [collectionView, mapView])
-            stackView.axis = .horizontal
-            collectionView.widthAnchor.constraint(equalToConstant: 320).isActive = true
-            collectionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        }
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
+    lazy var restaurantView: RestaurantView = {
+        let restaurantView = RestaurantView(frame: .zero, viewModelDelegate: viewModel)
+        restaurantView.translatesAutoresizingMaskIntoConstraints = false
+        restaurantView.collectionView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellWithReuseIdentifier: RestaurantCell.cellIdentifier)
+        return restaurantView
     }()
-    lazy var collectionView: UICollectionView = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = 1
-        flowLayout.minimumLineSpacing = 1
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellWithReuseIdentifier: RestaurantCell.cellIdentifier)
-        collectionView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-        return collectionView
-    }()
-    lazy var mapView: StoreMapView = {
-        let mapView = StoreMapView(vcDelegate: self, viewModelDelegate: self.viewModel)
-        return mapView
-    }()
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -106,24 +62,17 @@ class MapBaseViewController: UIViewController {
 
 
 //MARK: RestaurantVCDelegate
-extension MapBaseViewController: MapViewControllerDelegate {
-    
-    //Search Yelp Api to get Burger King Locations using search criteria
-    func searchStore(location: String?, coordinate: CLLocationCoordinate2D?) {
-        viewModel.searchStore(location: location, coordinate: coordinate) { [weak self] in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                //reset data and views
-                self.collectionView.reloadData()
-                self.mapView.reloadData()
-                self.currIndexPath = IndexPath(row: 0, section: 0)
-            }
-        }
-    }
+extension MapBaseViewController: RestaurantVCDelegate {
+
     
     //Goto Store Detail screen
     @objc func storeDetail(indexPath: IndexPath) {
         print("storeDetail")
+        
+        let testViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: LocationService())        
+//        let testVC = TestVC2(title: "TestVC 2", viewModel: testViewModel)
+        let testVC = TestVC(title: "Test VC", viewModel: testViewModel)
+        self.navigationController?.pushViewController(testVC, animated: true)
     }
     
     //Order Now Button Pressed

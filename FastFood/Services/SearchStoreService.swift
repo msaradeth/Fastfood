@@ -1,5 +1,5 @@
 //
-//  BusinessSearch.swift
+//  SearchStoreService.swift
 //  FastFood
 //
 //  Created by Mike Saradeth on 7/18/19.
@@ -33,7 +33,7 @@ class SearchStoreService: NSObject {
         }
     }
 
-    func search(term: String = "BurgerKing", location: String? = nil, coordinate: CLLocationCoordinate2D? = nil, completion: @escaping ([Store])->Void) {
+    func search(term: String = "BurgerKing", location: String? = nil, coordinate: CLLocationCoordinate2D? = nil, completion: @escaping ([Store], [StoreAnnotation] )->Void) {
         if location == nil && coordinate == nil { return }
         
         var urlString = YelpApi.EndPoints.search + "term=\(term)&limit=50"
@@ -45,8 +45,8 @@ class SearchStoreService: NSObject {
             urlString = urlString + "&latitude=\(coordinate.latitude)" + "&longitude=\(coordinate.longitude)"
         }
         
-        HttpHelper.request(urlString, method: .get, success: { (response) in
-            guard let data = response.data else { return }            
+        HttpHelper.request(urlString, method: .get, success: { [weak self] (response) in
+            guard let data = response.data, let self = self else { return }
             do {
                 let decoder = JSONDecoder()
                 var businessObject = try decoder.decode(BusinessObject.self, from: data)
@@ -54,12 +54,28 @@ class SearchStoreService: NSObject {
                     let coordinates = businessObject.stores[index].coordinates
                     businessObject.stores[index].coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
                 }
-                completion(businessObject.stores)
+                let annotations = self.getAnnotations(stores: businessObject.stores)
+                completion(businessObject.stores, annotations)
             }catch {
                 print(error.localizedDescription)
             }
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    
+    //getAnnotations
+    func getAnnotations(stores: [Store]) -> [StoreAnnotation] {
+        var annotations: [StoreAnnotation] = []
+        
+        for (index, store) in stores.enumerated() {
+            if let coordinate = store.coordinate {
+                let annotation = StoreAnnotation(coordinate: coordinate, indexPath: IndexPath(row: index, section: 0), store: store)
+                annotations.append(annotation)
+            }
+        }
+        
+        return annotations
     }
 }

@@ -1,5 +1,5 @@
 //
-//  RestaurantMapView.swift
+//  SearchMapView.swift
 //  FastFood
 //
 //  Created by Mike Saradeth on 7/23/19.
@@ -14,8 +14,7 @@ fileprivate enum ButtonIs: String {
     case filterButton = "Filters"
 }
 
-
-class StoreMapView: MKMapView {
+class SearchMapView: MKMapView {
     fileprivate var searchButtonIs = ButtonIs.filterButton {
         didSet {
             if searchButtonIs == .filterButton {
@@ -25,12 +24,13 @@ class StoreMapView: MKMapView {
             }
         }
     }
-    fileprivate var vcDelegate: MapViewControllerDelegate?
-    fileprivate var viewModelDelegate: MapViewModelDelegate?
+    weak var restaurantDelegate: RestaurantDelegate?
+    weak var viewModelDelegate: RestaurantViewModelDelegate?
+    
     
     //MARK: init
-    init(vcDelegate: MapViewControllerDelegate?, viewModelDelegate: MapViewModelDelegate?) {
-        self.vcDelegate = vcDelegate
+    init(restaurantDelegate: RestaurantDelegate?, viewModelDelegate: RestaurantViewModelDelegate?) {
+        self.restaurantDelegate = restaurantDelegate
         self.viewModelDelegate = viewModelDelegate
         super.init(frame: .zero)
         self.showsUserLocation = true
@@ -57,7 +57,7 @@ class StoreMapView: MKMapView {
         }
     }
    
-    
+        
     //MARK: Define views
     lazy var searchBarStackView: UIStackView = {
         let searchBarStackView = UIStackView(arrangedSubviews: [searchBar, searchButton])
@@ -75,6 +75,7 @@ class StoreMapView: MKMapView {
         searchBar.setDefaultAppearance()
         return searchBar
     }()
+    
     lazy var searchButton: UIButton = {
         let searchButton = UIButton(type: .roundedRect)
         searchButton.addTarget(self, action: #selector(searchButtonPressed), for: .touchUpInside)
@@ -91,27 +92,27 @@ class StoreMapView: MKMapView {
 
 
 //MARK: MKMapViewDelegate
-extension StoreMapView: MKMapViewDelegate {
+extension SearchMapView: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? StoreAnnotation else { return }
-        //update views with indexPath
-        vcDelegate?.currIndexPath = annotation.indexPath
+        //Reload views with new selection
+        restaurantDelegate?.currIndexPath = annotation.indexPath
     }
 }
 
 //MARK: UISearchBarDelegate
-extension StoreMapView: UISearchBarDelegate {
+extension SearchMapView: UISearchBarDelegate {
     @objc func searchButtonPressed() {
         if searchButtonIs == .cancelButton {
             resetSearchBar()
         }else {
-            print(ButtonIs.filterButton.rawValue)
+            print("Filter button pressed")
         }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let location = searchBar.text else { return }
-        vcDelegate?.searchStore(location: location, coordinate: nil)
+        restaurantDelegate?.searchStore(location: location, coordinate: nil)
         resetSearchBar()
     }
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
