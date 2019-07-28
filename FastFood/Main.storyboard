@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Restaurant DetailVC-->
+        <!--View Controller-->
         <scene sceneID="OaT-oR-SKu">
             <objects>
-                <viewController storyboardIdentifier="RestaurantDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="din-Rh-LOx" customClass="RestaurantDetailVC" customModule="FastFood" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RestaurantDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="din-Rh-LOx" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gB1-CJ-zpZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,12 +74,12 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <exclude reference="G8G-gG-K8d"/>
+                                                <exclude reference="7Sq-sQ-HaF"/>
+                                                <exclude reference="bNr-m1-OkQ"/>
                                                 <exclude reference="5kM-Kj-mh6"/>
                                                 <exclude reference="XTL-HL-dbe"/>
                                                 <exclude reference="hP1-sy-URQ"/>
                                                 <exclude reference="vdr-YW-upk"/>
-                                                <exclude reference="7Sq-sQ-HaF"/>
-                                                <exclude reference="bNr-m1-OkQ"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact">
@@ -88,12 +88,12 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <include reference="G8G-gG-K8d"/>
+                                                <include reference="7Sq-sQ-HaF"/>
+                                                <include reference="bNr-m1-OkQ"/>
                                                 <include reference="5kM-Kj-mh6"/>
                                                 <include reference="XTL-HL-dbe"/>
                                                 <include reference="hP1-sy-URQ"/>
                                                 <include reference="vdr-YW-upk"/>
-                                                <include reference="7Sq-sQ-HaF"/>
-                                                <include reference="bNr-m1-OkQ"/>
                                             </mask>
                                         </variation>
                                     </view>

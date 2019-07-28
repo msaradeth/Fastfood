@@ -1,5 +1,5 @@
 //
-//  OrderVCViewController.swift
+//  OrderVC.swift
 //  FastFood
 //
 //  Created by Mike Saradeth on 7/25/19.
@@ -63,7 +63,7 @@ class OrderVC: BaseViewController {
 
 
 //MARK: UICollectionViewDataSource
-extension  OrderVC: UICollectionViewDataSource {
+extension OrderVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.count
     }

@@ -118,11 +118,11 @@ extension UIViewController {
     }
     
     @objc func settingsPressed() {
-        self.showAlert(style: .alert, title: "Settings", message: "Not Implemented", alertActionTitle: "Continue")
+        self.showAlert(title: "Settings", message: "Not Implemented", alertActionTitle: "Continue")
     }
     
     //Helper function to show simple alert message
-    func showAlert(style: UIAlertController.Style = .actionSheet, title: String, message: String, alertActionTitle: String, alertHandler: ((UIAlertAction)->Void)? = nil) {
+    func showAlert(style: UIAlertController.Style = .alert, title: String, message: String, alertActionTitle: String, alertHandler: ((UIAlertAction)->Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
         
         //Alert Actions

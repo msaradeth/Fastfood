@@ -184,20 +184,20 @@ extension OfferVC: UICollectionViewDelegateFlowLayout {
 extension OfferVC: OfferVCDelegate {
     func showInfo(indexPat: IndexPath) {
         //Get information from ViewModel using indexPath and show it
-        self.showAlert(style: .alert, title: "Coupon Info", message: "Coupon Detail Information", alertActionTitle: "OK")
+        self.showAlert(title: "Coupon Info", message: "Coupon Detail Information", alertActionTitle: "OK")
     }
     
     func scanButtonPressed() {
-        self.showAlert(style: .alert, title: "It's Time", message: "Your stranger summer starts now", alertActionTitle: "LET'S GO")
+        self.showAlert(title: "It's Time", message: "Your stranger summer starts now", alertActionTitle: "LET'S GO")
     }
     
     func paymentMethod() {
         //Handle Payment Methods
-        self.showAlert(style: .alert, title: "Payment Methods", message: "Handle Payment Methods", alertActionTitle: "OK")
+        self.showAlert(title: "Payment Methods", message: "Handle Payment Methods", alertActionTitle: "OK")
     }
     
     func subscriptionInfoButtonPressed() {
-        self.showAlert(style: .alert, title: "Subscription Info", message: "Subscription Detail Information", alertActionTitle: "OK")
+        self.showAlert(style: .actionSheet, title: "Subscription Info", message: "Subscription Detail Information", alertActionTitle: "OK")
     }
     
 }
