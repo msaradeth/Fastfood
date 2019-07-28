@@ -61,20 +61,6 @@ extension RestaurantViewModel: MapViewModelDelegate, LoadImageService {
         }
     }
     
-    //MARK: Load Store detail information from cached if exist, otherwise load from server
-    func loadStoreDetail(indexPath: IndexPath, completion: @escaping (StoreDetail)->Void) {
-        let store = items[indexPath.row]
-        if let storeDetail = store.storeDetailCached {
-            completion(storeDetail)
-        }else {
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.storeDetailService.loadStoreDetail(storeId: store.id) { [weak self] (storeDetail) in
-                    self?.items[indexPath.row].storeDetailCached = storeDetail
-                    completion(storeDetail)
-                }
-            }
-        }
-    }
     
     //MARK: Load and cache image
     func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void) {

@@ -25,13 +25,11 @@ class StoreMapView: MKMapView {
             }
         }
     }
-    var locationService: LocationService
     fileprivate var vcDelegate: MapViewControllerDelegate?
     fileprivate var viewModelDelegate: MapViewModelDelegate?
     
     //MARK: init
-    init(locationService: LocationService, vcDelegate: MapViewControllerDelegate?, viewModelDelegate: MapViewModelDelegate?) {
-        self.locationService = locationService
+    init(vcDelegate: MapViewControllerDelegate?, viewModelDelegate: MapViewModelDelegate?) {
         self.vcDelegate = vcDelegate
         self.viewModelDelegate = viewModelDelegate
         super.init(frame: .zero)
@@ -40,7 +38,6 @@ class StoreMapView: MKMapView {
         self.addSubview(searchBarStackView)
         self.searchBarStackView.pinTo(view: self, top: 10, left: 10, right: 10)
         self.reloadData()
-        self.locationService.locationManager.requestWhenInUseAuthorization()
     }
     
     //MARK:  reload mapview

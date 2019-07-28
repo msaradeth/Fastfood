@@ -1,11 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Restaurant DetailVC-->
+        <scene sceneID="OaT-oR-SKu">
+            <objects>
+                <viewController storyboardIdentifier="RestaurantDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="din-Rh-LOx" customClass="RestaurantDetailVC" customModule="FastFood" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gB1-CJ-zpZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c44-im-2RJ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B4I-XD-G0G">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ViD-MS-p2J">
+                                                <rect key="frame" x="234" y="92" width="150" height="38"/>
+                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="150" id="493-s2-E1b"/>
+                                                    <constraint firstAttribute="height" constant="50" id="B5A-Se-cEJ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                                <state key="normal" title="Directions">
+                                                    <color key="titleColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="493-s2-E1b"/>
+                                                        <exclude reference="B5A-Se-cEJ"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="widthClass=compact">
+                                                    <mask key="constraints">
+                                                        <include reference="493-s2-E1b"/>
+                                                        <exclude reference="B5A-Se-cEJ"/>
+                                                    </mask>
+                                                </variation>
+                                            </button>
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oXE-rD-eVU">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
+                                            </mapView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="oXE-rD-eVU" firstAttribute="top" secondItem="B4I-XD-G0G" secondAttribute="top" id="5kM-Kj-mh6"/>
+                                            <constraint firstAttribute="bottom" secondItem="ViD-MS-p2J" secondAttribute="bottom" constant="50" id="7Sq-sQ-HaF">
+                                                <variation key="widthClass=compact" constant="30"/>
+                                            </constraint>
+                                            <constraint firstAttribute="height" constant="200" id="G8G-gG-K8d">
+                                                <variation key="widthClass=compact" constant="160"/>
+                                            </constraint>
+                                            <constraint firstAttribute="bottom" secondItem="oXE-rD-eVU" secondAttribute="bottom" id="XTL-HL-dbe"/>
+                                            <constraint firstAttribute="trailing" secondItem="ViD-MS-p2J" secondAttribute="trailing" constant="50" id="bNr-m1-OkQ">
+                                                <variation key="widthClass=compact" constant="30"/>
+                                            </constraint>
+                                            <constraint firstItem="oXE-rD-eVU" firstAttribute="leading" secondItem="B4I-XD-G0G" secondAttribute="leading" id="hP1-sy-URQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="oXE-rD-eVU" secondAttribute="trailing" id="vdr-YW-upk"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="subviews">
+                                                <exclude reference="ViD-MS-p2J"/>
+                                            </mask>
+                                            <mask key="constraints">
+                                                <exclude reference="G8G-gG-K8d"/>
+                                                <exclude reference="5kM-Kj-mh6"/>
+                                                <exclude reference="XTL-HL-dbe"/>
+                                                <exclude reference="hP1-sy-URQ"/>
+                                                <exclude reference="vdr-YW-upk"/>
+                                                <exclude reference="7Sq-sQ-HaF"/>
+                                                <exclude reference="bNr-m1-OkQ"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="widthClass=compact">
+                                            <mask key="subviews">
+                                                <include reference="ViD-MS-p2J"/>
+                                            </mask>
+                                            <mask key="constraints">
+                                                <include reference="G8G-gG-K8d"/>
+                                                <include reference="5kM-Kj-mh6"/>
+                                                <include reference="XTL-HL-dbe"/>
+                                                <include reference="hP1-sy-URQ"/>
+                                                <include reference="vdr-YW-upk"/>
+                                                <include reference="7Sq-sQ-HaF"/>
+                                                <include reference="bNr-m1-OkQ"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HJe-D3-dIl">
+                                        <rect key="frame" x="0.0" y="160" width="414" height="692"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
+                                </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="HJe-D3-dIl"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="HJe-D3-dIl"/>
+                                    </mask>
+                                </variation>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="c44-im-2RJ" firstAttribute="top" secondItem="WhF-8z-Aeg" secondAttribute="top" id="EbJ-n0-nmh"/>
+                            <constraint firstItem="c44-im-2RJ" firstAttribute="leading" secondItem="WhF-8z-Aeg" secondAttribute="leading" id="Lhq-gI-Qkm"/>
+                            <constraint firstAttribute="trailing" secondItem="c44-im-2RJ" secondAttribute="trailing" id="Ypu-HA-2FE"/>
+                            <constraint firstAttribute="bottom" secondItem="c44-im-2RJ" secondAttribute="bottom" id="lGn-tO-K4Y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WhF-8z-Aeg"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="c44-im-2RJ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="EbJ-n0-nmh"/>
+                                <exclude reference="Lhq-gI-Qkm"/>
+                                <exclude reference="Ypu-HA-2FE"/>
+                                <exclude reference="lGn-tO-K4Y"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="c44-im-2RJ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="EbJ-n0-nmh"/>
+                                <include reference="Lhq-gI-Qkm"/>
+                                <include reference="Ypu-HA-2FE"/>
+                                <include reference="lGn-tO-K4Y"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="HJe-D3-dIl" id="yaZ-SE-xUs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kgj-de-soE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-94.20289855072464" y="-81.026785714285708"/>
+        </scene>
+    </scenes>
 </document>

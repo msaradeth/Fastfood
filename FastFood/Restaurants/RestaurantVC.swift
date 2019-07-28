@@ -15,7 +15,7 @@ class RestaurantVC: MapBaseViewController {
     //MARK: init
     init(title: String, viewModel: MapViewModelDelegate) {
         let tabBarItem = UITabBarItem(title: "Restaurants", image: #imageLiteral(resourceName: "locationTabBar"), tag: 1)
-        super.init(title: title, locationService: viewModel.locationService, tabBarItem: tabBarItem)
+        super.init(title: title, tabBarItem: tabBarItem)
         self.viewModel = viewModel
         self.collectionView.delegate = self
         self.collectionView.dataSource = self        

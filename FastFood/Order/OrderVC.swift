@@ -15,7 +15,7 @@ class OrderVC: MapBaseViewController {
     //MARK: init
     init(title: String, viewModel: MapViewModelDelegate) {
         let tabBarItem = UITabBarItem(title: "Order", image: #imageLiteral(resourceName: "OrderImage"), tag: 2)
-        super.init(title: title, locationService: viewModel.locationService, tabBarItem: tabBarItem)
+        super.init(title: title, tabBarItem: tabBarItem)
         self.viewModel = viewModel        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -34,6 +34,9 @@ class OrderVC: MapBaseViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    deinit {
+        print("deinit - OrderVC")
     }
 }
 

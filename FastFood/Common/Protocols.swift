@@ -53,7 +53,6 @@ protocol MapViewModelDelegate {
     
     //Define function
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?, completion: @escaping ()->Void)
-    func loadStoreDetail(indexPath: IndexPath, completion: @escaping (StoreDetail)->Void)
     func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void)
 }
 

@@ -12,7 +12,6 @@ import MapKit
 class MapBaseViewController: UIViewController {
     var saveTitle: String?
     var viewModel: MapViewModelDelegate!
-    var locationService: LocationService
     var prevIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     var currIndexPath: IndexPath = IndexPath(row: 0, section: 0) {
         willSet {
@@ -36,8 +35,7 @@ class MapBaseViewController: UIViewController {
     }
     
     //MARK:  init
-    init(title: String, locationService: LocationService, tabBarItem: UITabBarItem? = nil) {
-        self.locationService = locationService
+    init(title: String, tabBarItem: UITabBarItem? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.saveTitle = title
         self.navigationItem.titleView = TitleView(title: title)
@@ -93,12 +91,15 @@ class MapBaseViewController: UIViewController {
         return collectionView
     }()
     lazy var mapView: StoreMapView = {
-        let mapView = StoreMapView(locationService: locationService, vcDelegate: self, viewModelDelegate: self.viewModel)
+        let mapView = StoreMapView(vcDelegate: self, viewModelDelegate: self.viewModel)
         return mapView
     }()
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    deinit {
+        print("deinit - MapBaseViewController")
     }
 }
 
@@ -122,8 +123,14 @@ extension MapBaseViewController: MapViewControllerDelegate {
     
     //Goto Store Detail screen
     @objc func storeDetail(indexPath: IndexPath) {
-        let storeDetailVC = RestaurantDetailVC(title: viewModel[indexPath].location.displayAddress[0], indexPath: indexPath, viewModel: viewModel)
-        self.navigationController?.pushViewController(storeDetailVC, animated: true)
+        //Order VC
+//        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService(), locationService: LocationService())
+//        let orderVC = OrderVC(title: "Order", viewModel: orderViewModel)
+        let vc = MapBaseViewController(title: "Test")
+        vc.setupViews()
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     //Order Now Button Pressed
