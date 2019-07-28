@@ -25,11 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: offerViewModel))
         
         //Restaurant VC
-        let restaurantViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService(), locationService: locationService)
+        let restaurantViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
         let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: restaurantViewModel))
         
         //Order VC
-        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService(), locationService: locationService)
+        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
         let orderVC = UINavigationController(rootViewController: OrderVC(title: "Order", viewModel: orderViewModel))
         
         //TabBarController

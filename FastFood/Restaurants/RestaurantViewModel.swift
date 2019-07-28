@@ -13,7 +13,6 @@ import MapKit
 
 class RestaurantViewModel: NSObject {
     fileprivate var searchStoreService: SearchStoreService
-    fileprivate var storeDetailService: StoreDetailService
     var locationService: LocationService
     var items: [Store] {
         didSet {
@@ -29,10 +28,9 @@ class RestaurantViewModel: NSObject {
     }
 
     //MARK: init
-    init(items: [Store], searchStoreService: SearchStoreService, storeDetailService: StoreDetailService, locationService: LocationService) {
+    init(items: [Store], searchStoreService: SearchStoreService, locationService: LocationService) {
         self.items = items
         self.searchStoreService = searchStoreService
-        self.storeDetailService = storeDetailService
         self.locationService = locationService
         super.init()
     }

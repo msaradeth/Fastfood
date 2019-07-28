@@ -123,14 +123,7 @@ extension MapBaseViewController: MapViewControllerDelegate {
     
     //Goto Store Detail screen
     @objc func storeDetail(indexPath: IndexPath) {
-        //Order VC
-//        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), storeDetailService: StoreDetailService(), locationService: LocationService())
-//        let orderVC = OrderVC(title: "Order", viewModel: orderViewModel)
-        let vc = MapBaseViewController(title: "Test")
-        vc.setupViews()
-        
-        self.navigationController?.pushViewController(vc, animated: true)
-
+        print("storeDetail")
     }
     
     //Order Now Button Pressed
