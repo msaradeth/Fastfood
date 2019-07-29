@@ -100,7 +100,9 @@ class RestaurantView: UIView {
         //collectionView
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-        collectionView.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            collectionView.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        }
         collectionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return collectionView
     }()

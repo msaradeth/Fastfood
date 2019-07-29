@@ -58,8 +58,8 @@ class RestaurantCell: UICollectionViewCell {
     }
     
     func updateData(item: Store, indexPath: IndexPath, currIndexPath: IndexPath) {
-        address1.text = item.location.displayAddress[0]
-        address2.text = "\(item.location.displayAddress[1])  (\(item.location.distance ?? 0.0) mi)"
+        address1.text = item.location.displayAddress.count >= 1 ? item.location.displayAddress[0] : ""
+        address2.text = item.location.displayAddress.count >= 2 ? "\(item.location.displayAddress[1])  (\(item.location.distance ?? 0.0) mi)" : ""       
         restaurantHours.text = item.isClose ? "Closed" : "Open"
         locationNumber.text = String(indexPath.row)
         

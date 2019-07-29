@@ -26,8 +26,8 @@ class OfferCell: UICollectionViewCell {
         self.vcDelegate = vcDelegate
         self.viewModelDelegate = viewModelDelegate
         nameLabel.text = item.name
-        address1Label.text = item.location.displayAddress[0]
-        address2Label.text = item.location.displayAddress[1]
+        address1Label.text = item.location.displayAddress.count >= 1 ? item.location.displayAddress[0] : ""
+        address2Label.text = item.location.displayAddress.count >= 2 ? item.location.displayAddress[1] : ""
         
         //set image from cache if exist, otherwise get from server
         if let image = item.imageCached {

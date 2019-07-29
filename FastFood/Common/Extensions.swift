@@ -89,7 +89,7 @@ extension UIImageView {
 //MARK:  UISearchBar extension
 extension UISearchBar {
     func setDefaultAppearance() {
-//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .darkGray
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.blue]
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes
     }
