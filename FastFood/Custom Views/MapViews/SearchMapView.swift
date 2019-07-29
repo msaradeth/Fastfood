@@ -15,6 +15,8 @@ fileprivate enum ButtonIs: String {
 }
 
 class SearchMapView: MKMapView {
+    let grayColor = UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1)
+//    let grayColor = UIColor(red: 242/255, green: 243/255, blue: 244/255, alpha: 1)
     fileprivate var searchButtonIs = ButtonIs.filterButton {
         didSet {
             if searchButtonIs == .filterButton {
@@ -35,8 +37,10 @@ class SearchMapView: MKMapView {
         super.init(frame: .zero)
         self.showsUserLocation = true
         self.delegate = self
-        self.addSubview(searchBarStackView)
-        self.searchBarStackView.pinTo(view: self, top: 10, left: 10, right: 10)
+//        self.addSubview(searchBarStackView)
+//        self.searchBarStackView.pinTo(view: self, top: 10, left: 10, right: 10)
+        self.addSubview(searchBarContainerView)
+        self.searchBarContainerView.pinTo(view: self, top: 10, left: 10, right: 10)
         self.reloadData()
     }
     
@@ -65,27 +69,52 @@ class SearchMapView: MKMapView {
         searchBarStackView.axis = .horizontal
         return searchBarStackView
     }()
+    lazy var searchBarContainerView: UIView = {
+        let searchBarContainerView = UIView(frame: .zero)
+        searchBarContainerView.backgroundColor = grayColor
+        searchBarContainerView.translatesAutoresizingMaskIntoConstraints = false
+        searchBarContainerView.heightAnchor.constraint(equalToConstant: 38).isActive = true
+        searchBarContainerView.layer.cornerRadius = 12
+        searchBarContainerView.layer.borderColor = UIColor.gray.cgColor
+        searchBarContainerView.layer.borderWidth = 0.2
+        searchBarContainerView.clipsToBounds = true
+        
+        //Add Subviews
+        searchBarContainerView.addSubview(searchButton)
+        searchButton.trailingAnchor.constraint(equalTo: searchBarContainerView.trailingAnchor).isActive = true
+        searchButton.centerYAnchor.constraint(equalTo: searchBarContainerView.centerYAnchor).isActive = true
+        searchButton.heightAnchor.constraint(equalTo: searchBarContainerView.heightAnchor).isActive = true
+        searchButton.widthAnchor.constraint(equalToConstant: 74).isActive = true
+
+        searchBarContainerView.addSubview(searchBar)
+        self.searchBar.leadingAnchor.constraint(equalTo: searchBarContainerView.leadingAnchor).isActive = true
+        self.searchBar.rightAnchor.constraint(equalTo: self.searchButton.leftAnchor).isActive = true
+        searchBar.centerYAnchor.constraint(equalTo: searchBarContainerView.centerYAnchor).isActive = true
+        searchBar.heightAnchor.constraint(equalTo: searchBarContainerView.heightAnchor).isActive = true
+        return searchBarContainerView
+    }()
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(frame: .zero)
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
         searchBar.delegate = self
         searchBar.placeholder = "Enter city, state, or zip"
-        searchBar.searchBarStyle = UISearchBar.Style.minimal
         searchBar.showsBookmarkButton = true
         searchBar.setImage(#imageLiteral(resourceName: "NavigationHome"), for: .bookmark, state: [.normal])
-        
-        searchBar.setDefaultAppearance()
+        searchBar.backgroundImage = UIImage()
+        searchBar.setSearchBarColor(color: grayColor)
+        searchBar.setFontAndForegroundColor()
         return searchBar
     }()
     
     lazy var searchButton: UIButton = {
         let searchButton = UIButton(type: .roundedRect)
         searchButton.translatesAutoresizingMaskIntoConstraints = false
+//        searchButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         searchButton.addTarget(self, action: #selector(searchButtonPressed), for: .touchUpInside)
         searchButton.setTitle(ButtonIs.filterButton.rawValue, for: .normal)
-        searchButton.setTitleColor(UIColor.darkOrange(), for: .normal)
-        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        searchButton.setTitleColor(UIColor.red, for: .normal)
+        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        searchButton.backgroundColor = .white
         return searchButton
     }()
 
