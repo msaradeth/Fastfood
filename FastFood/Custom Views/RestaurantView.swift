@@ -31,11 +31,12 @@ class RestaurantView: UIView {
             }
         }
     }
-    
+    var flowLayout: UICollectionViewFlowLayout?
     
     //MARK: Init
-    init(frame: CGRect, viewModelDelegate: RestaurantViewModelDelegate? = nil) {
+    init(frame: CGRect, viewModelDelegate: RestaurantViewModelDelegate? = nil, flowLayout: UICollectionViewFlowLayout? = nil) {
         self.viewModelDelegate = viewModelDelegate
+        self.flowLayout = flowLayout
         super.init(frame: frame)
         self.addSubview(stackView)
         stackView.fillsuperView()
@@ -80,20 +81,27 @@ class RestaurantView: UIView {
         }else {
             stackView = UIStackView(arrangedSubviews: [collectionView, mapView])
             stackView.axis = .horizontal
-            collectionView.widthAnchor.constraint(equalToConstant: 320).isActive = true
-            collectionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         }
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
     lazy var collectionView: UICollectionView = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = 1
-        flowLayout.minimumLineSpacing = 1
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        var collectionView: UICollectionView!
+        //flowlayout
+        if let flowLayout = self.flowLayout {
+            collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        }else {
+            let flowLayout = UICollectionViewFlowLayout()
+            flowLayout.minimumInteritemSpacing = 1
+            flowLayout.minimumLineSpacing = 1
+            collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        }
+        //collectionView
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        collectionView.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        collectionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return collectionView
     }()
     

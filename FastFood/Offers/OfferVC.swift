@@ -61,20 +61,25 @@ class OfferVC: UIViewController {
     }
     
     
-    //MARK: viewDidLoad
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //Load data with current location if available, otherwise load when current location becomes available
-        if let currLocation = viewModel.locationService.currLocation {
-            loadData(coordinate: currLocation.coordinate)
-        }else {
-            //Subscriber to get the latest current location when it becomes available
-            viewModel.locationService.subject.take(1).subscribe(onNext: { [weak self] (coordinate) in
-                self?.loadData(coordinate: coordinate)
-            })
-            .disposed(by: disposeBag)
+    //MARK:  viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //load if data array is empty
+        if viewModel.count == 0 {
+            //Load data with current location if available, otherwise load when current location becomes available
+            if let currLocation = viewModel.locationService.currLocation {
+                loadData(coordinate: currLocation.coordinate)
+            }else {
+                //Subscriber to get the latest current location when it becomes available
+                viewModel.locationService.subject.take(1).subscribe(onNext: { [weak self] (coordinate) in
+                    self?.loadData(coordinate: coordinate)
+                })
+                    .disposed(by: disposeBag)
+            }
         }
     }
+    
+    
 
     //Search Yelp Api to get Restaurants near current location
     func loadData(coordinate: CLLocationCoordinate2D) {

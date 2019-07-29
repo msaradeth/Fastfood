@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: restaurantViewModel))
         
         //Order VC
-        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
+        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService, hideOrderButton: true)
         let orderVC = UINavigationController(rootViewController: OrderVC(title: "Order", viewModel: orderViewModel))
         
         //TabBarController

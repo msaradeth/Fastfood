@@ -88,12 +88,12 @@ extension OrderVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let cellWidth = collectionView.getCellWidth(numberOfColumns: 1)
-        return CGSize(width: cellWidth, height: RestaurantCell.cellHeight)
+        return CGSize(width: cellWidth, height: RestaurantCell.cellHeight - 33) //subtract order now button height
     }
 }
 
 
-//MARK:  OrderVCDelegate
+//MARK:  RestaurantVCDelegate
 extension OrderVC: RestaurantVCDelegate {
     
     //Goto Store Detail screen

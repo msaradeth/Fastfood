@@ -29,7 +29,7 @@ class SearchMapView: MKMapView {
     
     
     //MARK: init
-    init(restaurantDelegate: RestaurantDelegate?, viewModelDelegate: RestaurantViewModelDelegate?) {
+    init(restaurantDelegate: RestaurantDelegate? = nil, viewModelDelegate: RestaurantViewModelDelegate? = nil) {
         self.restaurantDelegate = restaurantDelegate
         self.viewModelDelegate = viewModelDelegate
         super.init(frame: .zero)
