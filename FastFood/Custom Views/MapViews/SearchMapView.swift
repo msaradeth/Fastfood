@@ -15,7 +15,10 @@ fileprivate enum ButtonIs: String {
 }
 
 class SearchMapView: MKMapView {
-    let grayColor = UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1)
+    let grayColor = UIColor(red: 253/255, green: 254/255, blue: 254/255, alpha: 0.8)
+//    let grayColor = UIColor(red: 248/255, green: 249/255, blue: 249/255, alpha: 1)
+//    let grayColor = UIColor(red: 251/255, green: 252/255, blue: 253/255, alpha: 1)
+//    let grayColor = UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1)
 //    let grayColor = UIColor(red: 242/255, green: 243/255, blue: 244/255, alpha: 1)
     fileprivate var searchButtonIs = ButtonIs.filterButton {
         didSet {
