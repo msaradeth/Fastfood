@@ -153,6 +153,22 @@ extension UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func showMobilOrRestaurantOrder(indexPath: IndexPath) {
+        let style: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .phone ? .actionSheet: .alert
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: style)
+        
+        //alert action
+        let mobileOrder = UIAlertAction(title: "Mobile Order", style: .default, handler: nil)
+        let restaurantOrder = UIAlertAction(title: "Restaurant Order", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        //add alert actions
+        alertController.addAction(mobileOrder)
+        alertController.addAction(restaurantOrder)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 

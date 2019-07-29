@@ -18,18 +18,15 @@ protocol OfferVCDelegate {
     func scanButtonPressed()
 }
 
-class OfferVC: UIViewController {
+class OfferVC: BaseViewController {
     var disposeBag = DisposeBag()
     lazy var collectionView: UICollectionView = {
-        //Flow layout
-        let flowLayout = StretchHeader()
         //CollectionView
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout:  StretchHeader())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-        
         return collectionView
     }()
     var viewModel: OfferViewModel!
@@ -37,17 +34,11 @@ class OfferVC: UIViewController {
     //MARK: init
     init(title: String, viewModel: OfferViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        self.view.backgroundColor = .white
-        self.navigationItem.titleView = TitleView(title: title, fontSize: .large)
-        self.tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
-                
+        let tabBarItem = UITabBarItem(title: "Offers", image: #imageLiteral(resourceName: "OfferImage"), tag: 0)
+        super.init(title: title, fontSize: .large, tabBarItem: tabBarItem, showSettings: true)
         //add collectionView
         self.view.addSubview(collectionView)
         self.collectionView.fillsuperView()
-        
-        //Add settings image
-        self.addSettingsButton()
         
         //Register cells
         self.registerCollectionViewCells()
@@ -55,7 +46,6 @@ class OfferVC: UIViewController {
     
     //MARK: Register CollectionViewCells
     private func registerCollectionViewCells() {
-        //Register cells
         collectionView.register(UINib(nibName: "OfferHeaderCell", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: OfferHeaderCell.cellIdentifier)
         collectionView.register(UINib(nibName: "OfferCell", bundle: nil), forCellWithReuseIdentifier: OfferCell.cellIdentifier)
     }
@@ -70,7 +60,7 @@ class OfferVC: UIViewController {
             if let currLocation = viewModel.locationService.currLocation {
                 loadData(coordinate: currLocation.coordinate)
             }else {
-                //Subscriber to get the latest current location when it becomes available
+                //Subscriber to get the latest current location when it becomes available, than load data
                 viewModel.locationService.subject.take(1).subscribe(onNext: { [weak self] (coordinate) in
                     self?.loadData(coordinate: coordinate)
                 })
@@ -78,7 +68,6 @@ class OfferVC: UIViewController {
             }
         }
     }
-    
     
 
     //Search Yelp Api to get Restaurants near current location
@@ -126,23 +115,7 @@ extension OfferVC: UICollectionViewDataSource {
 //MARK: UICollectionViewDelegate
 extension OfferVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        handleItemSelected(indexPath: indexPath)
-    }
-        
-    func handleItemSelected(indexPath: IndexPath) {
-        let style: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .phone ? .actionSheet: .alert
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: style)
-        
-        //alert action
-        let mobileOrder = UIAlertAction(title: "Mobile Order", style: .default, handler: nil)
-        let restaurantOrder = UIAlertAction(title: "Restaurant Order", style: .default, handler: nil)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        //add alert actions
-        alertController.addAction(mobileOrder)
-        alertController.addAction(restaurantOrder)
-        alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        self.showMobilOrRestaurantOrder(indexPath: indexPath)
     }
 }
 

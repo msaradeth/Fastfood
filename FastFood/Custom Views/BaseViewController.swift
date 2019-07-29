@@ -12,14 +12,14 @@ class BaseViewController: UIViewController {
     var saveTitle: String?
     
     //MARK:  init
-    init(title: String? = nil, tabBarItem: UITabBarItem? = nil, showSettings: Bool = false) {
+    init(title: String? = nil, fontSize: TitleFonTSize = .normal, tabBarItem: UITabBarItem? = nil, showSettings: Bool = false) {
         self.saveTitle = title
         super.init(nibName: nil, bundle: nil)
         self.view.backgroundColor = .white
         
         //update if not nil
         if let title = title {
-            self.navigationItem.titleView = TitleView(title: title)
+            self.navigationItem.titleView = TitleView(title: title, fontSize: fontSize)
         }
         if let tabBarItem = tabBarItem {
             self.tabBarItem = tabBarItem

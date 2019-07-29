@@ -11,11 +11,14 @@ import UIKit
 enum TitleFonTSize {
     case normal
     case large
+    case xLarge
     
     func getFont() -> UIFont {
         switch self {
         case .large:
             return UIFont.systemFont(ofSize: 23, weight: .bold)
+        case .xLarge:
+            return UIFont.systemFont(ofSize: 25, weight: .bold)
         default:
             return UIFont.systemFont(ofSize: 17, weight: .bold)
         }
