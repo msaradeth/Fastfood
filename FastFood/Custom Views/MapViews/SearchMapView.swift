@@ -60,7 +60,7 @@ class SearchMapView: MKMapView {
         
     //MARK: Define views
     lazy var searchBarStackView: UIStackView = {
-        let searchBarStackView = UIStackView(arrangedSubviews: [searchBar, homeImageView, searchButton])
+        let searchBarStackView = UIStackView(arrangedSubviews: [searchBar, searchButton])
         searchBarStackView.translatesAutoresizingMaskIntoConstraints = false
         searchBarStackView.axis = .horizontal
         return searchBarStackView
@@ -72,6 +72,9 @@ class SearchMapView: MKMapView {
         searchBar.delegate = self
         searchBar.placeholder = "Enter city, state, or zip"
         searchBar.searchBarStyle = UISearchBar.Style.minimal
+        searchBar.showsBookmarkButton = true
+        searchBar.setImage(#imageLiteral(resourceName: "NavigationHome"), for: .bookmark, state: [.normal])
+        
         searchBar.setDefaultAppearance()
         return searchBar
     }()
@@ -85,23 +88,7 @@ class SearchMapView: MKMapView {
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return searchButton
     }()
-    
-    lazy var  homeImageView: UIImageView = {
-        let homeImageView = UIImageView(image: #imageLiteral(resourceName: "NavigationHome"))
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        homeImageView.isUserInteractionEnabled = true
-        homeImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        homeImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector( homeImageViewPressed))
-        homeImageView.addGestureRecognizer(tapGesture)
-        return homeImageView
-    }()
-    
-    
-    //MARK:  homeImageView Event
-    @objc func  homeImageViewPressed() {
-        restaurantDelegate?.searchStore(location: nil, coordinate: self.userLocation.coordinate)
-    }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -127,6 +114,11 @@ extension SearchMapView: UISearchBarDelegate {
         }else {
             print("Filter button pressed")
         }
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        //Search new store location base on user current location
+        restaurantDelegate?.searchStore(location: nil, coordinate: self.userLocation.coordinate)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
