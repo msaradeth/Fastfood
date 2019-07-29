@@ -35,3 +35,4 @@ class StretchHeader: UICollectionViewFlowLayout {
         return true
     }
 }
+

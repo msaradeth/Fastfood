@@ -21,10 +21,13 @@ protocol OfferVCDelegate {
 class OfferVC: BaseViewController {
     var disposeBag = DisposeBag()
     lazy var collectionView: UICollectionView = {
+        let offerDelegateFlowLayout = OfferDelegateFlowLayout(didSelectAction: { (indexPath) in
+            self.showMobilOrRestaurantOrder(indexPath: indexPath)
+        })
         //CollectionView
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout:  StretchHeader())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: offerDelegateFlowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.delegate = self
+        collectionView.delegate = offerDelegateFlowLayout
         collectionView.dataSource = self
         collectionView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         return collectionView
@@ -111,51 +114,6 @@ extension OfferVC: UICollectionViewDataSource {
         return headerView
     }
 }
-
-//MARK: UICollectionViewDelegate
-extension OfferVC: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.showMobilOrRestaurantOrder(indexPath: indexPath)
-    }
-}
-
-
-//MARK: UICollectionViewDelegateFlowLayout
-extension OfferVC: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return .zero}
-        //determine number of columns base device
-        var numberOfColumns: Int!
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            numberOfColumns = 1
-            flowLayout.minimumInteritemSpacing = 1
-            flowLayout.minimumLineSpacing = 1
-        }else {
-            numberOfColumns = UIDevice.current.orientation.isLandscape ? 3 : 2
-            flowLayout.minimumInteritemSpacing = 4
-            flowLayout.minimumLineSpacing = 8
-            flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        }
-        
-        //Calc cell Width base on number of columnslet cellHeight =
-        let cellWidth = collectionView.getCellWidth(numberOfColumns: numberOfColumns)
-        
-        return CGSize(width: cellWidth, height: OfferCell.cellHeight)
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        //cell Height
-        var cellHeight: CGFloat = 250
-        if UIDevice.current.userInterfaceIdiom != .phone {
-            cellHeight = UIDevice.current.orientation.isPortrait ? 150 : 170
-        }
-        
-        return CGSize(width: collectionView.bounds.width, height: cellHeight)
-    }
-}
-
 
 
 //MARK: OfferVCDelegate
