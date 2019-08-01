@@ -14,7 +14,7 @@ class OfferHeaderCell: UICollectionReusableView {
     @IBOutlet weak var scanCanImageView: UIImageView!
     @IBOutlet weak var subscribeImageView: UIImageView!
     
-    var delegate: OfferVCDelegate?
+    weak var delegate: OfferVCDelegate?
     
     //Configure cell
     func configure(delegate: OfferVCDelegate?) {

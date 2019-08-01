@@ -33,7 +33,7 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.tintColor = UIColor.darkOrange()
-        self.title = saveTitle
+//        self.title = saveTitle
     }
     
     //MARK:  viewWillDisappear

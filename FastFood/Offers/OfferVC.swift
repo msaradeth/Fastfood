@@ -11,7 +11,7 @@ import MapKit
 import RxSwift
 
 
-protocol OfferVCDelegate {
+protocol OfferVCDelegate: NSObject {
     func showInfo(indexPat: IndexPath)
     func paymentMethod()
     func subscriptionInfoButtonPressed()

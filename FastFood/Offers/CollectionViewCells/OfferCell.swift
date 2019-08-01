@@ -17,8 +17,8 @@ class OfferCell: UICollectionViewCell {
     @IBOutlet weak var infoImageView: UIImageView!
     @IBOutlet weak var foodImageView: UIImageView!
     
-    var viewModelDelegate: OfferViewModelDelegate?
-    var vcDelegate: OfferVCDelegate?
+    weak var viewModelDelegate: OfferViewModelDelegate?
+    weak var vcDelegate: OfferVCDelegate?
     var indexPath: IndexPath!
     
     func configure(item: Store, indexPath: IndexPath, vcDelegate: OfferVCDelegate?, viewModelDelegate: OfferViewModelDelegate?) {

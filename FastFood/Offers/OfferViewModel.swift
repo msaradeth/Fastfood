@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-protocol OfferViewModelDelegate {
+protocol OfferViewModelDelegate: NSObject {
     func loadImage(indexPath: IndexPath, completion: @escaping (UIImage?)->Void)
 }
 
