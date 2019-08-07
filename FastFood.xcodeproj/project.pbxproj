@@ -37,6 +37,12 @@
 		5EB1F52722E62B5600B8501C /* OfferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F52622E62B5600B8501C /* OfferViewModel.swift */; };
 		5EB1F52A22E62B7100B8501C /* OfferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB1F52822E62B7100B8501C /* OfferCell.swift */; };
 		5EB1F52B22E62B7100B8501C /* OfferCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB1F52922E62B7100B8501C /* OfferCell.xib */; };
+		5EC3D00D22F8E5AC0015D9C1 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC3D00C22F8E5AC0015D9C1 /* SearchVC.swift */; };
+		5EC3D00F22F8E5C40015D9C1 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC3D00E22F8E5C40015D9C1 /* SearchViewModel.swift */; };
+		5EC3D01122FA17220015D9C1 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC3D01022FA17220015D9C1 /* SearchCell.xib */; };
+		5EC3D01322FA17450015D9C1 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC3D01222FA17450015D9C1 /* SearchCell.swift */; };
+		5EC3D01622FA21220015D9C1 /* SearchHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC3D01422FA21220015D9C1 /* SearchHeaderCell.swift */; };
+		5EC3D01722FA21220015D9C1 /* SearchHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC3D01522FA21220015D9C1 /* SearchHeaderCell.xib */; };
 		5ED16A1422E7C276006F6C15 /* StoreAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1322E7C276006F6C15 /* StoreAnnotation.swift */; };
 		5ED16A1822E9105E006F6C15 /* StoreDetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */; };
 		5ED16A5B22EA3382006F6C15 /* StoreDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A5A22EA3382006F6C15 /* StoreDetail.swift */; };
@@ -105,6 +111,12 @@
 		5EB1F52622E62B5600B8501C /* OfferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferViewModel.swift; sourceTree = "<group>"; };
 		5EB1F52822E62B7100B8501C /* OfferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCell.swift; sourceTree = "<group>"; };
 		5EB1F52922E62B7100B8501C /* OfferCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfferCell.xib; sourceTree = "<group>"; };
+		5EC3D00C22F8E5AC0015D9C1 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		5EC3D00E22F8E5C40015D9C1 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		5EC3D01022FA17220015D9C1 /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
+		5EC3D01222FA17450015D9C1 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		5EC3D01422FA21220015D9C1 /* SearchHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeaderCell.swift; sourceTree = "<group>"; };
+		5EC3D01522FA21220015D9C1 /* SearchHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchHeaderCell.xib; sourceTree = "<group>"; };
 		5ED16A1322E7C276006F6C15 /* StoreAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAnnotation.swift; sourceTree = "<group>"; };
 		5ED16A1722E9105E006F6C15 /* StoreDetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailService.swift; sourceTree = "<group>"; };
 		5ED16A5A22EA3382006F6C15 /* StoreDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetail.swift; sourceTree = "<group>"; };
@@ -233,7 +245,7 @@
 			children = (
 				5E7E562722DFCB3700230C16 /* AppDelegate.swift */,
 				5E7E565822DFCCAF00230C16 /* TabBarController.swift */,
-				0EECA6D322E97B3A005A722B /* Main.storyboard */,
+				5EC3D00922F8DF220015D9C1 /* Storyboard */,
 				0E035A2C22E5327B004A8726 /* Offers */,
 				0E035A2A22E53227004A8726 /* Restaurants */,
 				0EED128F22E9E029000529AD /* Order */,
@@ -296,6 +308,20 @@
 				0EE9F79922ECD3C400CE6665 /* OfferHeaderCell.xib */,
 			);
 			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		5EC3D00922F8DF220015D9C1 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				0EECA6D322E97B3A005A722B /* Main.storyboard */,
+				5EC3D00C22F8E5AC0015D9C1 /* SearchVC.swift */,
+				5EC3D00E22F8E5C40015D9C1 /* SearchViewModel.swift */,
+				5EC3D01422FA21220015D9C1 /* SearchHeaderCell.swift */,
+				5EC3D01522FA21220015D9C1 /* SearchHeaderCell.xib */,
+				5EC3D01222FA17450015D9C1 /* SearchCell.swift */,
+				5EC3D01022FA17220015D9C1 /* SearchCell.xib */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		7330A52149E8E0EA4862546C /* Pods */ = {
@@ -433,6 +459,8 @@
 				5EB1F52B22E62B7100B8501C /* OfferCell.xib in Resources */,
 				0EECA6D422E97B3A005A722B /* Main.storyboard in Resources */,
 				5EB1F52522E61AE200B8501C /* RestaurantCell.xib in Resources */,
+				5EC3D01722FA21220015D9C1 /* SearchHeaderCell.xib in Resources */,
+				5EC3D01122FA17220015D9C1 /* SearchCell.xib in Resources */,
 				5E7E563522DFCB3800230C16 /* LaunchScreen.storyboard in Resources */,
 				5E7E563222DFCB3800230C16 /* Assets.xcassets in Resources */,
 			);
@@ -553,15 +581,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EEC5E8D22EACD4B002CD454 /* StoreAnnotationView.swift in Sources */,
+				5EC3D01322FA17450015D9C1 /* SearchCell.swift in Sources */,
 				5EB1F52722E62B5600B8501C /* OfferViewModel.swift in Sources */,
 				0EE9F79A22ECD3C400CE6665 /* OfferHeaderCell.swift in Sources */,
 				5EB1F50F22E1271300B8501C /* SearchStoreService.swift in Sources */,
 				5EB1F51122E12F7600B8501C /* HttpHelper.swift in Sources */,
 				5E7E565922DFCCAF00230C16 /* TabBarController.swift in Sources */,
+				5EC3D00F22F8E5C40015D9C1 /* SearchViewModel.swift in Sources */,
 				5E7E563022DFCB3700230C16 /* FastFood.xcdatamodeld in Sources */,
 				5E7E565C22DFCE0C00230C16 /* OfferVC.swift in Sources */,
 				5E7E562822DFCB3700230C16 /* AppDelegate.swift in Sources */,
 				5EB1F51922E13CCE00B8501C /* Extensions.swift in Sources */,
+				5EC3D00D22F8E5AC0015D9C1 /* SearchVC.swift in Sources */,
 				5EF0D7E022EFA8BA00BF8029 /* OfferDelegateFlowLayout.swift in Sources */,
 				5EB1F52422E61AE200B8501C /* RestaurantCell.swift in Sources */,
 				5ED16A5B22EA3382006F6C15 /* StoreDetail.swift in Sources */,
@@ -572,6 +603,7 @@
 				0E035A3322E55349004A8726 /* RestaurantViewModel.swift in Sources */,
 				0EED129122E9E04D000529AD /* OrderVC.swift in Sources */,
 				0EE9F79D22ECE60800CE6665 /* StretchHeader.swift in Sources */,
+				5EC3D01622FA21220015D9C1 /* SearchHeaderCell.swift in Sources */,
 				5ED16A1422E7C276006F6C15 /* StoreAnnotation.swift in Sources */,
 				5EB1F52A22E62B7100B8501C /* OfferCell.swift in Sources */,
 				5ED16A6122EB83F0006F6C15 /* LocationService.swift in Sources */,

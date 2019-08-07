@@ -17,29 +17,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //startUpdatingLocation
+//        //startUpdatingLocation
         locationService.locationManager.startUpdatingLocation()
         
-        //offerVC
-        let offerViewModel = OfferViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
-        let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: offerViewModel))
         
-        //Restaurant VC
-        let restaurantViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
-        let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: restaurantViewModel))
-        
-        //Order VC
-        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService, hideOrderButton: true)
-        let orderVC = UINavigationController(rootViewController: OrderVC(title: "Order", viewModel: orderViewModel))
-        
-        //TabBarController
-        let viewControllers = [offerVC, restaurantVC, orderVC]
-        let tabBarController = TabBarController(viewControllers: viewControllers)
-        
-        //Window
+        //search VC
+        let searchViewModel = SearchViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
+        let searchVC = SearchVC.createWith(title: "Search Restaurant", viewModel: searchViewModel)
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = tabBarController   
+        window?.rootViewController = UINavigationController(rootViewController: searchVC)
+        
+//
+//        //offerVC
+//        let offerViewModel = OfferViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
+//        let offerVC = UINavigationController(rootViewController: OfferVC(title: "Burger King", viewModel: offerViewModel))
+//        
+//        //Restaurant VC
+//        let restaurantViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
+//        let restaurantVC = UINavigationController(rootViewController: RestaurantVC(title: "Find Restaurants", viewModel: restaurantViewModel))
+//        
+//        //Order VC
+//        let orderViewModel = RestaurantViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService, hideOrderButton: true)
+//        let orderVC = UINavigationController(rootViewController: OrderVC(title: "Order", viewModel: orderViewModel))
+//        
+//        //TabBarController
+//        let viewControllers = [offerVC, restaurantVC, orderVC]
+//        let tabBarController = TabBarController(viewControllers: viewControllers)
+//        
+//        //Window
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.makeKeyAndVisible()
+//        window?.rootViewController = tabBarController   
         
         return true
     }

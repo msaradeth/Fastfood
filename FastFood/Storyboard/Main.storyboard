@@ -10,6 +10,63 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Search Restaurant-->
+        <scene sceneID="jZj-6J-32g">
+            <objects>
+                <viewController storyboardIdentifier="SearchVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="U4p-3h-Rmf" customClass="SearchVC" customModule="FastFood" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ra9-Bk-RJq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QEr-cU-9HS">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </mapView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A5y-A2-r3x">
+                                <rect key="frame" x="0.0" y="444" width="414" height="718"/>
+                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="718" id="SJq-1x-kj8"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="H3M-bL-VSS">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="TGa-9q-LlB">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hB8-GB-l1r" firstAttribute="bottom" secondItem="QEr-cU-9HS" secondAttribute="bottom" id="3Ig-TL-ybJ"/>
+                            <constraint firstItem="QEr-cU-9HS" firstAttribute="trailing" secondItem="hB8-GB-l1r" secondAttribute="trailing" id="8Vf-PO-xNN"/>
+                            <constraint firstItem="A5y-A2-r3x" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" constant="400" id="DJf-0D-arz"/>
+                            <constraint firstItem="QEr-cU-9HS" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" id="eC3-cK-tYW"/>
+                            <constraint firstItem="A5y-A2-r3x" firstAttribute="trailing" secondItem="hB8-GB-l1r" secondAttribute="trailing" id="fvf-3j-RMB"/>
+                            <constraint firstItem="QEr-cU-9HS" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" id="n3G-V5-yKe"/>
+                            <constraint firstItem="A5y-A2-r3x" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" id="ubV-OI-2yu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hB8-GB-l1r"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Search Restaurant" id="1Gw-4O-Oeq"/>
+                    <connections>
+                        <outlet property="collectionView" destination="A5y-A2-r3x" id="BKf-Cf-BVW"/>
+                        <outlet property="mapView" destination="QEr-cU-9HS" id="OEK-Ak-cQo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2rO-05-fa5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-544.92753623188412" y="-98.4375"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="OaT-oR-SKu">
             <objects>
@@ -151,7 +208,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kgj-de-soE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-94.20289855072464" y="-81.026785714285708"/>
+            <point key="canvasLocation" x="815.94202898550736" y="-81.026785714285708"/>
         </scene>
     </scenes>
 </document>
