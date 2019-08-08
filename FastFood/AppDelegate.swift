@@ -18,15 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
 //        //startUpdatingLocation
-        locationService.locationManager.startUpdatingLocation()
+//        locationService.locationManager.startUpdatingLocation()
         
         
         //search VC
-        let searchViewModel = SearchViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
-        let searchVC = SearchVC.createWith(title: "Search Restaurant", viewModel: searchViewModel)
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: searchVC)
+//        let searchViewModel = SearchViewModel(items: [], searchStoreService: SearchStoreService(), locationService: locationService)
+//        let searchVC = SearchVC.createWith(title: "Search Restaurant", viewModel: searchViewModel)
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.makeKeyAndVisible()
+//        window?.rootViewController = UINavigationController(rootViewController: searchVC)
         
 //
 //        //offerVC
