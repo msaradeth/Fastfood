@@ -80,7 +80,7 @@ class SearchVC: UIViewController {
         
 //        collectionView.isScrollEnabled = true
         
-        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, topY: view.frame.minY + topInset, midY: view.frame.midY, bottomY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
+        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
         
         print("bounds: ", self.view.bounds, self.view.frame)
         
@@ -100,7 +100,7 @@ class SearchVC: UIViewController {
 //        collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
 //        gestureManager.midY = collectionView.frame.midY
 //        gestureManager.currentY = gestureManager.midY
-        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, topY: view.frame.minY + topInset, midY: view.frame.midY, bottomY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
+        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
         
         print("bounds: ", self.view.bounds, self.view.frame)
         

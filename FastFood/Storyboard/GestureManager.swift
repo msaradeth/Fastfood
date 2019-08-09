@@ -20,12 +20,12 @@ class GestureManager: NSObject {
         }
     }
     var topConstrantConstant: CGFloat {
-        return topY - (safeAreaInset?.top ?? 0)
+        return minY - (safeAreaInset?.top ?? 0)
     }
 
-    var topY: CGFloat
+    var minY: CGFloat
     var midY: CGFloat
-    var bottomY: CGFloat
+    var maxY: CGFloat
     var height: CGFloat
     var width: CGFloat {
         return collectionView?.frame.width ?? 0
@@ -52,12 +52,12 @@ class GestureManager: NSObject {
     }
     
     //MARK: init
-    init(collectionView: UICollectionView?, topConstraint: NSLayoutConstraint?, topY: CGFloat, midY: CGFloat, bottomY: CGFloat, height: CGFloat) {
+    init(collectionView: UICollectionView?, topConstraint: NSLayoutConstraint?, minY: CGFloat, midY: CGFloat, maxY: CGFloat, height: CGFloat) {
         self.collectionView = collectionView
         self.topConstraint = topConstraint
-        self.topY = topY
+        self.minY = minY
         self.midY = midY
-        self.bottomY = bottomY
+        self.maxY = maxY
         self.height = height
         self.collectionView?.isScrollEnabled = false
     }
@@ -107,7 +107,7 @@ extension GestureManager {
             if atBottom() {
                 currentY = midY
             }else if atCenter() {
-                currentY = topY
+                currentY = minY
                 disableGestures()
                 collectionView?.isScrollEnabled = true
             }
@@ -115,7 +115,7 @@ extension GestureManager {
             if atTop() {
                 currentY = midY
             }else if atCenter() {
-                currentY = bottomY
+                currentY = maxY
             }
         default:
             break
@@ -128,7 +128,7 @@ extension GestureManager {
     func atTop() -> Bool {
 //        print("atTop:", currentY, topY, topConstraint?.constant, safeAreaInset?.top)
 //        let currentTopY = (topConstraint?.constant ?? 0) + (safeAreaInset?.top ?? 0)
-        return currentY == topY ? true : false
+        return currentY == minY ? true : false
 //        if currentY == topY || topConstraint?.constant == topConstrantConstant {
 //            return true
 //        }else {
@@ -139,6 +139,6 @@ extension GestureManager {
         return currentY == midY ? true : false
     }
     func atBottom() -> Bool {
-        return currentY == bottomY ? true : false
+        return currentY == maxY ? true : false
     }
 }

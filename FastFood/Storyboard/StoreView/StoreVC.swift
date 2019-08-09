@@ -86,7 +86,7 @@ class StoreVC: UIViewController {
         
         //        collectionView.isScrollEnabled = true
         
-        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, topY: view.frame.minY + topInset, midY: view.frame.midY, bottomY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
+        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
         collectionView.isScrollEnabled = true
         
         print("bounds: ", self.view.bounds, self.view.frame)
