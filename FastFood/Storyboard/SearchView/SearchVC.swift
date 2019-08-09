@@ -15,7 +15,7 @@ class SearchVC: UIViewController {
     fileprivate var disposeBag = DisposeBag()
     var topInset: CGFloat = 200
     var bottomHeight: CGFloat = SearchCell.cellHeight + 8
-    var gestureManager: GestureManager!
+    var gestureManager: LayoutManager!
 
     
     @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
@@ -80,7 +80,7 @@ class SearchVC: UIViewController {
         
 //        collectionView.isScrollEnabled = true
         
-        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
+        gestureManager = LayoutManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
         
         print("bounds: ", self.view.bounds, self.view.frame)
         
@@ -100,7 +100,7 @@ class SearchVC: UIViewController {
 //        collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
 //        gestureManager.midY = collectionView.frame.midY
 //        gestureManager.currentY = gestureManager.midY
-        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
+        gestureManager = LayoutManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
         
         print("bounds: ", self.view.bounds, self.view.frame)
         

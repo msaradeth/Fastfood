@@ -49,7 +49,7 @@
 		5ED16A5D22EA3398006F6C15 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A5C22EA3398006F6C15 /* Store.swift */; };
 		5ED16A6122EB83F0006F6C15 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED16A6022EB83F0006F6C15 /* LocationService.swift */; };
 		5EF0D7E022EFA8BA00BF8029 /* OfferDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0D7DF22EFA8BA00BF8029 /* OfferDelegateFlowLayout.swift */; };
-		5EFE7D7D22FC90140001D595 /* GestureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE7D7C22FC90140001D595 /* GestureManager.swift */; };
+		5EFE7D7D22FC90140001D595 /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE7D7C22FC90140001D595 /* LayoutManager.swift */; };
 		5EFE7D8122FCD4AE0001D595 /* StoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE7D8022FCD4AE0001D595 /* StoreVC.swift */; };
 		B390D018C5B9A7E6B07FE82C /* Pods_FastFoodTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470C94E9BAC97B549956D28C /* Pods_FastFoodTests.framework */; };
 		FCE700B1B12BDD76C8BCC52B /* Pods_FastFood.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A66438751B60F61CAA3A825A /* Pods_FastFood.framework */; };
@@ -125,7 +125,7 @@
 		5ED16A5C22EA3398006F6C15 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		5ED16A6022EB83F0006F6C15 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		5EF0D7DF22EFA8BA00BF8029 /* OfferDelegateFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDelegateFlowLayout.swift; sourceTree = "<group>"; };
-		5EFE7D7C22FC90140001D595 /* GestureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureManager.swift; sourceTree = "<group>"; };
+		5EFE7D7C22FC90140001D595 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
 		5EFE7D8022FCD4AE0001D595 /* StoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreVC.swift; sourceTree = "<group>"; };
 		7744F9EC5404C2A61E64BCFE /* Pods_FastFoodUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FastFoodUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		935E155A3E666AAC21F550B1 /* Pods-FastFoodUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FastFoodUITests.debug.xcconfig"; path = "Target Support Files/Pods-FastFoodUITests/Pods-FastFoodUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 				0EECA6D322E97B3A005A722B /* Main.storyboard */,
 				5EFE7D7F22FCD4900001D595 /* StoreView */,
 				5EFE7D7E22FCD4610001D595 /* SearchView */,
-				5EFE7D7C22FC90140001D595 /* GestureManager.swift */,
+				5EFE7D7C22FC90140001D595 /* LayoutManager.swift */,
 				5EC3D00E22F8E5C40015D9C1 /* SearchViewModel.swift */,
 				5EC3D01422FA21220015D9C1 /* SearchHeaderCell.swift */,
 				5EC3D01522FA21220015D9C1 /* SearchHeaderCell.xib */,
@@ -611,7 +611,7 @@
 				5E7E565922DFCCAF00230C16 /* TabBarController.swift in Sources */,
 				5EC3D00F22F8E5C40015D9C1 /* SearchViewModel.swift in Sources */,
 				5E7E563022DFCB3700230C16 /* FastFood.xcdatamodeld in Sources */,
-				5EFE7D7D22FC90140001D595 /* GestureManager.swift in Sources */,
+				5EFE7D7D22FC90140001D595 /* LayoutManager.swift in Sources */,
 				5E7E565C22DFCE0C00230C16 /* OfferVC.swift in Sources */,
 				5E7E562822DFCB3700230C16 /* AppDelegate.swift in Sources */,
 				5EB1F51922E13CCE00B8501C /* Extensions.swift in Sources */,

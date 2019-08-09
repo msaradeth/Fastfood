@@ -20,7 +20,7 @@ class StoreVC: UIViewController {
     fileprivate var disposeBag = DisposeBag()
     var topInset: CGFloat = 170
     var bottomHeight: CGFloat = SearchCell.cellHeight + 8
-    var gestureManager: GestureManager!
+    var layoutManager: LayoutManager!
     @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -49,12 +49,23 @@ class StoreVC: UIViewController {
     
     
     func setupVC() {
+        layoutManager = LayoutManager(collectionView: collectionView,
+                topConstraint: collectionViewTopConstraint,
+                minY: view.frame.minY + topInset + view.safeAreaInsets.top,
+                midY: view.frame.midY,
+                maxY: view.frame.maxY - bottomHeight - view.safeAreaInsets.bottom,
+                height: view.bounds.height - topInset)
+        
+        print("safeAreaInsets: ", view.safeAreaInsets)
         
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "SearchCell", bundle: nil), forCellWithReuseIdentifier: RestaurantCell.cellIdentifier)
         collectionView.register(UINib(nibName: "SearchHeaderCell", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchHeaderCell.cellIdentifier)
-//        collectionView.alpha = 0
+//        collectionView.isScrollEnabled = true
+//        collectionView.decelerationRate = .fast
+        collectionView.bounces = true
+
         
         //        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         //        collectionView.addGestureRecognizer(panGestureRecognizer)
@@ -86,13 +97,12 @@ class StoreVC: UIViewController {
         
         //        collectionView.isScrollEnabled = true
         
-        gestureManager = GestureManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
-        collectionView.isScrollEnabled = true
+
         
         print("bounds: ", self.view.bounds, self.view.frame)
         
         print("collectionView.frame: ", collectionView.frame)
-        print("Settings: ", gestureManager)
+        print("Settings: ", layoutManager)
         print("view.safeAreaInsets: ", view.safeAreaInsets)
         
 //        gestureManager.addSwipeGestures(view: collectionView)
@@ -103,6 +113,10 @@ class StoreVC: UIViewController {
         super.viewDidLayoutSubviews()
 //        collectionView.frame = CGRect(x: 0, y: self.mapView.frame.midY, width: collectionView.frame.width, height: mapView.frame.height - topInset)
         collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
+        print("safeAreaInsets: ", view.safeAreaInsets)
+        layoutManager.minY = view.frame.minY + topInset + view.safeAreaInsets.top
+        layoutManager.maxY = view.frame.maxY - bottomHeight - view.safeAreaInsets.bottom
+
     }
     
     //MARK:  viewWillAppear
@@ -139,116 +153,11 @@ class StoreVC: UIViewController {
         }
     }
     
-    
-    //
-    //    @objc func handlePanGesture(_ sender: UIPanGestureRecognizer) {
-    //        guard let view = sender.view else { return }
-    //        let velocity = sender.velocity(in: view.superview)
-    ////        let minY: CGFloat = mapView.center.y + (SearchCell.cellHeight / 2.0)
-    ////        let maxY: CGFloat = mapView.center.y + collectionView.bounds.height - ((SearchCell.cellHeight - self.view.safeAreaInsets.bottom) / 2.0)
-    ////
-    //        // Get the changes in the X and Y directions relative to
-    //        // the superview's coordinate space.
-    //        let translation = sender.translation(in: view.superview)
-    //
-    //        switch sender.state {
-    //        case .began:
-    //            origin = view.center
-    //            print("begin: ", origin)
-    //
-    //
-    //        case .changed:
-    ////            collectionView.center = view.center
-    //            var y = view.center.y + translation.y
-    ////            print("change", y, self.topCenterY, self.midCenterY, self.bottomCenterY)
-    ////            guard y != topCenterY && y != bottomCenterY else { return }
-    ////            if origin.y == topCenterY && y < topCenterY {
-    ////                return
-    ////            }
-    ////
-    ////            if origin.y == bottomCenterY && y > bottomCenterY {
-    ////                return
-    ////            }
-    ////
-    ////            if y < topCenterY {
-    ////                y = topCenterY
-    ////            }
-    ////            if y > bottomCenterY {
-    ////                y = bottomCenterY
-    ////            }
-    //
-    ////            view.center = CGPoint(x: view.center.x, y: y)
-    ////            sender.setTranslation(CGPoint.zero, in: view.superview)
-    //
-    //
-    //
-    //        case .ended:
-    //            if velocity.y > 0 {
-    //                print("panning down")
-    //                if topHalf(minY: collectionView.frame.minY) {
-    //                    if halfWayUp(minY: collectionView.frame.minY) {
-    //                        collectionView.center.y = topCenterY
-    //                    }else {
-    //                        collectionView.center.y = midCenterY
-    //                    }
-    //                }else {
-    //                    print("bottom half")
-    //                }
-    //            }else {
-    //                print("panning up")
-    //                if topHalf(minY: collectionView.frame.minY) {
-    //                    if halfWayUp(minY: collectionView.frame.minY) {
-    //                        collectionView.center.y = topCenterY
-    //                    }else {
-    //                        collectionView.center.y = midCenterY
-    //                    }
-    //                }else {
-    //                    print("bottom half")
-    //                }
-    //            }
-    //
-    //            panGestureRecognizer.reset()
-    //
-    //
-    //        default:
-    //            print("default ")
-    //        }
-    //    }
-    //
-    //
-    //    @objc func handleSwipeGesture(_ sender: UISwipeGestureRecognizer) {
-    //        print("handleSwipeGesture", sender.direction)
-    //        guard let view = sender.view else { return }
-    //
-    //    }
-    
-    
-    //MARK: Helper functions
-    func halfWayUp(minY: CGFloat) -> Bool {
-        let midPoint = topInset +  ((self.view.frame.midY - topInset) / 2)
-        return minY < midPoint ? true : false
-        
-        //        print("halfWayUp: ", minY, midPoint)
-        //        if minY < midPoint {
-        //            return true
-        //        }
-        //        return false
-    }
-    
-    func topHalf(minY: CGFloat) -> Bool {
-        return minY == collectionView.frame.midY ? true : false
-        //        if minY < collectionView.frame.midY {
-        //            return true
-        //        }
-        //        return false
-    }
-    
+
 }
 
 
-extension StoreVC {
-    
-}
+
 
 extension StoreVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -265,9 +174,6 @@ extension StoreVC: UICollectionViewDataSource {
 //MARK: UICollectionViewDelegateFlowLayout
 extension StoreVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
-        //        print(collectionView.contentOffset, collectionView.contentSize)
-        
         let cellWidth = collectionView.getCellWidth(numberOfColumns: 1)
         return CGSize(width: cellWidth, height: RestaurantCell.cellHeight)
     }
@@ -281,88 +187,47 @@ extension StoreVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension StoreVC: UIScrollViewDelegate {
-    
-//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        let contentOffsetY = scrollView.contentOffset.y
-//        let translation = scrollView.panGestureRecognizer.translation(in: self.view)
-//
-//
-//        let deltaY = translation.y
-//        var y = collectionView.frame.minY + abs(deltaY)
-//        let maxY = view.frame.height - bottomHeight - self.view.safeAreaInsets.bottom
-//
-//        print(deltaY, y, collectionView.frame.minY, topInset,  maxY, translation.y, contentOffsetY)
-//
-//        if deltaY > 0 && collectionView.frame.minY == topInset {
-//            // pull down
-//            if collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)) {
-//                var y = collectionView.frame.minY + abs(deltaY)
-//                let maxY = view.frame.height - bottomHeight - self.view.safeAreaInsets.bottom
-//                if y > maxY {
-////                    y = maxY
-//                }
-//                print("scrollViewWillBeginDragging: pull down: y=\(y),  maxY=\(maxY)  collectionView.frame.minY=\(collectionView.frame.minY),  topInset=\(topInset)   deltaY=\(deltaY)   view.safeAreaInsets.bottom=\(view.safeAreaInsets.bottom)")
-//                collectionView.frame = CGRect(x: 0, y: topInset+1, width: collectionView.frame.width, height: collectionView.frame.height)
-//
-//
-////                if y <= maxY {
-////                    print("pull down: y=\(y), collectionView.frame.minY=\(collectionView.frame.minY),  topInset=\(topInset)   deltaY=\(deltaY)   view.safeAreaInsets.bottom=\(view.safeAreaInsets.bottom)")
-////                    collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
-////                }
-//            }
-//        }
-//
-//    }
-//
-    
-    
+  
+ 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: self.view)
         
-        //        if collectionView.isDragging || collectionView.isDecelerating {
-        //            print("collectionView is Dragging: ", scrollView.contentOffset.y, collectionView.frame.maxY, minHeight, maxHeight)
-        //        }
+//            if collectionView.isDragging || collectionView.isDecelerating {
+//                print("collectionView is Dragging: ", scrollView.contentOffset.y, collectionView.frame.maxY)
+//            }
         
         let contentOffsetY = scrollView.contentOffset.y
-        print(translation.y, contentOffsetY)
-        let deltaY = translation.y
-        if deltaY < 0 {
+        print("translation.y: ", translation.y, "    contentOffsetY: ", contentOffsetY)
+        
+        
+        let deltaY = abs(translation.y)
+        if translation.y < 0 {
             // scroll up
-            var y = collectionView.frame.minY - abs(deltaY)
+            var y = collectionView.frame.minY - deltaY
             if y < topInset {
                 y = topInset
             }
-//            print("scroll up:  y=\(y), collectionView.frame.minY=\(collectionView.frame.minY),  topInset=\(topInset)   deltaY=\(deltaY)")
+            
+            
             if y >= topInset {
-                print("scroll up:  y=\(y), collectionView.frame.minY=\(collectionView.frame.minY),  topInset=\(topInset)   deltaY=\(deltaY)")
-                collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
+                self.collectionView.frame = CGRect(x: 0, y: y, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
             }
         }else {
             // pull down
-//            print("pull down: ", collectionView.frame.minY, topInset, collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
-//            if collectionView.frame.minY == topInset && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)) {
             if collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)) {
-//                UIView.animate(withDuration: 0.3) {
-//                    self.collectionView.frame = CGRect(x: 0, y: self.gestureManager.midY, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
-//                }
+                var y = collectionView.frame.minY + deltaY
                 
-                var y = collectionView.frame.minY + abs(deltaY)
-                let maxY = view.frame.height - bottomHeight - self.view.safeAreaInsets.bottom
-                if y > maxY {
-                    y = maxY
+                if y > layoutManager.maxY {
+                    y = layoutManager.maxY
                 }
-//                print("y=\(y), collectionView.frame.minY=\(collectionView.frame.minY),  topInset=\(topInset)   deltaY=\(deltaY)   view.safeAreaInsets.bottom=\(view.safeAreaInsets.bottom)")
-                if y <= maxY {
-                    print("pull down: ", collectionView.frame.minY, topInset, collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
-                    UIView.animate(withDuration: 0.5) {
-                        self.collectionView.frame = CGRect(x: 0, y: y, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
-                        self.collectionView.layoutIfNeeded()
-                    }
+                
+                if y <= layoutManager.maxY && y != layoutManager.currentY {
+                    layoutManager.currentY = y
                 }
             }
 
         }
-      
-        
+
     }
+   
 }

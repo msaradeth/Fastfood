@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class GestureManager: NSObject {
+class LayoutManager: NSObject {
     fileprivate let swipeGestureName = "swipeGestureName"
     fileprivate let panGestureName = "panGestureName"
     weak var collectionView: UICollectionView?
@@ -32,15 +32,17 @@ class GestureManager: NSObject {
     }
     var currentY: CGFloat = 0 {
         didSet {
-            guard let collectionView = self.collectionView else { return }
+//            guard let collectionView = self.collectionView else { return }
             print("didSet currentY: ", currentY)
+            animate(y: currentY)
+            
 //            if !atTop() && (topConstraint?.isActive ?? false) {
 //                topConstraint?.isActive = false
 //            }
-            UIView.animate(withDuration: 0.3) {
-                collectionView.frame = CGRect(x: 0, y: self.currentY, width: collectionView.frame.width, height: collectionView.frame.height)
-            }
-            
+//            UIView.animate(withDuration: 0.3) {
+//                collectionView.frame = CGRect(x: 0, y: self.currentY, width: collectionView.frame.width, height: collectionView.frame.height)
+//            }
+//
 //            UIView.animate(withDuration: 0.3, animations: {
 //                collectionView.frame = CGRect(x: 0, y: self.currentY, width: self.width, height: self.height)
 //            }) { (finished) in
@@ -59,7 +61,14 @@ class GestureManager: NSObject {
         self.midY = midY
         self.maxY = maxY
         self.height = height
-        self.collectionView?.isScrollEnabled = false
+    }
+    
+    func animate(y: CGFloat) {
+        UIView.animate(withDuration: 0.5) {
+            guard let collectionView = self.collectionView else { return }
+            collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
+            collectionView.layoutIfNeeded()
+        }
     }
     
     
@@ -87,7 +96,7 @@ class GestureManager: NSObject {
 
 
 //MARK: UISwipeGestureRecognizer
-extension GestureManager {
+extension LayoutManager {
     
     public func addSwipeGestures(view: UIView) {
         let directions: [UISwipeGestureRecognizer.Direction] = [.down, .up]
@@ -141,4 +150,16 @@ extension GestureManager {
     func atBottom() -> Bool {
         return currentY == maxY ? true : false
     }
+    
+    
+    //MARK: Helper functions
+    func halfWayUp(y: CGFloat) -> Bool {
+        let midPoint = (midY - minY) / 2.0
+        return y < midPoint ? true : false
+    }
+    
+    func topHalf(y: CGFloat) -> Bool {
+        return y == midY ? true : false
+    }
+    
 }
