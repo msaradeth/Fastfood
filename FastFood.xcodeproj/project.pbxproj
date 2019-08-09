@@ -318,8 +318,8 @@
 			isa = PBXGroup;
 			children = (
 				0EECA6D322E97B3A005A722B /* Main.storyboard */,
-				5EFE7D7F22FCD4900001D595 /* StoreView */,
-				5EFE7D7E22FCD4610001D595 /* SearchView */,
+				5EC3D00C22F8E5AC0015D9C1 /* SearchVC.swift */,
+				5EFE7D8022FCD4AE0001D595 /* StoreVC.swift */,
 				5EFE7D7C22FC90140001D595 /* LayoutManager.swift */,
 				5EC3D00E22F8E5C40015D9C1 /* SearchViewModel.swift */,
 				5EC3D01422FA21220015D9C1 /* SearchHeaderCell.swift */,
@@ -328,22 +328,6 @@
 				5EC3D01022FA17220015D9C1 /* SearchCell.xib */,
 			);
 			path = Storyboard;
-			sourceTree = "<group>";
-		};
-		5EFE7D7E22FCD4610001D595 /* SearchView */ = {
-			isa = PBXGroup;
-			children = (
-				5EC3D00C22F8E5AC0015D9C1 /* SearchVC.swift */,
-			);
-			path = SearchView;
-			sourceTree = "<group>";
-		};
-		5EFE7D7F22FCD4900001D595 /* StoreView */ = {
-			isa = PBXGroup;
-			children = (
-				5EFE7D8022FCD4AE0001D595 /* StoreVC.swift */,
-			);
-			path = StoreView;
 			sourceTree = "<group>";
 		};
 		7330A52149E8E0EA4862546C /* Pods */ = {

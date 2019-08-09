@@ -14,14 +14,9 @@ class LayoutManager: NSObject {
     fileprivate let panGestureName = "panGestureName"
     weak var collectionView: UICollectionView?
     weak var topConstraint: NSLayoutConstraint?
-    var safeAreaInset: UIEdgeInsets? {
-        didSet {
-//            self.topY = (self.safeAreaInset?.top ?? 0) + (self.topConstraint?.constant ?? 0)
-        }
-    }
-    var topConstrantConstant: CGFloat {
-        return minY - (safeAreaInset?.top ?? 0)
-    }
+//    var topConstrantConstant: CGFloat {
+//        return minY - (safeAreaInset?.top ?? 0)
+//    }
 
     var minY: CGFloat
     var midY: CGFloat
@@ -30,10 +25,12 @@ class LayoutManager: NSObject {
     var width: CGFloat {
         return collectionView?.frame.width ?? 0
     }
-    var currentY: CGFloat = 0 {
+    var currentY: CGFloat {
         didSet {
-//            guard let collectionView = self.collectionView else { return }
+            guard let collectionView = self.collectionView else { return }
             print("didSet currentY: ", currentY)
+//            collectionView.frame = CGRect(x: 0, y: self.currentY, width: collectionView.frame.width, height: collectionView.frame.height)
+            
             animate(y: currentY)
             
 //            if !atTop() && (topConstraint?.isActive ?? false) {
@@ -61,10 +58,13 @@ class LayoutManager: NSObject {
         self.midY = midY
         self.maxY = maxY
         self.height = height
+        self.currentY = midY
+        
+        print("LayoutManager  topConstraint?.constant: ", topConstraint?.constant)
     }
     
     func animate(y: CGFloat) {
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.3) {
             guard let collectionView = self.collectionView else { return }
             collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
             collectionView.layoutIfNeeded()
@@ -111,14 +111,28 @@ extension LayoutManager {
     //MARK: handle swipe Gesture
     @objc private func handleSwipeGesture(_ sender: UISwipeGestureRecognizer) {
         print(sender.direction)
+        
+        enableGestures()
+        collectionView?.isScrollEnabled = false
+//        topConstraint?.isActive = false
+        
+        
         switch sender.direction {
         case .up:
             if atBottom() {
                 currentY = midY
             }else if atCenter() {
                 currentY = minY
+////                topConstraint?.constant = minY
+//                topConstraint?.isActive = true
+                if let topConstraint = self.topConstraint {
+//                    topConstraint.constant = minY
+//                    topConstraint.isActive = true
+                }
                 disableGestures()
                 collectionView?.isScrollEnabled = true
+                currentY = minY
+//                topConstraint?.isActive = true
             }
         case .down:
             if atTop() {

@@ -49,14 +49,6 @@ class StoreVC: UIViewController {
     
     
     func setupVC() {
-        layoutManager = LayoutManager(collectionView: collectionView,
-                topConstraint: collectionViewTopConstraint,
-                minY: view.frame.minY + topInset + view.safeAreaInsets.top,
-                midY: view.frame.midY,
-                maxY: view.frame.maxY - bottomHeight - view.safeAreaInsets.bottom,
-                height: view.bounds.height - topInset)
-        
-        print("safeAreaInsets: ", view.safeAreaInsets)
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -114,8 +106,13 @@ class StoreVC: UIViewController {
 //        collectionView.frame = CGRect(x: 0, y: self.mapView.frame.midY, width: collectionView.frame.width, height: mapView.frame.height - topInset)
         collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
         print("safeAreaInsets: ", view.safeAreaInsets)
-        layoutManager.minY = view.frame.minY + topInset + view.safeAreaInsets.top
-        layoutManager.maxY = view.frame.maxY - bottomHeight - view.safeAreaInsets.bottom
+        
+        layoutManager = LayoutManager(collectionView: collectionView,
+                                      topConstraint: collectionViewTopConstraint,
+                                      minY: view.frame.minY + topInset + view.safeAreaInsets.top,
+                                      midY: view.frame.midY,
+                                      maxY: view.frame.maxY - bottomHeight - view.safeAreaInsets.bottom,
+                                      height: view.bounds.height - topInset)
 
     }
     
@@ -216,6 +213,7 @@ extension StoreVC: UIScrollViewDelegate {
             // pull down
             if collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)) {
                 var y = collectionView.frame.minY + deltaY
+//                var y = collectionView.frame.minY + contentOffsetY
                 
                 if y > layoutManager.maxY {
                     y = layoutManager.maxY
