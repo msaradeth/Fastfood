@@ -54,64 +54,19 @@ class StoreVC: UIViewController {
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "SearchCell", bundle: nil), forCellWithReuseIdentifier: RestaurantCell.cellIdentifier)
         collectionView.register(UINib(nibName: "SearchHeaderCell", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchHeaderCell.cellIdentifier)
-//        collectionView.isScrollEnabled = true
 //        collectionView.decelerationRate = .fast
         collectionView.bounces = true
-
-        
-        //        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        //        collectionView.addGestureRecognizer(panGestureRecognizer)
-        
-        
-        
-        //        swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-        //        swipeGestureRecognizer.numberOfTouchesRequired = 1
-        ////        swipeGestureRecognizer.direction = .up
-        //        swipeGestureRecognizer.direction = .down
-        //        collectionView.addGestureRecognizer(swipeGestureRecognizer)
-        
-        //        self.collectionViewTopConstraint.constant = self.view.bounds.height / 2
-        //        self.collectionViewHeightConstraint.constant = self.view.bounds.height - topInset
-        
-        //        self.collectionView.frame = CGRect(x: 0, y: self.mapView.frame.midY, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
-        //        self.collectionViewButtomConstraint.constant = -(self.view.bounds.height/2 + collectionViewHeightConstraint.constant)
-        //        self.collectionViewButtomConstraint.constant = collectionView.bounds.height
-        
-        //        print("setupVC: ", collectionViewTopConstraint.constant, collectionViewHeightConstraint.constant, collectionView.bounds.height, self.view.bounds.height)
-        //        topInset = collectionView.bounds.height
-        
-        //        let collectionViewHeight = self.view.bounds.height - topInset
-        //        topCenterY = self.view.center.y + topInset/2.0  //self.view.center.y + (self.view.bounds.height - topInset) / 2
-        //        midCenterY = self.view.center.y + (collectionView.bounds.height/2)
-        //        bottomCenterY = self.view.center.y + (collectionView.frame.height/2) - bottomHeight
-        //        let y =  self.view.bounds.height / 2
-        //        print(y, collectionViewHeight, collectionView.bounds.width, collectionView.bounds.height)
-        
-        //        collectionView.isScrollEnabled = true
-        
-
-        
-        print("bounds: ", self.view.bounds, self.view.frame)
-        
-        print("collectionView.frame: ", collectionView.frame)
-        print("Settings: ", layoutManager)
-        print("view.safeAreaInsets: ", view.safeAreaInsets)
-        
-//        gestureManager.addSwipeGestures(view: collectionView)
-//        collectionView.frame = CGRect(x: 0, y: self.mapView.frame.midY, width: collectionView.frame.width, height: mapView.frame.height - topInset)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        collectionView.frame = CGRect(x: 0, y: self.mapView.frame.midY, width: collectionView.frame.width, height: mapView.frame.height - topInset)
+
         collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
         print("safeAreaInsets: ", view.safeAreaInsets)
         
         layoutManager = LayoutManager(collectionView: collectionView,                                      
-                                      minY: view.frame.minY + topInset + view.safeAreaInsets.top,
-                                      midY: view.frame.midY,
-                                      maxY: view.frame.maxY - bottomHeight - view.safeAreaInsets.bottom,
-                                      height: view.bounds.height - topInset,
+                                      topInset: topInset,
+                                      bottomHeight: bottomHeight,
                                       topConstraint: collectionViewTopConstraint)
 
     }
@@ -215,11 +170,11 @@ extension StoreVC: UIScrollViewDelegate {
                 var y = collectionView.frame.minY + deltaY
 //                var y = collectionView.frame.minY + contentOffsetY
                 
-                if y > layoutManager.maxY {
-                    y = layoutManager.maxY
+                if y > layoutManager.bottomY {
+                    y = layoutManager.bottomY
                 }
                 
-                if y <= layoutManager.maxY && y != layoutManager.currentY {
+                if y <= layoutManager.bottomY && y != layoutManager.currentY {
                     layoutManager.currentY = y
                 }
             }

@@ -54,107 +54,15 @@ class SearchVC: UIViewController {
         
         
         layoutManager = LayoutManager(collectionView: collectionView,
-                                      minY: topInset,
-                                      midY: view.bounds.height/2.0,
-                                      maxY: view.bounds.height - (bottomHeight + view.safeAreaInsets.bottom),
-                                      height: view.frame.height - topInset,
+                                      topInset: topInset,
+                                      bottomHeight: bottomHeight,
                                       topConstraint: collectionViewTopConstraint)
         
         layoutManager.addSwipeGestures(view: collectionView)
-        print("setupVC: ", view.bounds.height, view.bounds.height/2, layoutManager.minY, layoutManager.midY, layoutManager.maxY, layoutManager.height)
-        
-        
-//        print("setupVC collectionViewTopConstraint.constant: ", self.collectionViewTopConstraint.constant)
-        //
-//        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-//        collectionView.addGestureRecognizer(panGestureRecognizer)
-        
-        
-        
-//        swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-//        swipeGestureRecognizer.numberOfTouchesRequired = 1
-////        swipeGestureRecognizer.direction = .up
-//        swipeGestureRecognizer.direction = .down
-//        collectionView.addGestureRecognizer(swipeGestureRecognizer)
-        
-//        self.collectionViewTopConstraint.constant = self.view.bounds.height / 2
-//        self.collectionViewHeightConstraint.constant = self.view.bounds.height - topInset
-        
-//        self.collectionView.frame = CGRect(x: 0, y: self.mapView.frame.midY, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
-//        self.collectionViewButtomConstraint.constant = -(self.view.bounds.height/2 + collectionViewHeightConstraint.constant)
-//        self.collectionViewButtomConstraint.constant = collectionView.bounds.height
-        
-//        print("setupVC: ", collectionViewTopConstraint.constant, collectionViewHeightConstraint.constant, collectionView.bounds.height, self.view.bounds.height)
-//        topInset = collectionView.bounds.height
-        
-//        let collectionViewHeight = self.view.bounds.height - topInset
-//        topCenterY = self.view.center.y + topInset/2.0  //self.view.center.y + (self.view.bounds.height - topInset) / 2
-//        midCenterY = self.view.center.y + (collectionView.bounds.height/2)
-//        bottomCenterY = self.view.center.y + (collectionView.frame.height/2) - bottomHeight
-//        let y =  self.view.bounds.height / 2
-//        print(y, collectionViewHeight, collectionView.bounds.width, collectionView.bounds.height)
-        
-//        collectionView.isScrollEnabled = true
-        
-//        layoutManager = LayoutManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
-        
-//        print("bounds: ", self.view.bounds, self.view.frame)
-//
-//        print("collectionView.frame: ", collectionView.frame)
-//        print("Settings: ", layoutManager)
-//        print("view.safeAreaInsets: ", view.safeAreaInsets)
-//
-//        layoutManager.addSwipeGestures(view: collectionView)
 
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        print("self.view.safeAreaInsets: ", self.view.safeAreaInsets)
-//        layoutManager.safeAreaInset = view.safeAreaInsets
-//        layoutManager.currentY = layoutManager.midY
-//        collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
-//        layoutManager.midY = collectionView.frame.midY
-//        layoutManager.currentY = layoutManager.midY
-//        layoutManager = LayoutManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
-//
-//        print("bounds: ", self.view.bounds, self.view.frame)
-//
-//        print("collectionView.frame: ", collectionView.frame)
-//        print("Settings: ", layoutManager)
-//        print("view.safeAreaInsets: ", view.safeAreaInsets)
-//
-//        layoutManager.addSwipeGestures(view: collectionView)
-//        layoutManager.currentY = layoutManager.midY
-        
-        
-//        layoutManager = LayoutManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
-//
-//        print("bounds: ", self.view.bounds, self.view.frame)
-//
-//        print("collectionView.frame: ", collectionView.frame)
-//        print("Settings: ", layoutManager)
-//        print("view.safeAreaInsets: ", view.safeAreaInsets)
-        
-//        layoutManager = LayoutManager(collectionView: collectionView,
-//                                      minY: view.frame.minY + topInset,
-//                                      midY: view.frame.midY,
-//                                      maxY: view.frame.height - (bottomHeight + view.safeAreaInsets.bottom),
-//                                      height: view.frame.height - topInset,
-//                                      topConstraint: collectionViewTopConstraint)
-//
-//        layoutManager.addSwipeGestures(view: collectionView)
-//        layoutManager.currentY = layoutManager.midY
-//        layoutManager.currentY = layoutManager.midY
 
-//        collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
-//        print("layoutManager.minY: ", layoutManager.minY,  "  view.safeAreaInsets.top=", view.safeAreaInsets.top, "view.frame.minY=", view.frame.minY, topInset, view.safeAreaInsets.top + topInset)
-        
-//        print("viewDidLayoutSubviews collectionViewTopConstraint.constant: ", self.collectionViewTopConstraint)
-//
-        
-    }
-    
     //MARK:  viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -169,7 +77,7 @@ class SearchVC: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        layoutManager.currentY = layoutManager.midY
+        layoutManager.currentY = layoutManager.centerY
     }
     
     //Search Yelp Api to get Burger King Locations using search criteria
@@ -370,7 +278,7 @@ extension SearchVC: UIScrollViewDelegate {
                 print("scrollViewDidScroll: enableGestures: ", translation.y)
                 layoutManager.enableGestures()
                 collectionView.isScrollEnabled = false
-                layoutManager.currentY = layoutManager.midY
+                layoutManager.currentY = layoutManager.centerY
             }
         }
     }
