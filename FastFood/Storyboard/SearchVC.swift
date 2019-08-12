@@ -13,9 +13,10 @@ import RxSwift
 
 class SearchVC: UIViewController {
     fileprivate var disposeBag = DisposeBag()
-    var topInset: CGFloat = 170
+    var topInset: CGFloat = 80
     var bottomHeight: CGFloat = SearchCell.cellHeight + 8
     var layoutManager: LayoutManager!
+    var startScrollFromTop: Bool = false
 
     
     @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
@@ -50,6 +51,19 @@ class SearchVC: UIViewController {
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "SearchCell", bundle: nil), forCellWithReuseIdentifier: RestaurantCell.cellIdentifier)
         collectionView.register(UINib(nibName: "SearchHeaderCell", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchHeaderCell.cellIdentifier)
+        
+        
+        layoutManager = LayoutManager(collectionView: collectionView,
+                                      minY: topInset,
+                                      midY: view.bounds.height/2.0,
+                                      maxY: view.bounds.height - (bottomHeight + view.safeAreaInsets.bottom),
+                                      height: view.frame.height - topInset,
+                                      topConstraint: collectionViewTopConstraint)
+        
+        layoutManager.addSwipeGestures(view: collectionView)
+        print("setupVC: ", view.bounds.height, view.bounds.height/2, layoutManager.minY, layoutManager.midY, layoutManager.maxY, layoutManager.height)
+        
+        
 //        print("setupVC collectionViewTopConstraint.constant: ", self.collectionViewTopConstraint.constant)
         //
 //        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
@@ -84,19 +98,19 @@ class SearchVC: UIViewController {
         
 //        layoutManager = LayoutManager(collectionView: collectionView, topConstraint: collectionViewTopConstraint, minY: view.frame.minY + topInset, midY: view.frame.midY, maxY: view.frame.maxY - bottomHeight, height: view.bounds.height - topInset)
         
-        print("bounds: ", self.view.bounds, self.view.frame)
-        
-        print("collectionView.frame: ", collectionView.frame)
-        print("Settings: ", layoutManager)
-        print("view.safeAreaInsets: ", view.safeAreaInsets)
-        
+//        print("bounds: ", self.view.bounds, self.view.frame)
+//
+//        print("collectionView.frame: ", collectionView.frame)
+//        print("Settings: ", layoutManager)
+//        print("view.safeAreaInsets: ", view.safeAreaInsets)
+//
 //        layoutManager.addSwipeGestures(view: collectionView)
 
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print("self.view.safeAreaInsets: ", self.view.safeAreaInsets)
+//        print("self.view.safeAreaInsets: ", self.view.safeAreaInsets)
 //        layoutManager.safeAreaInset = view.safeAreaInsets
 //        layoutManager.currentY = layoutManager.midY
 //        collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
@@ -122,18 +136,19 @@ class SearchVC: UIViewController {
 //        print("Settings: ", layoutManager)
 //        print("view.safeAreaInsets: ", view.safeAreaInsets)
         
-        layoutManager = LayoutManager(collectionView: collectionView,
-                                      topConstraint: collectionViewTopConstraint,
-                                      minY: view.frame.minY + topInset, // + view.safeAreaInsets.top,
-                                      midY: view.frame.midY,
-                                      maxY: view.frame.maxY - bottomHeight - view.safeAreaInsets.bottom,
-                                      height: view.bounds.height - topInset)
-        
-        layoutManager.addSwipeGestures(view: collectionView)
+//        layoutManager = LayoutManager(collectionView: collectionView,
+//                                      minY: view.frame.minY + topInset,
+//                                      midY: view.frame.midY,
+//                                      maxY: view.frame.height - (bottomHeight + view.safeAreaInsets.bottom),
+//                                      height: view.frame.height - topInset,
+//                                      topConstraint: collectionViewTopConstraint)
+//
+//        layoutManager.addSwipeGestures(view: collectionView)
+//        layoutManager.currentY = layoutManager.midY
 //        layoutManager.currentY = layoutManager.midY
 
-        collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
-        print("layoutManager.minY: ", layoutManager.minY)
+//        collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
+//        print("layoutManager.minY: ", layoutManager.minY,  "  view.safeAreaInsets.top=", view.safeAreaInsets.top, "view.frame.minY=", view.frame.minY, topInset, view.safeAreaInsets.top + topInset)
         
 //        print("viewDidLayoutSubviews collectionViewTopConstraint.constant: ", self.collectionViewTopConstraint)
 //
@@ -148,9 +163,14 @@ class SearchVC: UIViewController {
         if viewModel.count == 0 {
             self.searchStore(location: nil, coordinate: self.mapView.userLocation.coordinate)
         }
+        
     }
     
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        layoutManager.currentY = layoutManager.midY
+    }
     
     //Search Yelp Api to get Burger King Locations using search criteria
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?) {
@@ -316,136 +336,55 @@ extension SearchVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension SearchVC: UIScrollViewDelegate {
-    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        let translation = scrollView.panGestureRecognizer.translation(in: scrollView)
-        print("translation.y: ", translation.y)
-        if translation.y <= 0 {
-            print("Pulling down", layoutManager.atTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
-             //Pulling Down
-            if (layoutManager.atTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
-//                layoutManager.disableGestures()
-//                layoutManager.enableGestures()
-//                collectionView.isScrollEnabled = false
-//                layoutManager.currentY = layoutManager.midY
-            }
+        let translation = scrollView.panGestureRecognizer.translation(in: view)
+        print("scrollViewWillBeginDragging: ", translation.y, layoutManager.atTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
+        if (layoutManager.atTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+            startScrollFromTop = true
         }else {
-//            layoutManager.enableGestures()
+            startScrollFromTop = false
         }
         
-////        if collectionView.isDragging || collectionView.isDecelerating {
-////            print("collectionView is Dragging: ", scrollView.contentOffset.y, collectionView.frame.maxY, minHeight, maxHeight)
-////        }
-//
-//        let contentOffsetY = abs(scrollView.contentOffset.y)
-//        if translation.y < 0 {
-//            //Dragging Down
-//            guard scrollView.contentOffset.y <= 0 && collectionViewHeightConstraint.constant > minHeight else { return }
-//            print("pulling Down: ", translation.y, collectionViewHeightConstraint.constant)
-//            let y = collectionView.frame.midY + contentOffsetY
-//            collectionView.frame = CGRect(x: 0, y: y, width: collectionView.bounds.width, height: collectionView.bounds.height)
-//            //            collectionViewHeightConstraint.constant = translation.y
-////            if collectionViewHeightConstraint.constant > minHeight {
-////                UIView.animate(withDuration: 0.3) {
-////                    self.collectionViewHeightConstraint.constant = minHeight
-////                    self.collectionView.layoutIfNeeded()
-////                }
-////            }
-//        }else {
-//            //Dragging UP
-//            print("Dragging UP: ", translation.y, collectionViewHeightConstraint.constant)
-//            //            collectionViewHeightConstraint.constant += translation.y
-//            if collectionViewHeightConstraint.constant < maxHeight {
-//                UIView.animate(withDuration: 0.3) {
-//                    self.collectionViewHeightConstraint.constant = maxHeight
-//                    self.collectionView.layoutIfNeeded()
-//                }
-//            }
-//        }
+        
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let translation = scrollView.panGestureRecognizer.translation(in: view)
+        print("scrollViewDidEndDecelerating: ", translation.y)
+        if translation.y > 0 {
+             //Pulling Down
+            if (layoutManager.atTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+                print("scrollViewDidEndDecelerating: enableGestures: ", translation.y)
+                layoutManager.enableGestures()
+                collectionView.isScrollEnabled = false
+            }
+        }
+    }
     
-    }
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let minHeight: CGFloat = SearchCell.cellHeight
-        let maxHeight: CGFloat = view.bounds.height - (view.safeAreaInsets.top + SearchCell.cellHeight)
-        let translation = scrollView.panGestureRecognizer.translation(in: scrollView)
-
-        //        if collectionView.isDragging || collectionView.isDecelerating {
-        //            print("collectionView is Dragging: ", scrollView.contentOffset.y, collectionView.frame.maxY, minHeight, maxHeight)
-        //        }
-        
-        let contentOffsetY = abs(scrollView.contentOffset.y)
-//        if translation.y > 0 {
-//            //Dragging Down
-//            guard scrollView.contentOffset.y <= 0 && collectionViewHeightConstraint.constant > minHeight else { return }
-//
-//            let y = collectionView.frame.minY + contentOffsetY
-//            guard y > minHeight else { return }
-//
-////            print("pulling Down: ", translation.y, collectionViewHeightConstraint.constant)
-//
-////            collectionView.frame = CGRect(x: 0, y: y, width: collectionView.bounds.width, height: collectionView.bounds.height)
-//            //            collectionViewHeightConstraint.constant = translation.y
-//            //            if collectionViewHeightConstraint.constant > minHeight {
-//            //                UIView.animate(withDuration: 0.3) {
-//            //                    self.collectionViewHeightConstraint.constant = minHeight
-//            //                    self.collectionView.layoutIfNeeded()
-//            //                }
-//            //            }
-//        }else {
-//            //Dragging UP
-//            let y = collectionView.frame.minY - contentOffsetY
-//            guard y < maxHeight else { return }
-//
-//
-////            collectionView.frame = CGRect(x: 0, y: y, width: collectionView.bounds.width, height: collectionView.bounds.height)
-//
-////            print("Dragging UP: ", translation.y, collectionViewHeightConstraint.constant)
-//
-//
-//
-//            //            collectionViewHeightConstraint.constant += translation.y
-////            if collectionViewHeightConstraint.constant < maxHeight {
-////                UIView.animate(withDuration: 0.3) {
-////                    self.collectionViewHeightConstraint.constant = maxHeight
-////                    self.collectionView.layoutIfNeeded()
-////                }
-////            }
-//        }
-//
-        
-//        if collectionView.isSpringLoaded {
-//            print("collectionView.isSpringLoaded ")
-//        }
-//        if collectionView.isDragging || collectionView.isDecelerating {
-//            print("collectionView is Dragging: ", translation.y, scrollView.contentOffset.y, minHeight, maxHeight)
-//        }
-//
-//
-////        print(view.safeAreaInsets)
-//        if translation.y > 0 {
-//            //Dragging Down
-//            guard scrollView.contentOffset.y <= 0 && collectionViewHeightConstraint.constant > minHeight else { return }
-//            print("Dragging Down: ", translation.y, collectionViewHeightConstraint.constant)
-////            collectionViewHeightConstraint.constant = translation.y
-//            if collectionViewHeightConstraint.constant > minHeight {
-//                UIView.animate(withDuration: 0.3) {
-//                    self.collectionViewHeightConstraint.constant = minHeight
-//                    self.collectionView.layoutIfNeeded()
-//                }
-//
-//            }
-//        }else {
-//            //Dragging UP
-//            print("Dragging UP: ", translation.y, collectionViewHeightConstraint.constant)
-////            collectionViewHeightConstraint.constant += translation.y
-//            if collectionViewHeightConstraint.constant < maxHeight {
-//                UIView.animate(withDuration: 0.3) {
-//                    self.collectionViewHeightConstraint.constant = maxHeight
-//                    self.collectionView.layoutIfNeeded()
-//                }
-//            }
-//        }
-        
+        let translation = scrollView.panGestureRecognizer.translation(in: view)
+        print("scrollViewDidScroll: ", translation.y, layoutManager.atTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
+        if translation.y > 0 && startScrollFromTop {
+            //Pulling Down
+            if (layoutManager.atTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+                print("scrollViewDidScroll: enableGestures: ", translation.y)
+                layoutManager.enableGestures()
+                collectionView.isScrollEnabled = false
+                layoutManager.currentY = layoutManager.midY
+            }
+        }
     }
+    
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        let translation = scrollView.panGestureRecognizer.translation(in: view)
+//        print("scrollViewDidEndDragging: ", translation.y)
+//        if translation.y > 0 {
+//            //Pulling Down
+//            if (layoutManager.atTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+//                print("scrollViewDidEndDragging: enableGestures: ", translation.y)
+//                layoutManager.enableGestures()
+//                collectionView.isScrollEnabled = false
+//            }
+//        }
+//    }
 }

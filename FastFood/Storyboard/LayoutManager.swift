@@ -10,17 +10,41 @@ import Foundation
 import UIKit
 
 class LayoutManager: NSObject {
+    var topInset: CGFloat = 80
+    var bottomHeight: CGFloat = SearchCell.cellHeight + 8
+    
     fileprivate let swipeGestureName = "swipeGestureName"
     fileprivate let panGestureName = "panGestureName"
     weak var collectionView: UICollectionView?
     weak var topConstraint: NSLayoutConstraint?
+    var availableHeight: CGFloat {
+        guard let superview = collectionView?.superview else { return 0 }
+        return superview.frame.height - (safeAreaInsets.top + safeAreaInsets.bottom)
+    }
+    var safeAreaInsets: UIEdgeInsets {
+        let safeAreaInsets = collectionView?.superview?.safeAreaInsets ?? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        return collectionView?.superview?.safeAreaInsets ?? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        print("LayoutManager: safeAreaInsets: ", print(safeAreaInsets))
+        return safeAreaInsets
+    }
+ 
 //    var topConstrantConstant: CGFloat {
 //        return minY - (safeAreaInset?.top ?? 0)
 //    }
 
-    var minY: CGFloat
-    var midY: CGFloat
-    var maxY: CGFloat
+    var minY: CGFloat {
+        return topInset
+    }
+    var midY: CGFloat {
+        return availableHeight / 2.0
+//        guard let superview = collectionView?.superview else { return 0 }
+//        return superview.frame.height / 2.0
+    }
+    var maxY: CGFloat {
+//        guard let superview = collectionView?.superview else { return 0 }
+        
+        return availableHeight - bottomHeight
+    }
     var height: CGFloat
     var width: CGFloat {
         return collectionView?.frame.width ?? 0
@@ -28,19 +52,19 @@ class LayoutManager: NSObject {
     var currentY: CGFloat {
         didSet {
             guard let collectionView = self.collectionView else { return }
-            print("didSet currentY: ", currentY)
+//            print("didSet currentY: ", currentY, "  safeAreaInsets: ", safeAreaInsets, "  collectionView.superview?.frame.height=", collectionView.superview?.frame.height)
 //            collectionView.frame = CGRect(x: 0, y: self.currentY, width: collectionView.frame.width, height: collectionView.frame.height)
             
-            animate(y: currentY)
+            updateUI(y: currentY)
             
 //            if !atTop() && (topConstraint?.isActive ?? false) {
 //                topConstraint?.isActive = false
 //            }
-//            UIView.animate(withDuration: 0.3) {
+//            UIView.updateUI(withDuration: 0.3) {
 //                collectionView.frame = CGRect(x: 0, y: self.currentY, width: collectionView.frame.width, height: collectionView.frame.height)
 //            }
 //
-//            UIView.animate(withDuration: 0.3, animations: {
+//            UIView.updateUI(withDuration: 0.3, animations: {
 //                collectionView.frame = CGRect(x: 0, y: self.currentY, width: self.width, height: self.height)
 //            }) { (finished) in
 //                if collectionView.alpha != 1 {
@@ -51,24 +75,28 @@ class LayoutManager: NSObject {
     }
     
     //MARK: init
-    init(collectionView: UICollectionView?, topConstraint: NSLayoutConstraint?, minY: CGFloat, midY: CGFloat, maxY: CGFloat, height: CGFloat) {
+    init(collectionView: UICollectionView?, minY: CGFloat, midY: CGFloat, maxY: CGFloat, height: CGFloat, topConstraint: NSLayoutConstraint?) {
         self.collectionView = collectionView
-        self.topConstraint = topConstraint
-        self.minY = minY
-        self.midY = midY
-        self.maxY = maxY
+//        self.minY = minY
+//        self.midY = midY
+//        self.maxY = maxY
         self.height = height
+        self.topConstraint = topConstraint
         self.currentY = midY
         
         print("LayoutManager  topConstraint?.constant: ", topConstraint?.constant)
     }
     
-    func animate(y: CGFloat) {
-        UIView.animate(withDuration: 0.3) {
-            guard let collectionView = self.collectionView else { return }
-            collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
-            collectionView.layoutIfNeeded()
-        }
+    func updateUI(y: CGFloat) {
+        topConstraint?.constant = self.currentY
+//        UIView.updateUI(withDuration: 0.4) {
+//            print("self.currentY: ", self.currentY)
+//            self.collectionView?.superview?.layoutIfNeeded()
+//        }
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+//            print("self.currentY: ", self.currentY)
+            self.collectionView?.superview?.layoutIfNeeded()
+        })
     }
     
     
@@ -110,7 +138,7 @@ extension LayoutManager {
     
     //MARK: handle swipe Gesture
     @objc private func handleSwipeGesture(_ sender: UISwipeGestureRecognizer) {
-        print(sender.direction)
+//        print(sender.direction)
         
         enableGestures()
         collectionView?.isScrollEnabled = false
@@ -123,15 +151,17 @@ extension LayoutManager {
                 currentY = midY
             }else if atCenter() {
                 currentY = minY
-////                topConstraint?.constant = minY
-//                topConstraint?.isActive = true
-                if let topConstraint = self.topConstraint {
-//                    topConstraint.constant = minY
-//                    topConstraint.isActive = true
-                }
                 disableGestures()
                 collectionView?.isScrollEnabled = true
-                currentY = minY
+                
+////                topConstraint?.constant = minY
+//                topConstraint?.isActive = true
+//                if let topConstraint = self.topConstraint {
+////                    topConstraint.constant = minY
+////                    topConstraint.isActive = true
+//                }
+
+//                currentY = minY
 //                topConstraint?.isActive = true
             }
         case .down:

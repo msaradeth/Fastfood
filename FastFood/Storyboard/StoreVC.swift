@@ -107,12 +107,12 @@ class StoreVC: UIViewController {
         collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
         print("safeAreaInsets: ", view.safeAreaInsets)
         
-        layoutManager = LayoutManager(collectionView: collectionView,
-                                      topConstraint: collectionViewTopConstraint,
+        layoutManager = LayoutManager(collectionView: collectionView,                                      
                                       minY: view.frame.minY + topInset + view.safeAreaInsets.top,
                                       midY: view.frame.midY,
                                       maxY: view.frame.maxY - bottomHeight - view.safeAreaInsets.bottom,
-                                      height: view.bounds.height - topInset)
+                                      height: view.bounds.height - topInset,
+                                      topConstraint: collectionViewTopConstraint)
 
     }
     

@@ -29,7 +29,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A5y-A2-r3x">
-                                <rect key="frame" x="0.0" y="170" width="414" height="726"/>
+                                <rect key="frame" x="0.0" y="188" width="414" height="708"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="H3M-bL-VSS">
                                     <size key="itemSize" width="50" height="50"/>
@@ -52,10 +52,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="hB8-GB-l1r" firstAttribute="bottom" secondItem="QEr-cU-9HS" secondAttribute="bottom" id="3Ig-TL-ybJ"/>
-                            <constraint firstItem="A5y-A2-r3x" firstAttribute="top" secondItem="ra9-Bk-RJq" secondAttribute="top" constant="170" id="52f-RJ-9k0"/>
                             <constraint firstItem="QEr-cU-9HS" firstAttribute="trailing" secondItem="hB8-GB-l1r" secondAttribute="trailing" id="8Vf-PO-xNN"/>
                             <constraint firstItem="A5y-A2-r3x" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" id="NdY-6S-iDd"/>
                             <constraint firstAttribute="bottom" secondItem="A5y-A2-r3x" secondAttribute="bottom" id="WZC-fR-dLq"/>
+                            <constraint firstItem="A5y-A2-r3x" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" constant="100" id="X0F-WR-5EG"/>
                             <constraint firstItem="gZu-9M-ArZ" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" constant="20" id="cLy-Pa-X5t"/>
                             <constraint firstItem="QEr-cU-9HS" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" id="eC3-cK-tYW"/>
                             <constraint firstItem="gZu-9M-ArZ" firstAttribute="trailing" secondItem="hB8-GB-l1r" secondAttribute="trailing" constant="-20" id="fzh-XP-15e"/>
@@ -68,7 +68,7 @@
                     <navigationItem key="navigationItem" title="Search Restaurant" id="1Gw-4O-Oeq"/>
                     <connections>
                         <outlet property="collectionView" destination="A5y-A2-r3x" id="BKf-Cf-BVW"/>
-                        <outlet property="collectionViewTopConstraint" destination="52f-RJ-9k0" id="FHV-RI-bik"/>
+                        <outlet property="collectionViewTopConstraint" destination="X0F-WR-5EG" id="eum-EO-7CQ"/>
                         <outlet property="mapView" destination="QEr-cU-9HS" id="OEK-Ak-cQo"/>
                     </connections>
                 </viewController>
