@@ -189,3 +189,40 @@ extension UIViewController {
 }
 
 
+//MARK:  UIPanGestureRecognizer extension
+//@objc func handlePanOrSwipe(recognizer: UIPanGestureRecognizer) {
+//    
+//    if let direction = recognizer.direction {
+//        if direction == .leftSwipe {
+//            //swiped left
+//        } else if direction == .up {
+//            //panned up
+//        } else if direction.isVertical && direction.isSwipe {
+//            //swiped vertically
+//        }
+//    }
+//}
+
+public enum PanSwipeDirection: Int {
+    case up, down, left, right, upSwipe, downSwipe, leftSwipe, rightSwipe
+    public var isSwipe: Bool { return [.upSwipe, .downSwipe, .leftSwipe, .rightSwipe].contains(self) }
+    public var isVertical: Bool { return [.up, .down, .upSwipe, .downSwipe].contains(self) }
+    public var isHorizontal: Bool { return !isVertical }
+}
+
+public extension UIPanGestureRecognizer {
+    
+    var direction: PanSwipeDirection? {
+        let SwipeThreshold: CGFloat = 1000
+        let velocity = self.velocity(in: view)
+        let isVertical = abs(velocity.y) > abs(velocity.x)
+        switch (isVertical, velocity.x, velocity.y) {
+        case (true, _, let y) where y < 0: return y < -SwipeThreshold ? .upSwipe : .up
+        case (true, _, let y) where y > 0: return y > SwipeThreshold ? .downSwipe : .down
+        case (false, let x, _) where x > 0: return x > SwipeThreshold ? .rightSwipe : .right
+        case (false, let x, _) where x < 0: return x < -SwipeThreshold ? .leftSwipe : .left
+        default: return nil
+        }
+    }
+    
+}

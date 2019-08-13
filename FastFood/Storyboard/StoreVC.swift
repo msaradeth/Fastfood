@@ -20,6 +20,13 @@ class StoreVC: UIViewController {
     fileprivate var disposeBag = DisposeBag()
     var topInset: CGFloat = 170
     var bottomHeight: CGFloat = SearchCell.cellHeight + 8
+    var bottomY: CGFloat {
+        return view.frame.height - (view.safeAreaInsets.bottom + bottomHeight)
+    }
+    var isScrollingDownFromTop: Int = 0
+    var isAtTop = false
+    
+    
     var layoutManager: LayoutManager!
     @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
@@ -56,19 +63,19 @@ class StoreVC: UIViewController {
         collectionView.register(UINib(nibName: "SearchHeaderCell", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchHeaderCell.cellIdentifier)
 //        collectionView.decelerationRate = .fast
         collectionView.bounces = true
+        
+
+        
+        layoutManager = LayoutManager(collectionView: collectionView,
+                                      topInset: topInset,
+                                      bottomHeight: bottomHeight,
+                                      topConstraint: collectionViewTopConstraint)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-        collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
-        print("safeAreaInsets: ", view.safeAreaInsets)
-        
-        layoutManager = LayoutManager(collectionView: collectionView,                                      
-                                      topInset: topInset,
-                                      bottomHeight: bottomHeight,
-                                      topConstraint: collectionViewTopConstraint)
-
+            collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
+            print("safeAreaInsets: ", view.safeAreaInsets)
     }
     
     //MARK:  viewWillAppear
@@ -139,17 +146,52 @@ extension StoreVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension StoreVC: UIScrollViewDelegate {
-  
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        let translation = scrollView.panGestureRecognizer.translation(in: scrollView)
+        print("scrollViewWillBeginDragging: ", collectionView.frame.minY, topInset, translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
+        
+//        isScrollingDownFromTop = 0
+//        if (isAtTop && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+//            isScrollingDownFromTop = true
+//        }else {
+//            isScrollingDownFromTop = false
+//        }
+        
+        
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let translation = scrollView.panGestureRecognizer.translation(in: view)
+        print("scrollViewDidEndDecelerating: ", translation.y)
+        
+        if translation.y < 0 {
+            //Pulling up
+            let deltaY = abs(translation.y)
+            var y = collectionView.frame.minY - deltaY
+//            if y <= self.bottomY {
+//                self.collectionView.frame = CGRect(x: 0, y: y, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
+//            }
+
+            
+//            if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+//                print("scrollViewDidEndDecelerating: enableGestures: ", translation.y)
+//                layoutManager.enableGestures()
+//                collectionView.isScrollEnabled = false
+//            }
+        }
+    }
+    
+
  
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: self.view)
         
+       
 //            if collectionView.isDragging || collectionView.isDecelerating {
 //                print("collectionView is Dragging: ", scrollView.contentOffset.y, collectionView.frame.maxY)
 //            }
         
         let contentOffsetY = scrollView.contentOffset.y
-        print("translation.y: ", translation.y, "    contentOffsetY: ", contentOffsetY)
+//        print("translation.y: ", translation.y, "    contentOffsetY: ", contentOffsetY)
         
         
         let deltaY = abs(translation.y)
@@ -158,26 +200,54 @@ extension StoreVC: UIScrollViewDelegate {
             var y = collectionView.frame.minY - deltaY
             if y < topInset {
                 y = topInset
+                isAtTop = true
+            }else {
+                isAtTop = false
             }
             
             
             if y >= topInset {
                 self.collectionView.frame = CGRect(x: 0, y: y, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
             }
+
         }else {
             // pull down
-            if collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)) {
-                var y = collectionView.frame.minY + deltaY
-//                var y = collectionView.frame.minY + contentOffsetY
+            var y = collectionView.frame.minY + (deltaY * 0.08)
+            print("pull down: ", isScrollingDownFromTop, collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)), y, self.bottomY)
+
+            if !collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)) {
+                isScrollingDownFromTop = 0
+            }else {
+                isScrollingDownFromTop += 1
+            }
+            if isScrollingDownFromTop >= 1 {
+                collectionView.isScrollEnabled = false
+                let frame = CGRect(x: 0, y: topInset, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
+                self.collectionView.frame = frame
+//                collectionView.scrollRectToVisible(frame, animated: true)
                 
-                if y > layoutManager.bottomY {
-                    y = layoutManager.bottomY
-                }
-                
-                if y <= layoutManager.bottomY && y != layoutManager.currentY {
-                    layoutManager.currentY = y
+                collectionView.isScrollEnabled = true
+                isScrollingDownFromTop = 0
+ 
+            }else {
+                if collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)) {
+                    
+                    //                var y = collectionView.frame.minY + contentOffsetY
+                    //                print("y= ", y, "  layoutManager.bottomY= ", self.bottomY)
+                    
+                    if y > self.bottomY {
+                        y = self.bottomY
+                    }
+                    
+                    if y <= self.bottomY {
+                        self.collectionView.frame = CGRect(x: 0, y: y, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
+                    }
+                    
+                    //                self.collectionView.frame = CGRect(x: 0, y: y, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
                 }
             }
+            
+
 
         }
 

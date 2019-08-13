@@ -15,6 +15,7 @@ class SearchVC: UIViewController {
     fileprivate var disposeBag = DisposeBag()
     var topInset: CGFloat = 80
     var bottomHeight: CGFloat = SearchCell.cellHeight + 8
+
     var layoutManager: LayoutManager!
     var startScrollFromTop: Bool = false
 
@@ -58,7 +59,14 @@ class SearchVC: UIViewController {
                                       bottomHeight: bottomHeight,
                                       topConstraint: collectionViewTopConstraint)
         
+        
+//        layoutManager.addPanGesture(view: collectionView)
         layoutManager.addSwipeGestures(view: collectionView)
+        
+        DispatchQueue.main.async {
+            self.layoutManager.currentY = self.layoutManager.centerY
+        }
+        
 
     }
 
@@ -75,10 +83,6 @@ class SearchVC: UIViewController {
     }
     
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        layoutManager.currentY = layoutManager.centerY
-    }
     
     //Search Yelp Api to get Burger King Locations using search criteria
     func searchStore(location: String?, coordinate: CLLocationCoordinate2D?) {
