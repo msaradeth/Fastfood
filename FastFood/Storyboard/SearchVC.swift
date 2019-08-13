@@ -246,8 +246,8 @@ extension SearchVC: UICollectionViewDelegateFlowLayout {
 extension SearchVC: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: view)
-        print("scrollViewWillBeginDragging: ", translation.y, layoutManager.atTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
-        if (layoutManager.atTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+        print("scrollViewWillBeginDragging: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
+        if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
             startScrollFromTop = true
         }else {
             startScrollFromTop = false
@@ -260,7 +260,7 @@ extension SearchVC: UIScrollViewDelegate {
         print("scrollViewDidEndDecelerating: ", translation.y)
         if translation.y > 0 {
              //Pulling Down
-            if (layoutManager.atTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+            if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
                 print("scrollViewDidEndDecelerating: enableGestures: ", translation.y)
                 layoutManager.enableGestures()
                 collectionView.isScrollEnabled = false
@@ -271,10 +271,10 @@ extension SearchVC: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: view)
-        print("scrollViewDidScroll: ", translation.y, layoutManager.atTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
+        print("scrollViewDidScroll: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
         if translation.y > 0 && startScrollFromTop {
             //Pulling Down
-            if (layoutManager.atTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+            if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
                 print("scrollViewDidScroll: enableGestures: ", translation.y)
                 layoutManager.enableGestures()
                 collectionView.isScrollEnabled = false

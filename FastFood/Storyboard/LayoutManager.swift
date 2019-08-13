@@ -101,17 +101,17 @@ extension LayoutManager {
         
         switch sender.direction {
         case .up:
-            if atBottom() {
+            if isAtBottom() {
                 currentY = centerY
-            }else if atCenter() {
+            }else if isAtCenter() {
                 currentY = topInset
                 disableGestures()
                 collectionView?.isScrollEnabled = true
             }
         case .down:
-            if atTop() {
+            if isAtTop() {
                 currentY = centerY
-            }else if atCenter() {
+            }else if isAtCenter() {
                 currentY = bottomY
             }
         default:
@@ -122,25 +122,26 @@ extension LayoutManager {
     
     
     //MARK: Helper function to determine current position
-    func atTop() -> Bool {
+    func isAtTop() -> Bool {
         return currentY == topInset ? true : false
     }
-    func atCenter() -> Bool {
+    func isAtCenter() -> Bool {
         return currentY == centerY ? true : false
     }
-    func atBottom() -> Bool {
+    func isAtBottom() -> Bool {
         return currentY == bottomY ? true : false
     }
     
     
     //MARK: Helper functions
-    func halfWayUp(y: CGFloat) -> Bool {
+    func isHalfWayUpFromCenter(y: CGFloat) -> Bool {
         let midPoint = (centerY - topInset) / 2.0
         return y < midPoint ? true : false
     }
-    
-    func topHalf(y: CGFloat) -> Bool {
-        return y == centerY ? true : false
+
+    func isHalfWayUpFromBottom(y: CGFloat) -> Bool {
+        let midPoint = centerY / 2.0
+        return y < midPoint ? true : false
     }
     
 }
