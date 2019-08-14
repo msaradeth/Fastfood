@@ -1,19 +1,19 @@
 //
-//  GestureManager.swift
+//  LayoutManagerFrame.swift
 //  FastFood
 //
-//  Created by Mike Saradeth on 8/8/19.
+//  Created by Mike Saradeth on 8/14/19.
 //  Copyright © 2019 Mike Saradeth. All rights reserved.
 //
 
 import Foundation
+
+
+import Foundation
 import UIKit
 
-class LayoutManager: NSObject {
+class LayoutManagerFrame: NSObject {
     fileprivate let swipeGestureName = "swipeGestureName"
-    fileprivate let panGestureName = "panGestureName"
-    fileprivate var panGesture: UIPanGestureRecognizer?
-    var origin: CGPoint!
     var availableHeight: CGFloat {
         guard let superview = collectionView?.superview else { return 0 }
         return superview.frame.height - (superview.safeAreaInsets.top + superview.safeAreaInsets.bottom)
@@ -22,7 +22,13 @@ class LayoutManager: NSObject {
         return availableHeight / 2.0
     }
     var bottomY: CGFloat {
-        return availableHeight - bottomHeight
+        guard let superview = collectionView?.superview else { return 0 }
+        let bottomY = superview.safeAreaInsets.top + (availableHeight - bottomHeight)
+        print("bottomY: ", bottomY, superview.frame.height, bottomHeight)
+        return bottomY
+//        print(superview.frame.height - bottomHeight, superview.frame.height, superview.frame.minY, bottomHeight)
+//        return superview.frame.height - (bottomHeight + superview.safeAreaInsets.bottom)
+//        return availableHeight - bottomHeight
     }
     var currentY: CGFloat = 0 {
         didSet {
@@ -43,7 +49,7 @@ class LayoutManager: NSObject {
         self.bottomHeight = bottomHeight
         self.topConstraint = topConstraint
         
-        print("LayoutManager  topConstraint?.constant: ", topConstraint?.constant)
+        print("LayoutManagerFrame  topConstraint?.constant: ", topConstraint?.constant)
     }
     
     func updateUI(y: CGFloat) {
@@ -57,7 +63,7 @@ class LayoutManager: NSObject {
     //MARK: enable and disable gestureRecognizers
     func enableGestures() {
         collectionView?.gestureRecognizers?.forEach({ (gesture) in
-            if let gestureName = gesture.name, gestureName == swipeGestureName || gestureName == panGestureName {
+            if let gestureName = gesture.name, gestureName == swipeGestureName {
                 gesture.isEnabled = true
             }
         })
@@ -66,7 +72,7 @@ class LayoutManager: NSObject {
     func disableGestures() {
         //Disable gestureRecognizers
         collectionView?.gestureRecognizers?.forEach({ (gesture) in
-            if let gestureName = gesture.name, gestureName == swipeGestureName || gestureName == panGestureName {
+            if let gestureName = gesture.name, gestureName == swipeGestureName {
                 gesture.isEnabled = false
             }
         })
@@ -103,16 +109,12 @@ class LayoutManager: NSObject {
 
 
 //MARK: UISwipeGestureRecognizer
-extension LayoutManager {
+extension LayoutManagerFrame {
     
     public func addSwipeGestures(view: UIView) {
         let directions: [UISwipeGestureRecognizer.Direction] = [.down, .up]
         for direction in directions {
             let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-            if let panGesture = self.panGesture {
-                panGesture.require(toFail: swipeGesture)
-//                swipeGesture.require(toFail: panGesture)
-            }
             swipeGesture.name = swipeGestureName
             swipeGesture.direction = direction
             view.addGestureRecognizer(swipeGesture)
@@ -148,52 +150,3 @@ extension LayoutManager {
     }
 }
 
-
-//MARK: UISwipeGestureRecognizer
-extension LayoutManager {
-    
-    public func addPanGesture(view: UIView) {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        view.addGestureRecognizer(panGesture)
-        self.panGesture = panGesture
-    }
-    
-    //MARK: handle swipe Gesture
-    @objc private func handlePanGesture(_ sender: UIPanGestureRecognizer) {
-//        print("PanGestureRecognizer")
-        guard let view = sender.view, let direction = sender.direction, let collectionView = self.collectionView else { return }
-        // Get the changes in the X and Y directions relative to the superview's coordinate.
-        let translation = sender.translation(in: view.superview)
-        
-        switch sender.state {
-        case .began:
-            origin = view.center
-            
-        case .changed:
-//            print("changed: ", view.center, translation.y, topConstraint.constant)
-            let y = view.center.y + translation.y
-            view.center = CGPoint(x: view.center.x, y: y)
-            sender.setTranslation(CGPoint.zero, in: view.superview)
-            
-        case .ended:
-//            print("ended: ", collectionView.frame.minY)
-
-            if direction == .up {
-                print("handlePanGesture up")
-                if isHalfWayUpFromCenter(y: collectionView.frame.minY) {
-                    print("isHalfWayUpFromCenter")
-                    self.currentY = topInset
-                }else if isHalfWayUpFromBottom(y: collectionView.frame.minY) {
-                    print("isHalfWayUpFromBottom")
-                    self.currentY = bottomY
-                }
-            }else if direction == .down {
-                print("handlePanGesture down")
-            }
-            sender.reset()
-            
-        default:
-            break
-        }
-    }
-}

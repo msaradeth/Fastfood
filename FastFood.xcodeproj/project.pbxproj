@@ -20,6 +20,8 @@
 		0EEEFED922EE312300B84753 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEEFED822EE312300B84753 /* BaseViewController.swift */; };
 		0EEF387822E731F10063B9D9 /* SearchMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEF387722E731F10063B9D9 /* SearchMapView.swift */; };
 		25747894CA2A7B86CDAA05E5 /* Pods_FastFoodUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7744F9EC5404C2A61E64BCFE /* Pods_FastFoodUITests.framework */; };
+		5E2D1CA12304C37C0017C25F /* LayoutManagerSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2D1CA02304C37C0017C25F /* LayoutManagerSwipe.swift */; };
+		5E2D1CA32304C4580017C25F /* LayoutManagerFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2D1CA22304C4580017C25F /* LayoutManagerFrame.swift */; };
 		5E7E562822DFCB3700230C16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E562722DFCB3700230C16 /* AppDelegate.swift */; };
 		5E7E563022DFCB3700230C16 /* FastFood.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E562E22DFCB3700230C16 /* FastFood.xcdatamodeld */; };
 		5E7E563222DFCB3800230C16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E7E563122DFCB3800230C16 /* Assets.xcassets */; };
@@ -90,6 +92,8 @@
 		16B66CA96E547D16B1E5A5E1 /* Pods-FastFoodTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FastFoodTests.debug.xcconfig"; path = "Target Support Files/Pods-FastFoodTests/Pods-FastFoodTests.debug.xcconfig"; sourceTree = "<group>"; };
 		470C94E9BAC97B549956D28C /* Pods_FastFoodTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FastFoodTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4918E5525478A7CE8797558B /* Pods-FastFoodUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FastFoodUITests.release.xcconfig"; path = "Target Support Files/Pods-FastFoodUITests/Pods-FastFoodUITests.release.xcconfig"; sourceTree = "<group>"; };
+		5E2D1CA02304C37C0017C25F /* LayoutManagerSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManagerSwipe.swift; sourceTree = "<group>"; };
+		5E2D1CA22304C4580017C25F /* LayoutManagerFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManagerFrame.swift; sourceTree = "<group>"; };
 		5E7E562422DFCB3700230C16 /* FastFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E7E562722DFCB3700230C16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E7E562F22DFCB3700230C16 /* FastFood.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FastFood.xcdatamodel; sourceTree = "<group>"; };
@@ -326,6 +330,8 @@
 				5EC3D01522FA21220015D9C1 /* SearchHeaderCell.xib */,
 				5EC3D01222FA17450015D9C1 /* SearchCell.swift */,
 				5EC3D01022FA17220015D9C1 /* SearchCell.xib */,
+				5E2D1CA02304C37C0017C25F /* LayoutManagerSwipe.swift */,
+				5E2D1CA22304C4580017C25F /* LayoutManagerFrame.swift */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -593,6 +599,7 @@
 				5EB1F50F22E1271300B8501C /* SearchStoreService.swift in Sources */,
 				5EB1F51122E12F7600B8501C /* HttpHelper.swift in Sources */,
 				5E7E565922DFCCAF00230C16 /* TabBarController.swift in Sources */,
+				5E2D1CA32304C4580017C25F /* LayoutManagerFrame.swift in Sources */,
 				5EC3D00F22F8E5C40015D9C1 /* SearchViewModel.swift in Sources */,
 				5E7E563022DFCB3700230C16 /* FastFood.xcdatamodeld in Sources */,
 				5EFE7D7D22FC90140001D595 /* LayoutManager.swift in Sources */,
@@ -618,6 +625,7 @@
 				0EEF387822E731F10063B9D9 /* SearchMapView.swift in Sources */,
 				5ED16A5D22EA3398006F6C15 /* Store.swift in Sources */,
 				0EEEFED722EDF1FC00B84753 /* RestaurantView.swift in Sources */,
+				5E2D1CA12304C37C0017C25F /* LayoutManagerSwipe.swift in Sources */,
 				0EEEFED922EE312300B84753 /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

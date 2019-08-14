@@ -15,10 +15,7 @@ class SearchVC: UIViewController {
     fileprivate var disposeBag = DisposeBag()
     var topInset: CGFloat = 80
     var bottomHeight: CGFloat = SearchCell.cellHeight + 8
-
-    var layoutManager: LayoutManager!
-    var startScrollFromTop: Bool = false
-
+    var layoutManager: LayoutManagerSwipe!
     
     @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
@@ -54,13 +51,11 @@ class SearchVC: UIViewController {
         collectionView.register(UINib(nibName: "SearchHeaderCell", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchHeaderCell.cellIdentifier)
         
         
-        layoutManager = LayoutManager(collectionView: collectionView,
+        layoutManager = LayoutManagerSwipe(collectionView: collectionView,
                                       topInset: topInset,
                                       bottomHeight: bottomHeight,
                                       topConstraint: collectionViewTopConstraint)
         
-        
-//        layoutManager.addPanGesture(view: collectionView)
         layoutManager.addSwipeGestures(view: collectionView)
         
         DispatchQueue.main.async {
@@ -252,9 +247,9 @@ extension SearchVC: UIScrollViewDelegate {
         let translation = scrollView.panGestureRecognizer.translation(in: view)
         print("scrollViewWillBeginDragging: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
         if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
-            startScrollFromTop = true
+            layoutManager.startScrollFromTop = true
         }else {
-            startScrollFromTop = false
+            layoutManager.startScrollFromTop = false
         }
         
         
@@ -276,7 +271,7 @@ extension SearchVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: view)
         print("scrollViewDidScroll: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
-        if translation.y > 0 && startScrollFromTop {
+        if translation.y > 0 && layoutManager.startScrollFromTop {
             //Pulling Down
             if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
                 print("scrollViewDidScroll: enableGestures: ", translation.y)
