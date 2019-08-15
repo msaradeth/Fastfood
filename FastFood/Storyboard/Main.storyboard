@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WuL-xZ-HOp">
-    <device id="ipad12_9rounded" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,21 +15,21 @@
             <objects>
                 <viewController storyboardIdentifier="SearchVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="U4p-3h-Rmf" customClass="SearchVC" customModule="FastFood" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ra9-Bk-RJq">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QEr-cU-9HS">
-                                <rect key="frame" x="300" y="74" width="724" height="1227"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="483"/>
                             </mapView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter city or zip" translatesAutoresizingMaskIntoConstraints="NO" id="gZu-9M-ArZ">
-                                <rect key="frame" x="320" y="94" width="684" height="44"/>
+                                <rect key="frame" x="20" y="84" width="374" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="wPD-sZ-Qat"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A5y-A2-r3x">
-                                <rect key="frame" x="0.0" y="74" width="300" height="1292"/>
+                                <rect key="frame" x="0.0" y="164" width="414" height="572"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="jz5-FF-ASs"/>
@@ -139,7 +139,7 @@
             <objects>
                 <viewController storyboardIdentifier="RestaurantDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="din-Rh-LOx" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gB1-CJ-zpZ">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c44-im-2RJ">
@@ -223,7 +223,6 @@
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HJe-D3-dIl">
                                         <rect key="frame" x="0.0" y="160" width="414" height="556"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                 </subviews>
@@ -303,21 +302,21 @@
             <objects>
                 <viewController storyboardIdentifier="StoreVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0Kj-5k-AXJ" customClass="StoreVC" customModule="FastFood" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JOI-JE-NhM">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ikk-fd-yP0">
-                                <rect key="frame" x="0.0" y="74" width="1024" height="1227"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                             </mapView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter city or zip" translatesAutoresizingMaskIntoConstraints="NO" id="a67-8b-aAF">
-                                <rect key="frame" x="20" y="94" width="984" height="44"/>
+                                <rect key="frame" x="20" y="84" width="374" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Qov-SP-uQw"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tXk-qk-dfq">
-                                <rect key="frame" x="0.0" y="174" width="1024" height="1192"/>
+                                <rect key="frame" x="0.0" y="164" width="414" height="572"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="Heh-Zf-Pbc">
                                     <size key="itemSize" width="50" height="50"/>
@@ -371,7 +370,7 @@
                     <tabBarItem key="tabBarItem" title="Frame" id="gkL-F7-h7d"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Qp-4f-tFo">
-                        <rect key="frame" x="0.0" y="24" width="1024" height="50"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -390,7 +389,7 @@
                     <tabBarItem key="tabBarItem" title="Swipe" id="4Rb-z3-pBv"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aCR-MI-bM0">
-                        <rect key="frame" x="0.0" y="24" width="1024" height="50"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

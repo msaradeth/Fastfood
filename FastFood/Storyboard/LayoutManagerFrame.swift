@@ -24,7 +24,7 @@ class LayoutManagerFrame: NSObject {
     var bottomY: CGFloat {
         guard let superview = collectionView?.superview else { return 0 }
         let bottomY = superview.safeAreaInsets.top + (availableHeight - bottomHeight)
-        print("bottomY: ", bottomY, superview.frame.height, bottomHeight)
+//        print("bottomY: ", bottomY, superview.frame.height, bottomHeight)
         return bottomY
 //        print(superview.frame.height - bottomHeight, superview.frame.height, superview.frame.minY, bottomHeight)
 //        return superview.frame.height - (bottomHeight + superview.safeAreaInsets.bottom)

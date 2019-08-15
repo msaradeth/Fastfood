@@ -76,7 +76,7 @@ class StoreVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
             collectionView.frame = CGRect(x: 0, y: view.frame.midY, width: collectionView.frame.width, height: view.frame.height - topInset)
-            print("safeAreaInsets: ", view.safeAreaInsets)
+//            print("safeAreaInsets: ", view.safeAreaInsets)
     }
     
     //MARK:  viewWillAppear
@@ -166,46 +166,53 @@ extension StoreVC: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: view)
 //        print("scrollViewWillBeginDragging: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
-        if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+//        if (collectionView.frame.minY == topInset && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
+//            layoutManager.startScrollFromTop = true
+//        }else {
+//            layoutManager.startScrollFromTop = false
+//        }
+        
+        if ((collectionView.frame.minY > layoutManager.topInset - 2 || collectionView.frame.minY < layoutManager.topInset + 2) && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
             layoutManager.startScrollFromTop = true
         }else {
             layoutManager.startScrollFromTop = false
         }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let translation = scrollView.panGestureRecognizer.translation(in: view)
-        
 
-        
-//        if translation.y > 0 {
-//            //Pulling Down
-//            if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
-//                print("scrollViewDidEndDecelerating: enableGestures: ", translation.y)
-////                layoutManager.enableGestures()
-////                collectionView.isScrollEnabled = false
-//            }
-//        }
     }
+
     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: view)
+
 //        print("scrollViewDidScroll: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
       
 //        if translation.y > 0 && layoutManager.startScrollFromTop {
-        let deltaY = translation.y * 0.05
-        if translation.y > 0 {
+        let deltaY = translation.y * 0.10
+//        updateUI(deltaY: deltaY, y: 0, scrollView: scrollView)
+//        return
+        
+        if deltaY > 0 {
             //Pulling Down
+//            print("pulling down: ", collectionView.frame.minY, topInset, layoutManager.startScrollFromTop)
+//            if (collectionView.frame.minY == topInset && !layoutManager.startScrollFromTop) {
+//                return
+//            }
+            
+            if ((collectionView.frame.minY > layoutManager.topInset - 2 || collectionView.frame.minY < layoutManager.topInset + 2) && !layoutManager.startScrollFromTop) {
+                return
+            }
+            
             var y = collectionView.frame.minY + deltaY
             if y <= layoutManager.bottomY {
                 y = layoutManager.bottomY
             }
             
-            print("down scrollViewDidEndDecelerating: ", y, layoutManager.bottomY, collectionView.frame.minY, translation.y)
+//            print("down scrollViewDidEndDecelerating: ", y, layoutManager.bottomY, collectionView.frame.minY, translation.y)
             if y <= layoutManager.bottomY && collectionView.frame.minY != layoutManager.bottomY {
+                updateUI(deltaY: deltaY, y: y, scrollView: scrollView)
 //                collectionView.isScrollEnabled = false
-                collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
+//                collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
 //                collectionView.isScrollEnabled = true
             }
         }else {
@@ -214,24 +221,42 @@ extension StoreVC: UIScrollViewDelegate {
                 y = layoutManager.topInset
             }
             
-            print("up scrollViewDidEndDecelerating: ", y, layoutManager.topInset, collectionView.frame.minY, translation.y)
+//            print("up scrollViewDidEndDecelerating: ", y, layoutManager.topInset, collectionView.frame.minY, translation.y)
             if y >= layoutManager.topInset && collectionView.frame.minY != layoutManager.topInset {
+                updateUI(deltaY: deltaY, y: y, scrollView: scrollView)
 //                collectionView.isScrollEnabled = false
-                collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
+//                collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
 //                collectionView.isScrollEnabled = true
             }
         }
+        scrollView.panGestureRecognizer.reset()
+        collectionView.panGestureRecognizer.reset()
 
-        
-//        if translation.y > 0 && layoutManager.startScrollFromTop {
-//            //Pulling Down
-//            if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
-//                print("scrollViewDidScroll: enableGestures: ", translation.y)
-//                layoutManager.enableGestures()
-//                collectionView.isScrollEnabled = false
-//                layoutManager.currentY = layoutManager.centerY
-//            }
+    }
+    
+    
+    func updateUI(deltaY: CGFloat, y: CGFloat, scrollView: UIScrollView) {
+        guard let collectionView = self.collectionView else { return }
+        var y = collectionView.frame.minY + deltaY
+//        if y <= layoutManager.bottomY {
+//            y = layoutManager.bottomY
+//        }else if y >= layoutManager.topInset {
+//            y = layoutManager.topInset
 //        }
+        
+        let frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
+        
+//        let frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
+        print("updateUI: deltaY=", deltaY, y, collectionView.frame.minY )
+        
+        UIView.animate(withDuration: 0.1,
+            delay: 0,
+            usingSpringWithDamping: 0.9, //where higher values make the bouncing finish faster.
+            initialSpringVelocity: 5,  //where higher values give the spring more initial momentum.
+            options: .curveEaseIn,
+            animations: {
+                self.collectionView?.frame = frame
+        })
     }
 
 }

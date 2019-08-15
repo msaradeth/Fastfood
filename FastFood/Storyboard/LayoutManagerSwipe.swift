@@ -63,8 +63,6 @@ class LayoutManagerSwipe: NSObject {
         }else {
             self.collectionView?.superview?.layoutIfNeeded()
         }
-
-        
     }
     
     
