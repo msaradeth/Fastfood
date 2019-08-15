@@ -27,7 +27,9 @@ class LayoutManagerSwipe: NSObject {
     var currentY: CGFloat = 0 {
         didSet {
             let animate = oldValue == 0 ? false : true  //don't animate the first time.
-            updateUI(animate: animate)
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                updateUI(animate: animate)
+            }            
         }
     }
     

@@ -43,8 +43,8 @@ class SearchVC: UIViewController {
     
     
     func setupVC() {
-        
-        collectionView.isScrollEnabled = false
+
+     
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "SearchCell", bundle: nil), forCellWithReuseIdentifier: RestaurantCell.cellIdentifier)
@@ -56,13 +56,14 @@ class SearchVC: UIViewController {
                                       bottomHeight: bottomHeight,
                                       topConstraint: collectionViewTopConstraint)
         
-        layoutManager.addSwipeGestures(view: collectionView)
-        
-        DispatchQueue.main.async {
-            self.layoutManager.currentY = self.layoutManager.centerY
-        }
-        
-
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            collectionView.isScrollEnabled = false
+            layoutManager.addSwipeGestures(view: collectionView)
+            
+            DispatchQueue.main.async {
+                self.layoutManager.currentY = self.layoutManager.centerY
+            }
+        }                
     }
 
 

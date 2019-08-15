@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WuL-xZ-HOp">
-    <device id="retina6_5" orientation="portrait">
+    <device id="ipad12_9rounded" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,22 +15,25 @@
             <objects>
                 <viewController storyboardIdentifier="SearchVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="U4p-3h-Rmf" customClass="SearchVC" customModule="FastFood" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ra9-Bk-RJq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QEr-cU-9HS">
-                                <rect key="frame" x="0.0" y="88" width="414" height="585"/>
+                                <rect key="frame" x="300" y="74" width="724" height="1227"/>
                             </mapView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter city or zip" translatesAutoresizingMaskIntoConstraints="NO" id="gZu-9M-ArZ">
-                                <rect key="frame" x="20" y="108" width="374" height="44"/>
+                                <rect key="frame" x="320" y="94" width="684" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="wPD-sZ-Qat"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A5y-A2-r3x">
-                                <rect key="frame" x="0.0" y="188" width="414" height="708"/>
+                                <rect key="frame" x="0.0" y="74" width="300" height="1292"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="jz5-FF-ASs"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="H3M-bL-VSS">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -47,23 +50,78 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="jz5-FF-ASs"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="jz5-FF-ASs"/>
+                                    </mask>
+                                </variation>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="hB8-GB-l1r" firstAttribute="bottom" secondItem="QEr-cU-9HS" secondAttribute="bottom" constant="140" id="3Ig-TL-ybJ"/>
+                            <constraint firstItem="hB8-GB-l1r" firstAttribute="trailing" secondItem="gZu-9M-ArZ" secondAttribute="trailing" constant="20" id="1ya-AX-VzY"/>
+                            <constraint firstItem="hB8-GB-l1r" firstAttribute="bottom" secondItem="QEr-cU-9HS" secondAttribute="bottom" constant="140" id="3Ig-TL-ybJ">
+                                <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="QEr-cU-9HS" firstAttribute="trailing" secondItem="hB8-GB-l1r" secondAttribute="trailing" id="8Vf-PO-xNN"/>
                             <constraint firstItem="A5y-A2-r3x" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" id="NdY-6S-iDd"/>
+                            <constraint firstItem="gZu-9M-ArZ" firstAttribute="leading" secondItem="A5y-A2-r3x" secondAttribute="leading" id="SwV-3e-9hv">
+                                <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                            </constraint>
                             <constraint firstAttribute="bottom" secondItem="A5y-A2-r3x" secondAttribute="bottom" id="WZC-fR-dLq"/>
-                            <constraint firstItem="A5y-A2-r3x" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" constant="100" id="X0F-WR-5EG"/>
+                            <constraint firstItem="A5y-A2-r3x" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" constant="100" id="X0F-WR-5EG">
+                                <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="QEr-cU-9HS" firstAttribute="leading" secondItem="A5y-A2-r3x" secondAttribute="trailing" id="att-Is-y1Y"/>
                             <constraint firstItem="gZu-9M-ArZ" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" constant="20" id="cLy-Pa-X5t"/>
+                            <constraint firstItem="gZu-9M-ArZ" firstAttribute="leading" secondItem="A5y-A2-r3x" secondAttribute="trailing" constant="20" id="dFw-ec-DA5"/>
                             <constraint firstItem="QEr-cU-9HS" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" id="eC3-cK-tYW"/>
+                            <constraint firstItem="gZu-9M-ArZ" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" constant="20" id="f14-aH-lu8"/>
                             <constraint firstItem="gZu-9M-ArZ" firstAttribute="trailing" secondItem="hB8-GB-l1r" secondAttribute="trailing" constant="-20" id="fzh-XP-15e"/>
                             <constraint firstItem="gZu-9M-ArZ" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" constant="20" id="kp6-Ue-p0Q"/>
                             <constraint firstItem="QEr-cU-9HS" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" id="n3G-V5-yKe"/>
+                            <constraint firstItem="hB8-GB-l1r" firstAttribute="trailing" secondItem="gZu-9M-ArZ" secondAttribute="trailing" constant="20" id="oLv-ND-Oe2"/>
+                            <constraint firstItem="QEr-cU-9HS" firstAttribute="leading" secondItem="A5y-A2-r3x" secondAttribute="leading" id="oUT-ZA-nG6"/>
+                            <constraint firstItem="gZu-9M-ArZ" firstAttribute="leading" secondItem="QEr-cU-9HS" secondAttribute="leading" id="rOp-EU-X3t">
+                                <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                            </constraint>
                             <constraint firstItem="A5y-A2-r3x" firstAttribute="trailing" secondItem="hB8-GB-l1r" secondAttribute="trailing" id="xrp-0p-Id2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hB8-GB-l1r"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1ya-AX-VzY"/>
+                                <exclude reference="oLv-ND-Oe2"/>
+                                <exclude reference="att-Is-y1Y"/>
+                                <exclude reference="oUT-ZA-nG6"/>
+                                <exclude reference="SwV-3e-9hv"/>
+                                <exclude reference="dFw-ec-DA5"/>
+                                <exclude reference="f14-aH-lu8"/>
+                                <exclude reference="rOp-EU-X3t"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <exclude reference="xrp-0p-Id2"/>
+                                <include reference="1ya-AX-VzY"/>
+                                <exclude reference="oLv-ND-Oe2"/>
+                                <include reference="att-Is-y1Y"/>
+                                <exclude reference="eC3-cK-tYW"/>
+                                <exclude reference="oUT-ZA-nG6"/>
+                                <exclude reference="SwV-3e-9hv"/>
+                                <exclude reference="cLy-Pa-X5t"/>
+                                <include reference="dFw-ec-DA5"/>
+                                <include reference="f14-aH-lu8"/>
+                                <exclude reference="fzh-XP-15e"/>
+                                <exclude reference="kp6-Ue-p0Q"/>
+                                <exclude reference="rOp-EU-X3t"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Search Restaurant" id="1Gw-4O-Oeq"/>
                     <connections>
@@ -74,18 +132,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2rO-05-fa5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1415.9420289855072" y="-431.25"/>
+            <point key="canvasLocation" x="1415.625" y="-431.25"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="OaT-oR-SKu">
             <objects>
                 <viewController storyboardIdentifier="RestaurantDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="din-Rh-LOx" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gB1-CJ-zpZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c44-im-2RJ">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B4I-XD-G0G">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
@@ -164,7 +222,8 @@
                                         </variation>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HJe-D3-dIl">
-                                        <rect key="frame" x="0.0" y="160" width="414" height="692"/>
+                                        <rect key="frame" x="0.0" y="160" width="414" height="556"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                 </subviews>
@@ -231,8 +290,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="tUY-PI-HMW" kind="relationship" relationship="viewControllers" id="s5t-Ig-iRG"/>
                         <segue destination="m0Y-2h-Ljc" kind="relationship" relationship="viewControllers" id="u8J-XD-cBU"/>
+                        <segue destination="tUY-PI-HMW" kind="relationship" relationship="viewControllers" id="s5t-Ig-iRG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pig-Pu-wIv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -244,21 +303,21 @@
             <objects>
                 <viewController storyboardIdentifier="StoreVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0Kj-5k-AXJ" customClass="StoreVC" customModule="FastFood" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JOI-JE-NhM">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ikk-fd-yP0">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="74" width="1024" height="1227"/>
                             </mapView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter city or zip" translatesAutoresizingMaskIntoConstraints="NO" id="a67-8b-aAF">
-                                <rect key="frame" x="20" y="108" width="374" height="44"/>
+                                <rect key="frame" x="20" y="94" width="984" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Qov-SP-uQw"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tXk-qk-dfq">
-                                <rect key="frame" x="0.0" y="188" width="414" height="708"/>
+                                <rect key="frame" x="0.0" y="174" width="1024" height="1192"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="Heh-Zf-Pbc">
                                     <size key="itemSize" width="50" height="50"/>
@@ -312,7 +371,7 @@
                     <tabBarItem key="tabBarItem" title="Frame" id="gkL-F7-h7d"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Qp-4f-tFo">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="24" width="1024" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -331,7 +390,7 @@
                     <tabBarItem key="tabBarItem" title="Swipe" id="4Rb-z3-pBv"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aCR-MI-bM0">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="24" width="1024" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
