@@ -26,7 +26,8 @@ class LayoutManagerSwipe: NSObject {
     }
     var currentY: CGFloat = 0 {
         didSet {
-            updateUI(y: currentY)
+            let animate = oldValue == 0 ? false : true  //don't animate the first time.
+            updateUI(animate: animate)
         }
     }
     
@@ -46,11 +47,22 @@ class LayoutManagerSwipe: NSObject {
         print("LayoutManagerSwipe  topConstraint?.constant: ", topConstraint?.constant)
     }
     
-    func updateUI(y: CGFloat) {
+    func updateUI(animate: Bool) {
         topConstraint?.constant = self.currentY
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+        if animate {
+            UIView.animate(withDuration: 0.5,
+                delay: 0,
+                usingSpringWithDamping: 0.7, //where higher values make the bouncing finish faster.
+                initialSpringVelocity: 1.5,  //where higher values give the spring more initial momentum.
+                options: .curveEaseIn,
+                animations: {
+                self.collectionView?.superview?.layoutIfNeeded()
+            })
+        }else {
             self.collectionView?.superview?.layoutIfNeeded()
-        })
+        }
+
+        
     }
     
     
@@ -118,10 +130,8 @@ extension LayoutManagerSwipe {
     //MARK: handle swipe Gesture
     @objc private func handleSwipeGesture(_ sender: UISwipeGestureRecognizer) {
         print("SwipeGestureRecognizer")
-        if collectionView?.isScrollEnabled == false {
-            enableGestures()
-            collectionView?.isScrollEnabled = false
-        }
+        enableGestures()
+        collectionView?.isScrollEnabled = false
         
         switch sender.direction {
         case .up:

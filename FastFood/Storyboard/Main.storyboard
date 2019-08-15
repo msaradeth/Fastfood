@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QEr-cU-9HS">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="585"/>
                             </mapView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter city or zip" translatesAutoresizingMaskIntoConstraints="NO" id="gZu-9M-ArZ">
                                 <rect key="frame" x="20" y="108" width="374" height="44"/>
@@ -51,7 +51,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="hB8-GB-l1r" firstAttribute="bottom" secondItem="QEr-cU-9HS" secondAttribute="bottom" id="3Ig-TL-ybJ"/>
+                            <constraint firstItem="hB8-GB-l1r" firstAttribute="bottom" secondItem="QEr-cU-9HS" secondAttribute="bottom" constant="140" id="3Ig-TL-ybJ"/>
                             <constraint firstItem="QEr-cU-9HS" firstAttribute="trailing" secondItem="hB8-GB-l1r" secondAttribute="trailing" id="8Vf-PO-xNN"/>
                             <constraint firstItem="A5y-A2-r3x" firstAttribute="leading" secondItem="hB8-GB-l1r" secondAttribute="leading" id="NdY-6S-iDd"/>
                             <constraint firstAttribute="bottom" secondItem="A5y-A2-r3x" secondAttribute="bottom" id="WZC-fR-dLq"/>
