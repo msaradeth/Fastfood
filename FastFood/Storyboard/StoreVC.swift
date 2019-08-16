@@ -188,17 +188,17 @@ extension StoreVC: UIScrollViewDelegate {
 //        print("scrollViewDidScroll: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
       
 //        if translation.y > 0 && layoutManager.startScrollFromTop {
-        let deltaY = translation.y * 0.10
+//        let deltaY = translation.y * 0.30
 //        updateUI(deltaY: deltaY, y: 0, scrollView: scrollView)
 //        return
         
-        if deltaY > 0 {
+        if translation.y > 0 {
             //Pulling Down
 //            print("pulling down: ", collectionView.frame.minY, topInset, layoutManager.startScrollFromTop)
 //            if (collectionView.frame.minY == topInset && !layoutManager.startScrollFromTop) {
 //                return
 //            }
-            
+            let deltaY = translation.y * 0.30
             if ((collectionView.frame.minY > layoutManager.topInset - 2 || collectionView.frame.minY < layoutManager.topInset + 2) && !layoutManager.startScrollFromTop) {
                 return
             }
@@ -216,6 +216,7 @@ extension StoreVC: UIScrollViewDelegate {
 //                collectionView.isScrollEnabled = true
             }
         }else {
+            let deltaY = translation.y   
             var y = collectionView.frame.minY + deltaY
             if y >= layoutManager.topInset {
                 y = layoutManager.topInset
@@ -223,7 +224,7 @@ extension StoreVC: UIScrollViewDelegate {
             
 //            print("up scrollViewDidEndDecelerating: ", y, layoutManager.topInset, collectionView.frame.minY, translation.y)
             if y >= layoutManager.topInset && collectionView.frame.minY != layoutManager.topInset {
-                updateUI(deltaY: deltaY, y: y, scrollView: scrollView)
+                updateUI(deltaY: deltaY, y: y, scrollView: scrollView, animate: false)
 //                collectionView.isScrollEnabled = false
 //                collectionView.frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
 //                collectionView.isScrollEnabled = true
@@ -235,7 +236,7 @@ extension StoreVC: UIScrollViewDelegate {
     }
     
     
-    func updateUI(deltaY: CGFloat, y: CGFloat, scrollView: UIScrollView) {
+    func updateUI(deltaY: CGFloat, y: CGFloat, scrollView: UIScrollView, animate: Bool = true) {
         guard let collectionView = self.collectionView else { return }
         var y = collectionView.frame.minY + deltaY
 //        if y <= layoutManager.bottomY {
@@ -249,14 +250,19 @@ extension StoreVC: UIScrollViewDelegate {
 //        let frame = CGRect(x: 0, y: y, width: collectionView.frame.width, height: collectionView.frame.height)
         print("updateUI: deltaY=", deltaY, y, collectionView.frame.minY )
         
-        UIView.animate(withDuration: 0.1,
-            delay: 0,
-            usingSpringWithDamping: 0.9, //where higher values make the bouncing finish faster.
-            initialSpringVelocity: 5,  //where higher values give the spring more initial momentum.
-            options: .curveEaseIn,
-            animations: {
-                self.collectionView?.frame = frame
-        })
+        if animate {
+            UIView.animate(withDuration: 0.3,
+                delay: 0,
+                usingSpringWithDamping: 0.5, //where higher values make the bouncing finish faster.
+                initialSpringVelocity: 1.5,  //where higher values give the spring more initial momentum.
+                options: .curveEaseInOut,
+                animations: {
+                    self.collectionView?.frame = frame
+            })
+        }else {
+            self.collectionView?.frame = frame
+        }
+
     }
 
 }
