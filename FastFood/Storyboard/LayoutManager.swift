@@ -13,21 +13,35 @@ class LayoutManager: NSObject {
     fileprivate let swipeGestureName = "swipeGestureName"
     fileprivate let panGestureName = "panGestureName"
     fileprivate var panGesture: UIPanGestureRecognizer?
-    var origin: CGPoint!
     var availableHeight: CGFloat {
         guard let superview = collectionView?.superview else { return 0 }
         return superview.frame.height - (superview.safeAreaInsets.top + superview.safeAreaInsets.bottom)
     }
-    var centerY: CGFloat {
+    var safeAreaInsets: UIEdgeInsets {
+        return collectionView?.superview?.safeAreaInsets ?? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    var topConstraintValue: CGFloat {
+        return topInset
+    }
+    var centerConstraintValue: CGFloat {
         return availableHeight / 2.0
     }
-    var bottomY: CGFloat {
+    var bottomConstraintValue: CGFloat {
         return availableHeight - bottomHeight
     }
-    var currentY: CGFloat = 0 {
+    var currentConstraintValue: CGFloat = 0 {
         didSet {
-            updateUI(y: currentY)
+            updateUI()
         }
+    }
+    var minY: CGFloat {
+        return safeAreaInsets.top + topInset
+    }
+    var midY: CGFloat {
+        return safeAreaInsets.top + centerConstraintValue
+    }
+    var maxY: CGFloat {
+        return safeAreaInsets.top + bottomConstraintValue
     }
     
     weak var collectionView: UICollectionView?
@@ -46,8 +60,8 @@ class LayoutManager: NSObject {
         print("LayoutManager  topConstraint?.constant: ", topConstraint?.constant)
     }
     
-    func updateUI(y: CGFloat) {
-        topConstraint?.constant = self.currentY
+    func updateUI() {
+        topConstraint?.constant = currentConstraintValue
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
             self.collectionView?.superview?.layoutIfNeeded()
         })
@@ -76,30 +90,42 @@ class LayoutManager: NSObject {
     
     //MARK: Helper function to determine current position
     func isAtTop() -> Bool {
-        return currentY == topInset ? true : false
+        return currentConstraintValue == topInset || collectionView?.frame.minY == minY ? true : false
     }
     
     func isAtCenter() -> Bool {
-        return currentY == centerY ? true : false
+        return currentConstraintValue == centerConstraintValue ? true : false
     }
     
     func isAtBottom() -> Bool {
-        return currentY == bottomY ? true : false
+        return currentConstraintValue == bottomConstraintValue ? true : false
+    }
+    
+    func isInTopHalfOfScreen(y: CGFloat) -> Bool {
+        return y <= midY ? true : false
+    }
+    func isInBottomHalfOfScreen(y: CGFloat) -> Bool {
+        return y >= midY ? true : false
     }
     
     func isHalfWayUpFromCenter(y: CGFloat) -> Bool {
-        let midPoint = (centerY - topInset) / 2.0
-        print("isHalfWayUpFromCenter: ", y, " > ", midPoint, centerY, topInset)
-        return y > midPoint ? true : false
+        let midPoint = minY + (midY - minY)/2.0
+//        print("isHalfWayUpFromCenter: ", y > midPoint,  y, " > ", midPoint, centerConstraintValue, topInset)
+        return y < midPoint ? true : false
     }
     
     func isHalfWayUpFromBottom(y: CGFloat) -> Bool {
-        let midPoint = centerY / 2.0
-        print("isHalfWayUpFromBottom: ", y, midPoint, centerY, topInset)
+        let midPoint = midY + (maxY - midY)/2.0
+//        print("isHalfWayUpFromBottom: ", y, midPoint, centerConstraintValue, topInset)
         return y < midPoint ? true : false
     }
 }
 
+extension LayoutManager: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
 
 
 //MARK: UISwipeGestureRecognizer
@@ -109,10 +135,11 @@ extension LayoutManager {
         let directions: [UISwipeGestureRecognizer.Direction] = [.down, .up]
         for direction in directions {
             let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-            if let panGesture = self.panGesture {
-                panGesture.require(toFail: swipeGesture)
-//                swipeGesture.require(toFail: panGesture)
-            }
+            swipeGesture.delegate = self
+//            if let panGesture = self.panGesture {
+//                panGesture.require(toFail: swipeGesture)
+////                swipeGesture.require(toFail: panGesture)
+//            }
             swipeGesture.name = swipeGestureName
             swipeGesture.direction = direction
             view.addGestureRecognizer(swipeGesture)
@@ -122,25 +149,30 @@ extension LayoutManager {
     //MARK: handle swipe Gesture
     @objc private func handleSwipeGesture(_ sender: UISwipeGestureRecognizer) {
         print("SwipeGestureRecognizer")
-        if collectionView?.isScrollEnabled == false {
+        guard let collectionView = self.collectionView else { return }
+        if isAtTop() {
+            disableGestures()
+            collectionView.isScrollEnabled = true
+        }else {
             enableGestures()
-            collectionView?.isScrollEnabled = false
+            collectionView.isScrollEnabled = false
         }
+        
         
         switch sender.direction {
         case .up:
             if isAtBottom() {
-                currentY = centerY
+                currentConstraintValue = centerConstraintValue
             }else if isAtCenter() {
-                currentY = topInset
+                currentConstraintValue = topInset
                 disableGestures()
-                collectionView?.isScrollEnabled = true
+                collectionView.isScrollEnabled = true
             }
         case .down:
             if isAtTop() {
-                currentY = centerY
+                currentConstraintValue = centerConstraintValue
             }else if isAtCenter() {
-                currentY = bottomY
+                currentConstraintValue = bottomConstraintValue
             }
         default:
             break
@@ -149,51 +181,66 @@ extension LayoutManager {
 }
 
 
-//MARK: UISwipeGestureRecognizer
+//MARK: UIPanGestureRecognizer
 extension LayoutManager {
     
     public func addPanGesture(view: UIView) {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        panGesture.delegate = self
         view.addGestureRecognizer(panGesture)
         self.panGesture = panGesture
     }
     
-    //MARK: handle swipe Gesture
+    //handle PanGestureRecognizer
     @objc private func handlePanGesture(_ sender: UIPanGestureRecognizer) {
-//        print("PanGestureRecognizer")
-        guard let view = sender.view, let direction = sender.direction, let collectionView = self.collectionView else { return }
+        print("PanGestureRecognizer")
+        guard let collectionView = self.collectionView else { return }
+        if isAtTop() {
+            disableGestures()
+            collectionView.isScrollEnabled = true
+            return
+        }else {
+            enableGestures()
+            collectionView.isScrollEnabled = false
+        }
+
+        
+        guard let view = sender.view else { return }
         // Get the changes in the X and Y directions relative to the superview's coordinate.
         let translation = sender.translation(in: view.superview)
         
         switch sender.state {
-        case .began:
-            origin = view.center
-            
         case .changed:
-//            print("changed: ", view.center, translation.y, topConstraint.constant)
             let y = view.center.y + translation.y
             view.center = CGPoint(x: view.center.x, y: y)
-            sender.setTranslation(CGPoint.zero, in: view.superview)
+            sender.setTranslation(CGPoint.zero, in: view)
             
         case .ended:
-//            print("ended: ", collectionView.frame.minY)
-
-            if direction == .up {
-                print("handlePanGesture up")
-                if isHalfWayUpFromCenter(y: collectionView.frame.minY) {
-                    print("isHalfWayUpFromCenter")
-                    self.currentY = topInset
-                }else if isHalfWayUpFromBottom(y: collectionView.frame.minY) {
-                    print("isHalfWayUpFromBottom")
-                    self.currentY = bottomY
+            if isInTopHalfOfScreen(y: view.frame.minY) {
+                if isHalfWayUpFromCenter(y: view.frame.minY) {
+                    updateUI(view: view, y: minY)
+                }else {
+                    updateUI(view: view, y: midY)
                 }
-            }else if direction == .down {
-                print("handlePanGesture down")
+            }else {
+                //bottom half of screen
+                if isHalfWayUpFromBottom(y: view.frame.minY) {
+//                    print("isHalfWayUpFromCenter")
+                    updateUI(view: view, y: midY)
+                }else {
+                    updateUI(view: view, y: maxY)
+                }
             }
             sender.reset()
             
         default:
             break
         }
+    }
+    
+    func updateUI(view: UIView, y: CGFloat) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+            view.frame = CGRect(x: 0, y: y, width: view.frame.width, height: view.frame.height)
+        })
     }
 }
