@@ -107,7 +107,6 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <exclude reference="xrp-0p-Id2"/>
                                 <include reference="1ya-AX-VzY"/>
                                 <exclude reference="oLv-ND-Oe2"/>
                                 <include reference="att-Is-y1Y"/>
@@ -120,6 +119,7 @@
                                 <exclude reference="fzh-XP-15e"/>
                                 <exclude reference="kp6-Ue-p0Q"/>
                                 <exclude reference="rOp-EU-X3t"/>
+                                <exclude reference="xrp-0p-Id2"/>
                             </mask>
                         </variation>
                     </view>
@@ -289,6 +289,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <segue destination="MhJ-iU-UlM" kind="relationship" relationship="viewControllers" id="suE-r5-1Zg"/>
                         <segue destination="m0Y-2h-Ljc" kind="relationship" relationship="viewControllers" id="u8J-XD-cBU"/>
                         <segue destination="tUY-PI-HMW" kind="relationship" relationship="viewControllers" id="s5t-Ig-iRG"/>
                     </connections>
@@ -382,11 +383,11 @@
             </objects>
             <point key="canvasLocation" x="492.75362318840581" y="363.61607142857139"/>
         </scene>
-        <!--Swipe-->
+        <!--PanSwipe-->
         <scene sceneID="4Db-18-pAK">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="m0Y-2h-Ljc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Swipe" id="4Rb-z3-pBv"/>
+                    <tabBarItem key="tabBarItem" title="PanSwipe" id="4Rb-z3-pBv"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aCR-MI-bM0">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -400,6 +401,149 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4c7-q3-LJI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="505.79710144927537" y="-431.25"/>
+        </scene>
+        <!--Scroll-->
+        <scene sceneID="bex-sU-sVn">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MhJ-iU-UlM" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Scroll" id="V3w-xi-qMv"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nhC-k2-ZPf">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Jhx-Pu-lbO" kind="relationship" relationship="rootViewController" id="AkK-TS-qyR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XaS-hC-swv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="493" y="-1167"/>
+        </scene>
+        <!--Scroll Restaurant-->
+        <scene sceneID="yLb-Q3-uHU">
+            <objects>
+                <viewController storyboardIdentifier="ScrollVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jhx-Pu-lbO" customClass="ScrollVC" customModule="FastFood" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oIv-o3-dDU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="o4O-b7-c1E">
+                                <rect key="frame" x="0.0" y="64" width="414" height="483"/>
+                            </mapView>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Enter city or zip" translatesAutoresizingMaskIntoConstraints="NO" id="YLK-tB-5Tt">
+                                <rect key="frame" x="20" y="84" width="374" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="AmM-jp-hT4"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8Uc-YJ-fAF">
+                                <rect key="frame" x="0.0" y="164" width="414" height="572"/>
+                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="2Le-EK-aQz"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="Odf-zm-Vjf">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pC4-4j-Nh8">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2Le-EK-aQz"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="2Le-EK-aQz"/>
+                                    </mask>
+                                </variation>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YLK-tB-5Tt" firstAttribute="leading" secondItem="o4O-b7-c1E" secondAttribute="leading" id="0e3-VI-5LY">
+                                <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                            </constraint>
+                            <constraint firstItem="YLK-tB-5Tt" firstAttribute="top" secondItem="gTK-fd-bGV" secondAttribute="top" constant="20" id="69N-5W-euc"/>
+                            <constraint firstItem="YLK-tB-5Tt" firstAttribute="leading" secondItem="gTK-fd-bGV" secondAttribute="leading" constant="20" id="8ck-Vw-YeD"/>
+                            <constraint firstItem="YLK-tB-5Tt" firstAttribute="trailing" secondItem="gTK-fd-bGV" secondAttribute="trailing" constant="-20" id="HYZ-lk-drk"/>
+                            <constraint firstItem="gTK-fd-bGV" firstAttribute="trailing" secondItem="YLK-tB-5Tt" secondAttribute="trailing" constant="20" id="JJM-zx-9iY"/>
+                            <constraint firstItem="o4O-b7-c1E" firstAttribute="trailing" secondItem="gTK-fd-bGV" secondAttribute="trailing" id="Lia-8t-9KF"/>
+                            <constraint firstItem="YLK-tB-5Tt" firstAttribute="top" secondItem="gTK-fd-bGV" secondAttribute="top" constant="20" id="S0M-eo-Sz1"/>
+                            <constraint firstItem="o4O-b7-c1E" firstAttribute="top" secondItem="gTK-fd-bGV" secondAttribute="top" id="SQ3-Ma-6Wj"/>
+                            <constraint firstItem="o4O-b7-c1E" firstAttribute="leading" secondItem="gTK-fd-bGV" secondAttribute="leading" id="V7e-LG-97C"/>
+                            <constraint firstItem="8Uc-YJ-fAF" firstAttribute="leading" secondItem="gTK-fd-bGV" secondAttribute="leading" id="Z9s-1X-Qwx"/>
+                            <constraint firstItem="o4O-b7-c1E" firstAttribute="leading" secondItem="8Uc-YJ-fAF" secondAttribute="trailing" id="enm-z2-NVP"/>
+                            <constraint firstAttribute="bottom" secondItem="8Uc-YJ-fAF" secondAttribute="bottom" id="exP-lk-mmq"/>
+                            <constraint firstItem="YLK-tB-5Tt" firstAttribute="leading" secondItem="8Uc-YJ-fAF" secondAttribute="trailing" constant="20" id="gI8-mJ-Qyy"/>
+                            <constraint firstItem="YLK-tB-5Tt" firstAttribute="leading" secondItem="8Uc-YJ-fAF" secondAttribute="leading" id="gyN-3e-yVO">
+                                <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                            </constraint>
+                            <constraint firstItem="o4O-b7-c1E" firstAttribute="leading" secondItem="8Uc-YJ-fAF" secondAttribute="leading" id="kHI-qt-Fmt"/>
+                            <constraint firstItem="gTK-fd-bGV" firstAttribute="bottom" secondItem="o4O-b7-c1E" secondAttribute="bottom" constant="140" id="mFV-fW-yyR">
+                                <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="8Uc-YJ-fAF" firstAttribute="top" secondItem="gTK-fd-bGV" secondAttribute="top" constant="100" id="n4B-Vh-YI7">
+                                <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="8Uc-YJ-fAF" firstAttribute="trailing" secondItem="gTK-fd-bGV" secondAttribute="trailing" id="pBB-Zt-ZnJ"/>
+                            <constraint firstItem="gTK-fd-bGV" firstAttribute="trailing" secondItem="YLK-tB-5Tt" secondAttribute="trailing" constant="20" id="pO2-hw-29G"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gTK-fd-bGV"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="pO2-hw-29G"/>
+                                <exclude reference="JJM-zx-9iY"/>
+                                <exclude reference="enm-z2-NVP"/>
+                                <exclude reference="kHI-qt-Fmt"/>
+                                <exclude reference="gyN-3e-yVO"/>
+                                <exclude reference="gI8-mJ-Qyy"/>
+                                <exclude reference="S0M-eo-Sz1"/>
+                                <exclude reference="0e3-VI-5LY"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="pO2-hw-29G"/>
+                                <exclude reference="JJM-zx-9iY"/>
+                                <include reference="enm-z2-NVP"/>
+                                <exclude reference="V7e-LG-97C"/>
+                                <exclude reference="kHI-qt-Fmt"/>
+                                <exclude reference="gyN-3e-yVO"/>
+                                <exclude reference="8ck-Vw-YeD"/>
+                                <include reference="gI8-mJ-Qyy"/>
+                                <include reference="S0M-eo-Sz1"/>
+                                <exclude reference="HYZ-lk-drk"/>
+                                <exclude reference="69N-5W-euc"/>
+                                <exclude reference="0e3-VI-5LY"/>
+                                <exclude reference="pBB-Zt-ZnJ"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Scroll Restaurant" id="qK2-xt-HZh"/>
+                    <connections>
+                        <outlet property="collectionView" destination="8Uc-YJ-fAF" id="Beb-ph-Emw"/>
+                        <outlet property="collectionViewTopConstraint" destination="n4B-Vh-YI7" id="0b1-v5-NFT"/>
+                        <outlet property="mapView" destination="o4O-b7-c1E" id="Dzm-xx-cT2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bIK-8i-G1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1332" y="-1166"/>
         </scene>
     </scenes>
 </document>

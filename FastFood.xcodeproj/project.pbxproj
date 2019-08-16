@@ -22,6 +22,8 @@
 		25747894CA2A7B86CDAA05E5 /* Pods_FastFoodUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7744F9EC5404C2A61E64BCFE /* Pods_FastFoodUITests.framework */; };
 		5E14555223070A02006F62D7 /* GestureVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E14555123070A02006F62D7 /* GestureVC.swift */; };
 		5E14555423070A79006F62D7 /* LayoutManagerGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E14555323070A79006F62D7 /* LayoutManagerGesture.swift */; };
+		5E1455562307397B006F62D7 /* ScrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1455552307397B006F62D7 /* ScrollVC.swift */; };
+		5E145558230739DA006F62D7 /* LayoutManagerScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E145557230739DA006F62D7 /* LayoutManagerScroll.swift */; };
 		5E2D1CA12304C37C0017C25F /* LayoutManagerSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2D1CA02304C37C0017C25F /* LayoutManagerSwipe.swift */; };
 		5E2D1CA32304C4580017C25F /* LayoutManagerFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2D1CA22304C4580017C25F /* LayoutManagerFrame.swift */; };
 		5E7E562822DFCB3700230C16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E562722DFCB3700230C16 /* AppDelegate.swift */; };
@@ -96,6 +98,8 @@
 		4918E5525478A7CE8797558B /* Pods-FastFoodUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FastFoodUITests.release.xcconfig"; path = "Target Support Files/Pods-FastFoodUITests/Pods-FastFoodUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5E14555123070A02006F62D7 /* GestureVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureVC.swift; sourceTree = "<group>"; };
 		5E14555323070A79006F62D7 /* LayoutManagerGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManagerGesture.swift; sourceTree = "<group>"; };
+		5E1455552307397B006F62D7 /* ScrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollVC.swift; sourceTree = "<group>"; };
+		5E145557230739DA006F62D7 /* LayoutManagerScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManagerScroll.swift; sourceTree = "<group>"; };
 		5E2D1CA02304C37C0017C25F /* LayoutManagerSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManagerSwipe.swift; sourceTree = "<group>"; };
 		5E2D1CA22304C4580017C25F /* LayoutManagerFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManagerFrame.swift; sourceTree = "<group>"; };
 		5E7E562422DFCB3700230C16 /* FastFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -326,6 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				0EECA6D322E97B3A005A722B /* Main.storyboard */,
+				5E1455552307397B006F62D7 /* ScrollVC.swift */,
+				5E145557230739DA006F62D7 /* LayoutManagerScroll.swift */,
 				5EC3D00C22F8E5AC0015D9C1 /* SearchVC.swift */,
 				5EFE7D8022FCD4AE0001D595 /* StoreVC.swift */,
 				5EC3D00E22F8E5C40015D9C1 /* SearchViewModel.swift */,
@@ -633,7 +639,9 @@
 				0EEF387822E731F10063B9D9 /* SearchMapView.swift in Sources */,
 				5ED16A5D22EA3398006F6C15 /* Store.swift in Sources */,
 				0EEEFED722EDF1FC00B84753 /* RestaurantView.swift in Sources */,
+				5E1455562307397B006F62D7 /* ScrollVC.swift in Sources */,
 				5E2D1CA12304C37C0017C25F /* LayoutManagerSwipe.swift in Sources */,
+				5E145558230739DA006F62D7 /* LayoutManagerScroll.swift in Sources */,
 				0EEEFED922EE312300B84753 /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
