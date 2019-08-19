@@ -17,6 +17,7 @@ class SearchVC: UIViewController {
     var bottomHeight: CGFloat = SearchCell.cellHeight + 8
     var layoutManager: LayoutManager!
     
+    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -54,11 +55,12 @@ class SearchVC: UIViewController {
         layoutManager = LayoutManager(collectionView: collectionView,
                                       topInset: topInset,
                                       bottomHeight: bottomHeight,
-                                      topConstraint: collectionViewTopConstraint)
+                                      topConstraint: collectionViewTopConstraint,
+                                      heightConstraint: collectionViewHeightConstraint)
         
         if UIDevice.current.userInterfaceIdiom == .phone {
             collectionView.isScrollEnabled = false
-            layoutManager.addSwipeGestures(view: collectionView)
+//            layoutManager.addSwipeGestures(view: collectionView)
             layoutManager.addPanGesture(view: collectionView)
             
             DispatchQueue.main.async {
@@ -154,12 +156,12 @@ extension SearchVC: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: view)
         print("scrollViewDidEndDecelerating: ", translation.y)
-        if translation.y > 0 {
+        if scrollView.panGestureRecognizer.direction == .down || scrollView.panGestureRecognizer.direction == .downSwipe {
              //Pulling Down
             if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
-                print("scrollViewDidEndDecelerating: enableGestures: ", translation.y)
-                layoutManager.enableGestures()
-                collectionView.isScrollEnabled = false
+//                print("scrollViewDidEndDecelerating: enableGestures: ", translation.y)
+//                layoutManager.enableGestures()
+//                collectionView.isScrollEnabled = false
             }
         }
     }
@@ -167,8 +169,9 @@ extension SearchVC: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: view)
-        print("scrollViewDidScroll: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
-        if translation.y > 0 && layoutManager.startScrollFromTop {
+//        print("scrollViewDidScroll: ", translation.y, layoutManager.isAtTop(), collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0)))
+        if (scrollView.panGestureRecognizer.direction == .down || scrollView.panGestureRecognizer.direction == .downSwipe) && layoutManager.startScrollFromTop {
+//        if translation.y > 0 && layoutManager.startScrollFromTop {
             //Pulling Down
             if (layoutManager.isAtTop() && collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 0, section: 0))) {
                 print("scrollViewDidScroll: enableGestures: ", translation.y)

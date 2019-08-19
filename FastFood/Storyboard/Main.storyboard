@@ -29,10 +29,11 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A5y-A2-r3x">
-                                <rect key="frame" x="0.0" y="164" width="414" height="572"/>
+                                <rect key="frame" x="0.0" y="164" width="414" height="623"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="jz5-FF-ASs"/>
+                                    <constraint firstAttribute="height" constant="623" id="vIi-c8-TgG"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="H3M-bL-VSS">
                                     <size key="itemSize" width="50" height="50"/>
@@ -73,7 +74,6 @@
                             <constraint firstItem="gZu-9M-ArZ" firstAttribute="leading" secondItem="A5y-A2-r3x" secondAttribute="leading" id="SwV-3e-9hv">
                                 <variation key="heightClass=regular-widthClass=regular" constant="20"/>
                             </constraint>
-                            <constraint firstAttribute="bottom" secondItem="A5y-A2-r3x" secondAttribute="bottom" id="WZC-fR-dLq"/>
                             <constraint firstItem="A5y-A2-r3x" firstAttribute="top" secondItem="hB8-GB-l1r" secondAttribute="top" constant="100" id="X0F-WR-5EG">
                                 <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
                             </constraint>
@@ -126,13 +126,14 @@
                     <navigationItem key="navigationItem" title="Search Restaurant" id="1Gw-4O-Oeq"/>
                     <connections>
                         <outlet property="collectionView" destination="A5y-A2-r3x" id="BKf-Cf-BVW"/>
+                        <outlet property="collectionViewHeightConstraint" destination="vIi-c8-TgG" id="2nI-ax-mPZ"/>
                         <outlet property="collectionViewTopConstraint" destination="X0F-WR-5EG" id="eum-EO-7CQ"/>
                         <outlet property="mapView" destination="QEr-cU-9HS" id="OEK-Ak-cQo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2rO-05-fa5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1415.625" y="-431.25"/>
+            <point key="canvasLocation" x="1414.4927536231885" y="-431.25000000000006"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="OaT-oR-SKu">
@@ -506,30 +507,30 @@
                         <viewLayoutGuide key="safeArea" id="gTK-fd-bGV"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="pO2-hw-29G"/>
                                 <exclude reference="JJM-zx-9iY"/>
+                                <exclude reference="pO2-hw-29G"/>
                                 <exclude reference="enm-z2-NVP"/>
                                 <exclude reference="kHI-qt-Fmt"/>
-                                <exclude reference="gyN-3e-yVO"/>
-                                <exclude reference="gI8-mJ-Qyy"/>
-                                <exclude reference="S0M-eo-Sz1"/>
                                 <exclude reference="0e3-VI-5LY"/>
+                                <exclude reference="S0M-eo-Sz1"/>
+                                <exclude reference="gI8-mJ-Qyy"/>
+                                <exclude reference="gyN-3e-yVO"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <include reference="pO2-hw-29G"/>
                                 <exclude reference="JJM-zx-9iY"/>
-                                <include reference="enm-z2-NVP"/>
+                                <include reference="pO2-hw-29G"/>
                                 <exclude reference="V7e-LG-97C"/>
+                                <include reference="enm-z2-NVP"/>
                                 <exclude reference="kHI-qt-Fmt"/>
-                                <exclude reference="gyN-3e-yVO"/>
-                                <exclude reference="8ck-Vw-YeD"/>
-                                <include reference="gI8-mJ-Qyy"/>
-                                <include reference="S0M-eo-Sz1"/>
-                                <exclude reference="HYZ-lk-drk"/>
-                                <exclude reference="69N-5W-euc"/>
                                 <exclude reference="0e3-VI-5LY"/>
+                                <exclude reference="69N-5W-euc"/>
+                                <exclude reference="8ck-Vw-YeD"/>
+                                <exclude reference="HYZ-lk-drk"/>
+                                <include reference="S0M-eo-Sz1"/>
+                                <include reference="gI8-mJ-Qyy"/>
+                                <exclude reference="gyN-3e-yVO"/>
                                 <exclude reference="pBB-Zt-ZnJ"/>
                             </mask>
                         </variation>
